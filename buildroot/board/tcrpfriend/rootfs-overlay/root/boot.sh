@@ -52,7 +52,7 @@ function upgradefriend() {
         fi
 
         echo -n "Checking for latest friend -> "
-        URL=$(curl --connect-timeout 15 -s --insecure -L https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
+        URL=$(curl --connect-timeout 15 -s --insecure -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
         [ -n "$URL" ] && curl -s --insecure -L $URL -O
 
         if [ -f chksum ]; then
@@ -63,7 +63,7 @@ function upgradefriend() {
                 msgnormal "OK, latest \n"
             else
                 msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
-                URLS=$(curl --insecure -s https://api.github.com/repos/pocopico/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+                URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
                 for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
                 FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
                 BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
@@ -577,11 +577,15 @@ function boot() {
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}"
     echo "cmdline : ${CMDLINE_LINE}"
 
+    echo
+    echo "User config is on $(msgwarning "/home/tc/user_config.json\n")"
+    echo "Default SSH tc password is $(msgwarning "P@ssw0rd\n")"
+
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
     echo ${CMDLINE_LINE} >/tmp/cmdline.out
     while IFS=" " read -r -a line; do
         printf "%s\n" "${line[@]}"
-    done </tmp/cmdline.out | egrep -i "sataportmap|sn|pid|vid|mac|hddhotplug|diskidxmap|netif_num" | sort >/tmp/cmdline.check
+    done </tmp/cmdline.out | egrep -i "sn|pid|vid|mac|hddhotplug|netif_num" | sort >/tmp/cmdline.check
 
     . /tmp/cmdline.check
 
