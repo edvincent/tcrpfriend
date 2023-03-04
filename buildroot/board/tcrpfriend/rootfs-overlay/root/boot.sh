@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Author :
-# Date : 221021
-# Version : 0.0.4
+# Author : PeterSuh-Q3
+# Date : 230304
+# Version : 0.0.5
 # User Variables :
 ###############################################################################
 
-BOOTVER="0.0.4"
+BOOTVER="0.0.5"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -24,6 +24,8 @@ function history() {
     0.0.2 Added the option to disable TCRP Friend auto update. Default if true.
     0.0.3 Added smallfixnumber to display current update version on boot
     0.0.4 Testing 5.x, fixed typo and introduced user config file update and backup
+    0.0.5 Added tinycore linux connection account information guide
+          Delaying the time to find an IP address 
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
