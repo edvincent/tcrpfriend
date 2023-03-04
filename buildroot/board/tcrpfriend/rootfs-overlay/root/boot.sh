@@ -372,7 +372,7 @@ getip() {
     # Wait for an IP
     COUNT=0
     while true; do
-        if [ ${COUNT} -eq 15 ]; then
+        if [ ${COUNT} -eq 10 ]; then
             msgalert "ERROR Could not get IP\n"
             break
         fi
@@ -571,6 +571,7 @@ function boot() {
 
     gethw
 
+    getip
     echo "IP Address : $(msgnormal "${IP}\n")"
     echo -n "Model : $(msgnormal " $model") , Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1") DSM Version : $(msgnormal "$version") Update : $(msgnormal "$smallfixnumber") RedPillMake : $(msgnormal "${redpillmake}\n")"
 
