@@ -333,7 +333,7 @@ function gethw() {
 
     echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS\n")"
     echo -ne "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq) With $(free -h | grep Mem | awk '{print $2}') Memory\n"
-    echo -ne "System has $(lspci -nn | egrep -e "\[0100\]" -e "\[0106\]" | wc -l) HBAs and $(lspci -nn | egrep -e "\[0200\]" | wc -l) Network cards\n"
+    echo -ne "System has $(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]" | wc -l) SAS/RAID HBAs and $(lspci -nn | egrep -e "\[0200\]" | wc -l) Network cards\n"
 }
 
 function checkmachine() {
@@ -575,12 +575,13 @@ function boot() {
     gethw
 
     getip
-    echo "IP Address : $(msgnormal "${IP}") , Module Processing Method : $(msgnormal " ${dmpm}\n")"
-    echo -n "Model : $(msgnormal " $model") , Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1") DSM Version : $(msgnormal "$version") Update : $(msgnormal "$smallfixnumber") RedPillMake : $(msgnormal "${redpillmake}\n")"
-
+    echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"
+    echo
+    echo -n "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), DSM Version : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), RedPillMake : $(msgnormal "${redpillmake}\n")"
+    echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}"
+    echo
     echo "cmdline : ${CMDLINE_LINE}"
-
     echo
     echo "User config is on $(msgwarning "/home/tc/user_config.json\n")"
     echo "Default SSH tc password is $(msgwarning "P@ssw0rd\n")"
@@ -599,8 +600,9 @@ function boot() {
 
     echo "Boot timeout exceeded, booting ... "
     echo
-    echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)\n"
+    echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
     echo
+    echo    
     echo "Kernel loading has started, nothing will be displayed here anymore ..."
 
     [ "${hidesensitive}" = "true" ] && clear
