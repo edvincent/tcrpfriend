@@ -485,6 +485,7 @@ readconfig() {
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
+        dmpm="$(jq -r -e '.general .devmod' $userconfigfile)"        
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
@@ -574,7 +575,7 @@ function boot() {
     gethw
 
     getip
-    echo "IP Address : $(msgnormal "${IP}\n")"
+    echo "IP Address : $(msgnormal "${IP}") , Module Processing Method : $(msgnormal " ${dmpm}\n")"
     echo -n "Model : $(msgnormal " $model") , Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1") DSM Version : $(msgnormal "$version") Update : $(msgnormal "$smallfixnumber") RedPillMake : $(msgnormal "${redpillmake}\n")"
 
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}"
@@ -598,7 +599,7 @@ function boot() {
 
     echo "Boot timeout exceeded, booting ... "
     echo
-    echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
+    echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)\n"
     echo
     echo "Kernel loading has started, nothing will be displayed here anymore ..."
 
@@ -618,7 +619,7 @@ function boot() {
 function welcome() {
 
     clear
-    echo -en "\033[7;32m---------------------------------={ TinyCore RedPill Friend }=---------------------------------\033[0m\n"
+    echo -en "\033[7;32m--------------------------------------={ TinyCore RedPill Friend }=--------------------------------------\033[0m\n"
 
     # Echo Version
     echo "TCRP Friend Version : $BOOTVER"
