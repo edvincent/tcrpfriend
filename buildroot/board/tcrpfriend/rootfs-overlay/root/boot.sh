@@ -485,7 +485,7 @@ readconfig() {
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
-#        dmpm="$(jq -r -e '.general .devmod' $userconfigfile)"        
+        dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
