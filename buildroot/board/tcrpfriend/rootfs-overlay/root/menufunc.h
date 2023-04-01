@@ -112,16 +112,6 @@ function backtitle() {
 ###############################################################################
 # Shows menu to user type one or generate randomly
 function serialMenu() {
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      a "Generate a random serial number" \
-      m "Enter a serial number" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "m" ]; then
       while true; do
         dialog --backtitle "`backtitle`" \
           --inputbox "Please enter a serial number " 0 0 "" \
@@ -134,12 +124,6 @@ function serialMenu() {
           break
         fi
       done
-      break
-    elif [ "${resp}" = "a" ]; then
-      SERIAL=`./sngen.sh "${MODEL}"`
-      break
-    fi
-  done
   SN="${SERIAL}"
   writeConfigKey "extra_cmdline" "sn" "${SN}"
 }
@@ -147,23 +131,6 @@ function serialMenu() {
 ###############################################################################
 # Shows menu to generate randomly or to get realmac
 function macMenu() {
-  while true; do
-    dialog --clear --backtitle "`backtitle`" \
-      --menu "Choose a option" 0 0 0 \
-      c "Get a real mac address" \
-      d "Generate a random mac address" \
-      m "Enter a mac address" \
-    2>${TMP_PATH}/resp
-    [ $? -ne 0 ] && return
-    resp=$(<${TMP_PATH}/resp)
-    [ -z "${resp}" ] && return
-    if [ "${resp}" = "d" ]; then
-      MACADDR=`./macgen.sh "randommac" $1 ${MODEL}`
-      break
-    elif [ "${resp}" = "c" ]; then
-      MACADDR=`./macgen.sh "realmac" $1 ${MODEL}`
-      break
-    elif [ "${resp}" = "m" ]; then
       while true; do
         dialog --backtitle "`backtitle`" \
           --inputbox "Please enter a mac address " 0 0 "" \
@@ -176,9 +143,6 @@ function macMenu() {
           break
         fi
       done
-      break
-    fi
-  done
   
   if [ "$1" = "eth0" ]; then
       MACADDR1="${MACADDR}"
@@ -284,16 +248,16 @@ function mainmenu() {
   NEXT="m"
   while true; do
 
-    echo "s \"Choose a Synology Serial Number\""         > "${TMP_PATH}/menu"
-    echo "a \"Choose a mac address 1\""                 >> "${TMP_PATH}/menu"
+    echo "s \"Enter a Synology Serial Number\""         > "${TMP_PATH}/menu"
+    echo "a \"Enter a mac address 1\""                 >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
-      echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
+      echo "f \"Enter a mac address 2\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth2 | wc -l) -gt 0 ]; then
-      echo "g \"Choose a mac address 3\""               >> "${TMP_PATH}/menu"
+      echo "g \"Enter a mac address 3\""               >> "${TMP_PATH}/menu"
     fi  
     if [ $(ifconfig | grep eth3 | wc -l) -gt 0 ]; then
-      echo "h \"Choose a mac address 4\""               >> "${TMP_PATH}/menu"
+      echo "h \"Enter a mac address 4\""               >> "${TMP_PATH}/menu"
     fi
     echo "u \"Edit user config file manually\""         >> "${TMP_PATH}/menu"
     echo "r \"continue boot\""                          >> "${TMP_PATH}/menu"
