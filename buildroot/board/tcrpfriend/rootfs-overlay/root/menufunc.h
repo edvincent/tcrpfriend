@@ -122,11 +122,13 @@ function sataMenu() {
 }
 
 function forcejunior() {
+    clear
     initialize
     boot forcejunior
 }
 
 function bootmenu() {
+    clear 
     initialize    
     boot
 }
