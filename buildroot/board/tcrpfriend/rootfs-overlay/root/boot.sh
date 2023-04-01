@@ -320,19 +320,21 @@ function updateuserconfigfield() {
 }
 
 function countdown() {
-
-    let timeout=10
+    local timeout=10
     while [ $timeout -ge 0 ]; do
         sleep 1
         printf '\e[32m%s\e[0m\r' "Press <Del> to enter a menu for edit USB/SATA Command Line or <ctrl-c> to stop boot $1 in : $timeout"
-        # Add the following lines
-        if keystatus --key=del ; then
-            echo "Del key pressed! Entering Menu for edit USB/SATA Command Line!"
-            mainmenu
-        fi
+        read -t 1 -n 1 key
+        case $key in
+            $'\x7f') # Del key
+                echo "Del key pressed! Entering Menu for edit USB/SATA Command Line!"
+                mainmenu
+                ;;
+            *)
+                ;;
+        esac
         let timeout=$timeout-1
     done
-
 }
 
 function gethw() {
