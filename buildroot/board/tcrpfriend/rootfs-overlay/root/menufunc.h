@@ -126,7 +126,7 @@ function forcejunior() {
     boot forcejunior
 }
 
-function boot() {
+function bootmenu() {
     initialize    
     boot
 }
@@ -152,7 +152,7 @@ function mainmenu() {
       s) usbMenu;      NEXT="r" ;;
       a) sataMenu;     NEXT="r" ;;
       j) forcejunior ;;      
-      r) boot ;;
+      r) bootmenu ;;
       e) break ;;
     esac
   done
