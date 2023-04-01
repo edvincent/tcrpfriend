@@ -76,11 +76,6 @@ function backtitle() {
   else
     BACKTITLE+=" (no SN)"
   fi
-  if [ -n "${IP}" ]; then
-    BACKTITLE+=" ${IP}"
-  else
-    BACKTITLE+=" (no IP)"
-  fi
   if [ -n "${MACADDR1}" ]; then
     BACKTITLE+=" ${MACADDR1}"
   else
