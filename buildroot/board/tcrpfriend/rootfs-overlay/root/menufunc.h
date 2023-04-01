@@ -53,25 +53,25 @@ function backtitle() {
   else
     BACKTITLE+=" (no SN)"
   fi
-  if [ -n "${MACADDR1}" ]; then
+  if [ "${MACADDR1}" == "null" ]; then
+    BACKTITLE+=" (no MAC1)"  
+  else
     BACKTITLE+=" ${MACADDR1}"
-  else
-    BACKTITLE+=" (no MAC1)"
   fi
-  if [ -n "${MACADDR2}" ]; then
+  if [ "${MACADDR2}" == "null" ]; then
+    BACKTITLE+=" (no MAC2)"  
+  else
     BACKTITLE+=" ${MACADDR2}"
-  else
-    BACKTITLE+=" (no MAC2)"
   fi
-  if [ -n "${MACADDR3}" ]; then
+  if [ "${MACADDR3}" == "null" ]; then
+    BACKTITLE+=" (no MAC3)"  
+  else
     BACKTITLE+=" ${MACADDR3}"
-  else
-    BACKTITLE+=" (no MAC3)"
   fi
-  if [ -n "${MACADDR4}" ]; then
-    BACKTITLE+=" ${MACADDR4}"
+  if [ "${MACADDR4}" == "null" ]; then
+    BACKTITLE+=" (no MAC4)"  
   else
-    BACKTITLE+=" (no MAC4)"
+    BACKTITLE+=" ${MACADDR4}"
   fi
   if [ -n "${KEYMAP}" ]; then
     BACKTITLE+=" (${LAYOUT}/${KEYMAP})"
@@ -86,11 +86,11 @@ function backtitle() {
 function usbMenu() {
       while true; do
         dialog --backtitle "`backtitle`" \
-          --inputbox "Please enter a serial number " 0 0 "${USB_LINE}" \
+          --inputbox "Edit USB Command Line " 0 0 "${USB_LINE}" \
           2>${TMP_PATH}/resp
         [ $? -ne 0 ] && return
-        SERIAL=`cat ${TMP_PATH}/resp`
-        if [ -z "${SERIAL}" ]; then
+        USB_LINE=`cat ${TMP_PATH}/resp`
+        if [ -z "${USB_LINE}" ]; then
           return
         else
           break
@@ -106,11 +106,11 @@ function usbMenu() {
 function sataMenu() {
       while true; do
         dialog --backtitle "`backtitle`" \
-          --inputbox "Please enter a mac address " 0 0 "${SATA_LINE}" \
+          --inputbox "Edit Sata Command Line" 0 0 "${SATA_LINE}" \
           2>${TMP_PATH}/resp
         [ $? -ne 0 ] && return
-        MACADDR=`cat ${TMP_PATH}/resp`
-        if [ -z "${MACADDR}" ]; then
+        SATA_LINE=`cat ${TMP_PATH}/resp`
+        if [ -z "${SATA_LINE}" ]; then
           return
         else
           break
