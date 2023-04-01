@@ -1,12 +1,16 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230304
-# Version : 0.0.4
+# Date : 230401
+# Version : 0.0.5
 # User Variables :
 ###############################################################################
 
-BOOTVER="0.0.4"
+##### INCLUDES #####################################################################################################
+source menufunc.h
+#####################################################################################################
+
+BOOTVER="0.0.5"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -24,8 +28,7 @@ function history() {
     0.0.2 Added the option to disable TCRP Friend auto update. Default if true.
     0.0.3 Added smallfixnumber to display current update version on boot
     0.0.4 Testing 5.x, fixed typo and introduced user config file update and backup
-    0.0.5 Added tinycore linux connection account information guide and etc.
-          Delaying the time to find an IP address 
+    0.0.5 AAdded menu function to edit CMDLINE of user_config.json
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -367,7 +370,7 @@ function getusb() {
 
 }
 
-getip() {
+function getip() {
 
     ethdev=$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
 
@@ -388,7 +391,7 @@ getip() {
 
 }
 
-checkfiles() {
+function checkfiles() {
 
     files="user_config.json initrd-dsm zImage-dsm"
 
@@ -404,7 +407,7 @@ checkfiles() {
 
 }
 
-checkupgrade() {
+function checkupgrade() {
 
     origrdhash=$(sha256sum /mnt/tcrp-p2/rd.gz | awk '{print $1}')
     origzimghash=$(sha256sum /mnt/tcrp-p2/zImage | awk '{print $1}')
@@ -429,7 +432,7 @@ checkupgrade() {
 
 }
 
-setmac() {
+function setmac() {
 
     # Set custom MAC if defined
 
@@ -446,7 +449,7 @@ setmac() {
 
 }
 
-setnetwork() {
+function setnetwork() {
 
     ethdev=$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
 
@@ -467,7 +470,7 @@ setnetwork() {
 
 }
 
-readconfig() {
+function readconfig() {
 
     LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
     LOADER_BUS="$(udevadm info --query property --name /dev/${LOADER_DISK} | grep -i ID_BUS | awk -F= '{print $2}')"
@@ -494,7 +497,7 @@ readconfig() {
 
 }
 
-mountall() {
+function mountall() {
 
     LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
 
@@ -645,6 +648,12 @@ function initialize() {
 
 }
 
+function menu() {
+
+
+
+}
+
 case $1 in
 
 patchramdisk)
@@ -669,6 +678,12 @@ extractramdisk)
 forcejunior)
     initialize
     boot forcejunior
+    ;;
+
+menu)
+    mainmenu
+    initialize
+    boot
     ;;
 
 *)
