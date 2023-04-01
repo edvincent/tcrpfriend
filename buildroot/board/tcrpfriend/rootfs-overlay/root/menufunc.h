@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-##### explanation #####################################################################################################
+##### explanation ###################################################################################
 # As you edit the cmdline of grub.cfg
 # Edit /mnt/tcrp/user_config.json to modify cmdline used by TCRP FRIEND
 #####################################################################################################
@@ -284,7 +284,7 @@ function mainmenu() {
   NEXT="m"
   while true; do
 
-    echo "s \"Choose a Synology Serial Number\""        >> "${TMP_PATH}/menu"
+    echo "s \"Choose a Synology Serial Number\""         > "${TMP_PATH}/menu"
     echo "a \"Choose a mac address 1\""                 >> "${TMP_PATH}/menu"
     if [ $(ifconfig | grep eth1 | wc -l) -gt 0 ]; then
       echo "f \"Choose a mac address 2\""               >> "${TMP_PATH}/menu"
@@ -299,7 +299,7 @@ function mainmenu() {
     echo "r \"continue boot\""                          >> "${TMP_PATH}/menu"
 
     dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
-      --menu "Device-Tree[DT] Base Models & HBAs do not require SataPortMap,DiskIdxMap\nDT models do not support HBAs\n${result}" 0 0 0 --file "${TMP_PATH}/menu" \
+      --menu "As you edit the cmdline of grub.cfg/nEdit /mnt/tcrp/user_config.json to modify cmdline used by TCRP FRIEND" 0 0 0 --file "${TMP_PATH}/menu" \
       2>${TMP_PATH}/resp
     [ $? -ne 0 ] && break
     case `<"${TMP_PATH}/resp"` in
