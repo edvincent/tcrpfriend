@@ -594,8 +594,11 @@ function boot() {
     echo
     echo "cmdline : ${CMDLINE_LINE}"
     echo
-    echo "User config is on $(msgwarning "/home/tc/user_config.json\n")"
-    echo "Default SSH tc password is $(msgwarning "P@ssw0rd\n")"
+    echo "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem."
+    echo "(If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access)"
+    echo "Default TTYD root password is $(msgwarning "blank")"
+    echo        
+    echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"    
 
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
     echo ${CMDLINE_LINE} >/tmp/cmdline.out
