@@ -648,12 +648,6 @@ function initialize() {
 
 }
 
-function menu() {
-
-
-
-}
-
 case $1 in
 
 patchramdisk)
