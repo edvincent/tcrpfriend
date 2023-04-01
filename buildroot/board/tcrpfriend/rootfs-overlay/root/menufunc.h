@@ -21,22 +21,6 @@ KEYMAP=$(jq -r -e '.general.keymap' "$USER_CONFIG_FILE")
 DMPM=$(jq -r -e '.general.devmod' "$USER_CONFIG_FILE")
 LDRMODE=$(jq -r -e '.general.loadermode' "$USER_CONFIG_FILE")
   
-###############################################################################
-# Write to json config file
-function writeConfigKey() {
-
-    block="$1"
-    field="$2"
-    value="$3"
-
-    if [ -n "$1 " ] && [ -n "$2" ]; then
-        jsonfile=$(jq ".$block+={\"$field\":\"$value\"}" $USER_CONFIG_FILE)
-        echo $jsonfile | jq . >$USER_CONFIG_FILE
-    else
-        echo "No values to update specified"
-    fi
-
-}
 
 ###############################################################################
 # Delete field from json config file
@@ -141,7 +125,7 @@ function serialMenu() {
     fi
   done
   SN="${SERIAL}"
-  writeConfigKey "extra_cmdline" "sn" "${SN}"
+  updateuserconfigfield "extra_cmdline" "sn" "${SN}"
 }
 
 ###############################################################################
@@ -182,25 +166,25 @@ function macMenu() {
   
   if [ "$1" = "eth0" ]; then
       MACADDR1="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac1" "${MACADDR1}"
+      updateuserconfigfield "extra_cmdline" "mac1" "${MACADDR1}"
   fi
   
   if [ "$1" = "eth1" ]; then
       MACADDR2="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac2" "${MACADDR2}"
-      writeConfigKey "extra_cmdline" "netif_num" "2"
+      updateuserconfigfield "extra_cmdline" "mac2" "${MACADDR2}"
+      updateuserconfigfield "extra_cmdline" "netif_num" "2"
   fi
   
   if [ "$1" = "eth2" ]; then
       MACADDR3="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac3" "${MACADDR3}"
-      writeConfigKey "extra_cmdline" "netif_num" "3"
+      updateuserconfigfield "extra_cmdline" "mac3" "${MACADDR3}"
+      updateuserconfigfield "extra_cmdline" "netif_num" "3"
   fi
 
   if [ "$1" = "eth3" ]; then
       MACADDR4="${MACADDR}"
-      writeConfigKey "extra_cmdline" "mac4" "${MACADDR4}"
-      writeConfigKey "extra_cmdline" "netif_num" "4"
+      updateuserconfigfield "extra_cmdline" "mac4" "${MACADDR4}"
+      updateuserconfigfield "extra_cmdline" "netif_num" "4"
   fi
 
 }
@@ -278,7 +262,7 @@ function mainmenu() {
       DeleteConfigKey "extra_cmdline" "mac3"
       DeleteConfigKey "extra_cmdline" "mac2"    
     fi  
-    writeConfigKey "extra_cmdline" "netif_num" "$NETNUM"
+    updateuserconfigfield "extra_cmdline" "netif_num" "$NETNUM"
   fi
 
   NEXT="m"
