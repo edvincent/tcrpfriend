@@ -323,11 +323,12 @@ function countdown() {
     local timeout=9
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[32m%s\e[0m\r' "Press <End> to enter a menu for edit USB/SATA Command Line or <ctrl-c> to stop $1 in : $timeout"
+        printf '\e[32m%s\e[0m\r' "Press <e> to enter a menu for edit USB/SATA Command Line or <ctrl-c> to stop $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
-            $'\x05') # End key
-                echo "End key pressed! Entering Menu for edit USB/SATA Command Line!"
+            'e') # e key
+                echo "e key pressed! Entering Menu for edit USB/SATA Command Line!"
+                sleep 1
                 mainmenu
                 ;;
             *)
