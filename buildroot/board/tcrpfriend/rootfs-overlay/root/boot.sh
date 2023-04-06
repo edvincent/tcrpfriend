@@ -323,7 +323,7 @@ function countdown() {
     local timeout=9
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[32m%s\e[0m\r' "Press <g> to enter a Getty Console to solve trouble.\nPress <e> to enter a menu for edit USB/SATA Command Line.\nPress <j> to enter a Force Junior.\nPress <ctrl-c> to stop boot $1 in : $timeout"
+        printf '\e[32m%s\e[0m\r' "Press <g> to enter a Getty Console to solve trouble./nPress <e> to enter a menu for edit USB/SATA Command Line./nPress <j> to enter a Force Junior./nPress <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
             'e') # e key
