@@ -121,12 +121,6 @@ function sataMenu() {
 
 }
 
-function forcejunior() {
-    clear
-    initialize
-    boot forcejunior
-}
-
 function bootmenu() {
     clear 
     initialize    
@@ -143,7 +137,6 @@ function mainmenu() {
 
     echo "s \"Edit USB Line\""         > "${TMP_PATH}/menu"
     echo "a \"Edit SATA Line\""        >> "${TMP_PATH}/menu"
-    echo "j \"Boot Force Junior\""     >> "${TMP_PATH}/menu"    
     echo "r \"continue boot\""         >> "${TMP_PATH}/menu"
 
     dialog --clear --default-item ${NEXT} --backtitle "`backtitle`" --colors \
@@ -153,7 +146,6 @@ function mainmenu() {
     case `<"${TMP_PATH}/resp"` in
       s) usbMenu;      NEXT="r" ;;
       a) sataMenu;     NEXT="r" ;;
-      j) forcejunior ;;      
       r) bootmenu ;;
       e) break ;;
     esac
