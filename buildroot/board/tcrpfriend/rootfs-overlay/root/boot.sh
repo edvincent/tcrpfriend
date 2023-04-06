@@ -332,14 +332,15 @@ function countdown() {
                 mainmenu
                 ;;
             'j') # j key
-                echo "j key pressed! Entering Force Junior!"
+                echo "j key pressed! Prepare Entering Force Junior!"
                 sleep 3
                 initialize
                 boot forcejunior
                 ;;
             'g') # j key
-                echo "g key pressed! Entering Getty Console!"
+                echo "g key pressed! Prepare Entering Getty Console!"
                 sleep 3
+                echo -e "ON" > /etc/gettyon
                 ;;
             *)
                 ;;
