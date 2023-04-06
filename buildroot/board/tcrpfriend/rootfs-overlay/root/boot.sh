@@ -323,16 +323,17 @@ function countdown() {
     local timeout=9
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[32m%s\e[0m\r' "Press <g> to enter a Getty Console to solve trouble."
-        printf '\e[33m%s\e[0m\r' "Press <e> to enter a menu for edit USB/SATA Command Line."
-        printf '\e[31m%s\e[0m\r' "Press <j> to enter a Force Junior."
+        printf '\e[32m%s\e[0m\r' "Press <g> to enter a Getty Console to solve trouble.\n"
+        printf '\e[33m%s\e[0m\r' "Press <e> to enter a menu for edit USB/SATA Command Line.\n"
+        printf '\e[31m%s\e[0m\r' "Press <j> to enter a Force Junior.\n"
         printf '\e[32m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
             'g') # j key
                 echo "g key pressed! Prepare Entering Getty Console!"
                 sleep 3
-                echo -e "ON" > /etc/gettyon
+                initialize
+                boot gettycon
                 ;;
             'e') # e key
                 echo "e key pressed! Entering Menu for edit USB/SATA Command Line!"
@@ -592,6 +593,8 @@ function boot() {
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
     fi
 
+    [ "$1" = "gettycon" ] && CMDLINE_LINE+=" gettycon "
+
     [ "$1" = "forcejunior" ] && CMDLINE_LINE+=" force_junior "
 
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
@@ -697,6 +700,11 @@ extractramdisk)
 forcejunior)
     initialize
     boot forcejunior
+    ;;
+
+gettycon)
+    initialize
+    boot gettycon
     ;;
 
 menu)
