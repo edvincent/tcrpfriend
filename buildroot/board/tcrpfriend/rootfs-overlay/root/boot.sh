@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230401
-# Version : 0.0.5
+# Date : 230406
+# Version : 0.0.6
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.5"
+BOOTVER="0.0.6"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -28,7 +28,8 @@ function history() {
     0.0.2 Added the option to disable TCRP Friend auto update. Default if true.
     0.0.3 Added smallfixnumber to display current update version on boot
     0.0.4 Testing 5.x, fixed typo and introduced user config file update and backup
-    0.0.5 AAdded menu function to edit CMDLINE of user_config.json
+    0.0.5 Added menu function to edit CMDLINE of user_config.json
+    0.0.6 Added Getty Console to solve trouble    
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -320,12 +321,9 @@ function updateuserconfigfield() {
 }
 
 function countdown() {
-    local timeout=9
+    local timeout=7
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[32m%s\e[0m\r' "Press <g> to enter a Getty Console to solve trouble.\n"
-        printf '\e[33m%s\e[0m\r' "Press <e> to enter a menu for edit USB/SATA Command Line.\n"
-        printf '\e[31m%s\e[0m\r' "Press <j> to enter a Force Junior.\n"
         printf '\e[32m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
@@ -616,6 +614,9 @@ function boot() {
     echo "Default TTYD root password is $(msgwarning "blank")"
     echo        
     echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"    
+    echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
+    echo "$(msgnormal "Press <e> to enter a menu for edit USB/SATA Command Line\n")"
+    echo "$(msgwarning "Press <j> to enter a Force Junior\n")"
 
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
     echo ${CMDLINE_LINE} >/tmp/cmdline.out
