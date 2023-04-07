@@ -613,11 +613,17 @@ function boot() {
     echo "(If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access)"
     echo "Default TTYD root password is $(msgwarning "blank")"
     echo        
-    echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"    
-    echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
-    echo "$(msgnormal "Press <e> to enter a menu for edit USB/SATA Command Line\n")"
-    echo "$(msgwarning "Press <j> to enter a Force Junior\n")"
-
+    echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"
+    if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
+        echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
+        echo "$(msgnormal "Press <e> to enter a menu for edit USB/SATA Command Line\n")"
+        echo "$(msgwarning "Press <j> to enter a Junior mode\n")"
+    elif [ "$1" = "gettycon" ]; then
+        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
+    elif [ "$1" = "forcejunior" ]; then
+        echo "$(msgwarning "Entering a Junior mode...\n")"        
+    fi
+    
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
     echo ${CMDLINE_LINE} >/tmp/cmdline.out
     while IFS=" " read -r -a line; do
@@ -628,7 +634,9 @@ function boot() {
 
     [ $(grep mac /tmp/cmdline.check | wc -l) != $netif_num ] && msgalert "FAILED to match the count of configured netif_num and mac addresses, DSM will panic, exiting so you can fix this\n" && exit 99
 
-    countdown "booting"
+    if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then
+        countdown "booting"
+    fi
 
     echo "Boot timeout exceeded, booting ... "
     echo
