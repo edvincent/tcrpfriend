@@ -42,7 +42,6 @@ EOF
 function version() {
     shift 1
     echo $BOOTVER
-    showlastupdate
     [ "$1" == "history" ] && history
 }
 
@@ -690,7 +689,7 @@ function welcome() {
 
     # Echo Version
     echo "TCRP Friend Version : $BOOTVER"
-
+    showlastupdate
 }
 
 function initialize() {
