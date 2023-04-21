@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230406
-# Version : 0.0.6
+# Date : 230422
+# Version : 0.0.6b
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6"
+BOOTVER="0.0.6b"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -29,7 +29,7 @@ function history() {
     0.0.3 Added smallfixnumber to display current update version on boot
     0.0.4 Testing 5.x, fixed typo and introduced user config file update and backup
     0.0.5 Added menu function to edit CMDLINE of user_config.json
-    0.0.6 Added Getty Console to solve trouble    
+    0.0.6 Added Getty Console to solve trouble 
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -529,6 +529,21 @@ function mountall() {
     [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}1 /mnt/tcrp-p1
     [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}2 /mnt/tcrp-p2
     [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}3 /mnt/tcrp
+    
+    if [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev/${LOADER_DISK}1 to /mnt/tcrp-p1, stopping boot process"
+        exit 99
+    fi
+
+    if [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev${LOADER_DISK}2 to /mnt/tcrp-p2, stopping boot process"
+        exit 99
+    fi
+
+    if [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev${LOADER_DISK}3 to /mnt/tcrp, stopping boot process"
+        exit 99
+    fi
 
 }
 
