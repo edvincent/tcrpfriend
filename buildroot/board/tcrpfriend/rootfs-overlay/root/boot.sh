@@ -15,12 +15,6 @@ FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
 
-function version() {
-    shift 1
-    echo $BOOTVER
-    [ "$1" == "history" ] && history
-}
-
 function history() {
     cat <<EOF
     --------------------------------------------------------------------------------------
@@ -29,11 +23,27 @@ function history() {
     0.0.3 Added smallfixnumber to display current update version on boot
     0.0.4 Testing 5.x, fixed typo and introduced user config file update and backup
     0.0.5 Added menu function to edit CMDLINE of user_config.json
-    0.0.6 Added Getty Console to solve trouble 
+    0.0.6 Added Getty Console to solve trouble
+    0.0.6a Fix Intel CpuFreq Performence Management
+    0.0.6b Added mountall success check routine
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
+}
+
+function showlastupdate() {
+    cat <<EOF
+# 0.0.6a Fix Intel CpuFreq Performence Management
+# 0.0.6b Added mountall success check routine
+EOF
+}
+
+function version() {
+    shift 1
+    echo $BOOTVER
+    showlastupdate
+    [ "$1" == "history" ] && history
 }
 
 function msgalert() {
