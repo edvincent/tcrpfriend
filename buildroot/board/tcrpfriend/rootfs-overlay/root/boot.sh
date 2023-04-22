@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 230422
-# Version : 0.0.6b
+# Version : 0.0.6c
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6b"
+BOOTVER="0.0.6c"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -26,6 +26,7 @@ function history() {
     0.0.6 Added Getty Console to solve trouble
     0.0.6a Fix Intel CpuFreq Performence Management
     0.0.6b Added mountall success check routine
+    0.0.6c Add CONFIG_IOSCHED_BFQ=y, restore CpuFreq performance tuning settings
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -36,6 +37,7 @@ function showlastupdate() {
     cat <<EOF
 # 0.0.6a Fix Intel CpuFreq Performence Management
 # 0.0.6b Added mountall success check routine
+# 0.0.6c Add CONFIG_IOSCHED_BFQ=y, restore CpuFreq performance tuning settings
 EOF
 }
 
