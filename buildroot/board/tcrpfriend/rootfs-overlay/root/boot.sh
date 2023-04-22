@@ -26,7 +26,8 @@ function history() {
     0.0.6 Added Getty Console to solve trouble
     0.0.6a Fix Intel CpuFreq Performence Management
     0.0.6b Added mountall success check routine
-    0.0.6c Add CONFIG_IOSCHED_BFQ=y, restore CpuFreq performance tuning settings
+    0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
+           restore CpuFreq performance tuning settings ( from 0.0.6a )
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -37,7 +38,8 @@ function showlastupdate() {
     cat <<EOF
 # 0.0.6a Fix Intel CpuFreq Performence Management
 # 0.0.6b Added mountall success check routine
-# 0.0.6c Add CONFIG_IOSCHED_BFQ=y, restore CpuFreq performance tuning settings
+# 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
+         restore CpuFreq performance tuning settings ( from 0.0.6a )
 EOF
 }
 
