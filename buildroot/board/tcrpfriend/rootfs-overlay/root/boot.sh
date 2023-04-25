@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 230422
-# Version : 0.0.6c
+# Version : 0.0.6d
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6c"
+BOOTVER="0.0.6d"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -28,6 +28,7 @@ function history() {
     0.0.6b Added mountall success check routine
     0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
            restore CpuFreq performance tuning settings ( from 0.0.6a )
+    0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -40,6 +41,7 @@ function showlastupdate() {
 # 0.0.6b Added mountall success check routine
 # 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
          restore CpuFreq performance tuning settings ( from 0.0.6a )
+# 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade         
 EOF
 }
 
@@ -229,6 +231,9 @@ function patchramdisk() {
     echo "Applying model synoinfo patches"
 
     while IFS=":" read KEY VALUE; do
+        if [ -z "$VALUE" ]; then
+            continue
+        fi
         echo "Key : $KEY Value: $VALUE"
         _set_conf_kv $KEY $VALUE $temprd/etc/synoinfo.conf
         echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
@@ -238,6 +243,9 @@ function patchramdisk() {
     echo "Applying user synoinfo settings"
 
     while IFS=":" read KEY VALUE; do
+        if [ -z "$VALUE" ]; then
+            continue
+        fi
         echo "Key : $KEY Value: $VALUE"
         _set_conf_kv $KEY $VALUE $temprd/etc/synoinfo.conf
         echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
