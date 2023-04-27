@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230422
-# Version : 0.0.6d
+# Date : 230427
+# Version : 0.0.6e
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6d"
+BOOTVER="0.0.6e"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -29,6 +29,7 @@ function history() {
     0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
            restore CpuFreq performance tuning settings ( from 0.0.6a )
     0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
+    0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -37,11 +38,9 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-# 0.0.6a Fix Intel CpuFreq Performence Management
-# 0.0.6b Added mountall success check routine
 # 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
-         restore CpuFreq performance tuning settings ( from 0.0.6a )
-# 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade         
+# 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
+# 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
 EOF
 }
 
@@ -284,7 +283,7 @@ function patchramdisk() {
     echo "Copying file to ${LOADER_DISK}3"
 
     cp -f /root/initrd-dsm /mnt/tcrp
-    cp -f /root/initrd-dsm /mnt/tcrp-p1/rd.gz
+    #cp -f /root/initrd-dsm /mnt/tcrp-p1/rd.gz
     cd /root && rm -rf $temprd
 
     origrdhash=$(sha256sum /mnt/tcrp-p2/rd.gz | awk '{print $1}')
