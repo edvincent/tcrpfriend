@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230427
-# Version : 0.0.6e
+# Date : 230501
+# Version : 0.0.6f
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6e"
+BOOTVER="0.0.6f"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -30,6 +30,7 @@ function history() {
            restore CpuFreq performance tuning settings ( from 0.0.6a )
     0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
     0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
+    0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ function showlastupdate() {
 # 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
 # 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
 # 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
+# 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
 EOF
 }
 
@@ -470,6 +472,14 @@ function checkupgrade() {
         msgwarning "zImage upgrade has been detected \n"
         patchkernel 2>&1 >>$FRIENDLOG
     fi
+    
+    if [ "$loadermode" == "JOT" ]; then
+        msgwarning "Ramdisk upgrade and zImage upgrade completed successfully for JOT !!! \n"
+        echo "A reboot is required. Press any key to reboot..."
+        read answer
+        
+        reboot
+    fi
 
 }
 
@@ -530,6 +540,7 @@ function readconfig() {
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
+        loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
