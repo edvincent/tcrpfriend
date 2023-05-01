@@ -388,6 +388,8 @@ function checkmachine() {
         MACHINE="VIRTUAL"
         HYPERVISOR=$(lscpu | grep "Hypervisor vendor" | awk '{print $3}')
         echo "Machine is $MACHINE and the Hypervisor is $HYPERVISOR"
+    else
+        MACHINE="BAREMETAL"    
     fi
 
 }
@@ -457,12 +459,24 @@ function checkupgrade() {
     rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
     zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
 
+    if [ "$loadermode" == "JOT" ]; then    
+        checkmachine
+
+        if [ "$MACHINE" = "VIRTUAL" ]; then
+            msgnormal "Setting default boot entry to JOT SATA"
+            sed -i "/set default=\"*\"/cset default=\"1\"" /mnt/tcrp-p1/boot/grub/grub.cfg
+        else
+            msgnormal "Setting default boot entry to JOT USB"
+            sed -i "/set default=\"*\"/cset default=\"0\"" /mnt/tcrp-p1/boot/grub/grub.cfg
+        fi        
+    fi
+
     echo -n "Detecting upgrade : "
 
     if [ "$rdhash" = "$origrdhash" ]; then
         msgnormal "Ramdisk OK ! "
     else
-        msgwarning "Ramdisk upgrade has been detected "
+        msgwarning "Ramdisk upgrade has been detected and "
         patchramdisk 2>&1 >>$FRIENDLOG
     fi
 
@@ -471,16 +485,15 @@ function checkupgrade() {
     else
         msgwarning "zImage upgrade has been detected \n"
         patchkernel 2>&1 >>$FRIENDLOG
+   
+        if [ "$loadermode" == "JOT" ]; then
+            msgwarning "Ramdisk upgrade and zImage upgrade for JOT completed successfully !!! \n"
+            echo "A reboot is required. Press any key to reboot..."
+            read answer
+            reboot
+        fi
     fi
     
-    if [ "$loadermode" == "JOT" ]; then
-        msgwarning "Ramdisk upgrade and zImage upgrade completed successfully for JOT !!! \n"
-        echo "A reboot is required. Press any key to reboot..."
-        read answer
-        
-        reboot
-    fi
-
 }
 
 function setmac() {
