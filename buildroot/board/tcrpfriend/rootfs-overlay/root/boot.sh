@@ -463,10 +463,10 @@ function checkupgrade() {
         checkmachine
 
         if [ "$MACHINE" = "VIRTUAL" ]; then
-            msgnormal "Setting default boot entry to JOT SATA"
+            msgnormal "Setting default boot entry to JOT SATA\n"
             sed -i "/set default=\"*\"/cset default=\"1\"" /mnt/tcrp-p1/boot/grub/grub.cfg
         else
-            msgnormal "Setting default boot entry to JOT USB"
+            msgnormal "Setting default boot entry to JOT USB\n"
             sed -i "/set default=\"*\"/cset default=\"0\"" /mnt/tcrp-p1/boot/grub/grub.cfg
         fi        
     fi
