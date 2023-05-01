@@ -30,7 +30,7 @@ function history() {
            restore CpuFreq performance tuning settings ( from 0.0.6a )
     0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
     0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
-    0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
+    0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ function showlastupdate() {
 # 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
 # 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
 # 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
-# 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk Update
+# 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
 EOF
 }
 
