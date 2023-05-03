@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230501
-# Version : 0.0.6f
+# Date : 230503
+# Version : 0.0.6g
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6f"
+BOOTVER="0.0.6g"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -31,7 +31,7 @@ function history() {
     0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
     0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
     0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
-
+    0.0.6g Recompile for DSM 7.2.0-64551 RC support
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -43,6 +43,7 @@ function showlastupdate() {
 # 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
 # 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
 # 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
+# 0.0.6g Recompile for DSM 7.2.0-64551 RC support
 EOF
 }
 
