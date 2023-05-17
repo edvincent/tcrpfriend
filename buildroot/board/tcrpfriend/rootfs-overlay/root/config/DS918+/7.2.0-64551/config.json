@@ -2,19 +2,19 @@
   "os": {
     "id": "ds918p_64551",
     "pat_url": "https://global.download.synology.com/download/DSM/release/7.2/64551/DSM_DS918%2B_64551.pat",
-    "sha256": "3603a03212b440e15aceb9d825a52639b086d260adf0e1deac2c4a574f2005a5"
+    "sha256": "13b7d6dfb371bbf9b75ffbefbad07d514e42aaeefb868796bf0990ce26744a83"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "2830008cbd89bd07d2e3cce4b2c30d3a1fc881f1c9c45daa31f6ef1d9e3fbd2c"
+      "sha256": "30c27506d4f0226168e01e47e8158d7f709b596299945627387b75c548d22a2e"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "a92bfc397af8fd1e3d5464a1563fde2e71c51d0e433a73238568c7e8cc94b911"
+      "sha256": "d42a64015b1c3cad3c6f338bb3f2886076307e63b98c8804e14f407aa050cdc1"
     },
     "vmlinux": {
-      "sha256": "fcb0e0084879180f1df385fdc435e4facd099da860bbaf28ac799ddef8c52d3f"
+      "sha256": "3ae7b176f3312e01a45f59271965bc563357a971be3f1d6f27cde1040c87b383"
     }
   },
   "patches": {
@@ -35,11 +35,11 @@
     "internalportcfg": "0xffff",
     "esataportcfg": "0x0",
     "buzzeroffen": "0xffff",
-    "rss_server": "http://example.com/null.xml",
-    "rss_server_ssl": "https://example.com/null.xml",
+    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
+    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
+    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.json",
     "small_info_path": "https://example.com/null",
-    "updateurl": "http://example.com/",
-    "myds_region_api_base_url": "https://example.com"
+    "security_version_server": "https://example.com/smallupdate"
   },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",
@@ -69,7 +69,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with USB boot"
         ],
         "cmdline": {
@@ -85,7 +85,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with SATA boot",
           "echo WARNING: SATA boot support on this platform is experimental!"
         ],

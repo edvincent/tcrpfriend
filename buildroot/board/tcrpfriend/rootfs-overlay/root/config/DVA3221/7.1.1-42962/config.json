@@ -39,9 +39,9 @@
     "internalportcfg": "0xfffff",
     "SasIdxMap": "0",
     "esataportcfg": "0x00",
-    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss.xml",
-    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss.xml",
-    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss.json",
+    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
+    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
+    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.json",
     "small_info_path": "https://example.com/null",
     "security_version_server": "https://example.com/smallupdate"
   },
@@ -75,7 +75,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with USB boot"
         ],
         "cmdline": {
@@ -91,7 +91,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with SATA boot"
         ],
         "cmdline": {

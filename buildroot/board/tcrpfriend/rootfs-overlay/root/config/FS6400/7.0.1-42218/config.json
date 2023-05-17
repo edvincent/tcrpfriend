@@ -78,7 +78,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with USB boot"
         ],
         "cmdline": {
@@ -94,7 +94,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with SATA boot"
         ],
         "cmdline": {
@@ -111,7 +111,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with USB boot"
         ],
         "cmdline": {
@@ -128,7 +128,7 @@
           "echo Loading Linux...",
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
-          "initrd /rd.gz /custom.gz",
+          "initrd (hd0,msdos3)/initrd-dsm",
           "echo Starting kernel with SATA boot"
         ],
         "cmdline": {
