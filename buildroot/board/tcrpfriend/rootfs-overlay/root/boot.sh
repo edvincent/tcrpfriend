@@ -32,7 +32,7 @@ function history() {
     0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
     0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
     0.0.6g Recompile for DSM 7.2.0-64551 RC support
-    0.0.7  removed custom.gz from partition 1
+    0.0.7  removed custom.gz from partition 1, added static boot option
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -40,12 +40,9 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-# 0.0.6c Add CONFIG_MQ_IOSCHED_DEADLINE=y, CONFIG_MQ_IOSCHED_KYBER=y, CONFIG_IOSCHED_BFQ=y, CONFIG_BFQ_GROUP_IOSCHED=y
-# 0.0.6d Processing without errors related to synoinfo.conf while processing Ramdisk upgrade
-# 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
 # 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
 # 0.0.6g Recompile for DSM 7.2.0-64551 RC support
-# 0.0.7  removed custom.gz from partition 1
+# 0.0.7  removed custom.gz from partition 1, added static boot option
 EOF
 }
 
@@ -308,6 +305,12 @@ function patchramdisk() {
 
 }
 
+function setgrubdefault() {
+
+    echo "Setting default boot entry to $1"
+    sed -i "s/set default=\"[0-9]\"/set default=\"$1\"/g" /mnt/tcrp-p1/boot/grub/grub.cfg
+}
+
 function updateuserconfigfile() {
 
     backupfile="$userconfigfile.$(date +%Y%b%d)"
@@ -559,6 +562,7 @@ function readconfig() {
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
+        staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
         loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
     else
@@ -700,28 +704,38 @@ function boot() {
 
     [ $(grep mac /tmp/cmdline.check | wc -l) != $netif_num ] && msgalert "FAILED to match the count of configured netif_num and mac addresses, DSM will panic, exiting so you can fix this\n" && exit 99
 
-    if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then
-        countdown "booting"
-    fi
-
-    echo "Boot timeout exceeded, booting ... "
-    echo
-    echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
-    echo
-    echo    
-    echo "Kernel loading has started, nothing will be displayed here anymore ..."
-
-    [ "${hidesensitive}" = "true" ] && clear
-
-    if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
-        kexec -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
+    if [ "$staticboot" = "true" ]; then
+        echo "Static boot set, rebooting to static ..."
+        cp tools/libdevmapper.so.1.02 /usr/lib
+        cp tools/grub-editenv /usr/bin
+        chmod +x /usr/bin/grub-editenv
+        /usr/bin/grub-editenv /mnt/tcrp-p1/boot/grub/grubenv create        
+        [ "$LOADER_BUS" = "ata" ] && setgrubdefault 1
+        [ "$LOADER_BUS" = "usb" ] && setgrubdefault 0
+        reboot
     else
-        echo "Booting with noefi, please notice that this might cause issues"
-        kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
+
+        if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then
+            countdown "booting"
+        fi
+        echo "Boot timeout exceeded, booting ... "
+        echo
+        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
+        echo
+        echo    
+        echo "Kernel loading has started, nothing will be displayed here anymore ..."
+
+        [ "${hidesensitive}" = "true" ] && clear
+
+        if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
+            kexec -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
+        else
+            echo "Booting with noefi, please notice that this might cause issues"
+            kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
+        fi
+
+        kexec -e -a
     fi
-
-    kexec -e -a
-
 }
 
 function welcome() {
