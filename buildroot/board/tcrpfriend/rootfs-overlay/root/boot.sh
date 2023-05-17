@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230503
-# Version : 0.0.6g
+# Date : 230517
+# Version : 0.0.7
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.6g"
+BOOTVER="0.0.7"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -32,6 +32,7 @@ function history() {
     0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
     0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
     0.0.6g Recompile for DSM 7.2.0-64551 RC support
+    0.0.7  removed custom.gz from partition 1
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -44,6 +45,7 @@ function showlastupdate() {
 # 0.0.6e Removed "No space left on device" when copying /mnt/tcrp-p1/rd.gz file during Ramdisk upgrade
 # 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
 # 0.0.6g Recompile for DSM 7.2.0-64551 RC support
+# 0.0.7  removed custom.gz from partition 1
 EOF
 }
 
@@ -269,7 +271,11 @@ function patchramdisk() {
 
     echo "Adding custom.gz to image"
     cd $temprd
-    cat /mnt/tcrp-p1/custom.gz | cpio -idm >/dev/null 2>&1
+    if [ -f /mnt/tcrp-p1/custom.gz ]; then
+        cat /mnt/tcrp-p1/custom.gz | cpio -idm >/dev/null 2>&1
+    else
+        cat /mnt/tcrp/custom.gz | cpio -idm >/dev/null 2>&1
+    fi
 
     for script in $(find /root/rd.temp/exts/ | grep ".sh"); do chmod +x $script; done
     chmod +x $temprd/usr/sbin/modprobe
@@ -286,7 +292,7 @@ function patchramdisk() {
     echo "Copying file to ${LOADER_DISK}3"
 
     cp -f /root/initrd-dsm /mnt/tcrp
-    #cp -f /root/initrd-dsm /mnt/tcrp-p1/rd.gz
+
     cd /root && rm -rf $temprd
 
     origrdhash=$(sha256sum /mnt/tcrp-p2/rd.gz | awk '{print $1}')
