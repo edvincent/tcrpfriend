@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230517
-# Version : 0.0.7
+# Date : 230610
+# Version : 0.0.8
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.7"
+BOOTVER="0.0.8"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -33,6 +33,9 @@ function history() {
     0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
     0.0.6g Recompile for DSM 7.2.0-64551 RC support
     0.0.7  removed custom.gz from partition 1, added static boot option
+    0.0.8  Added the detection of EFI and the addition of withefi option to cmdline
+           Enhanced the synoinfo key reading to accept multiword keys
+           Fixed an a leading space in the synoinfo key reading
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -40,9 +43,11 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-# 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
-# 0.0.6g Recompile for DSM 7.2.0-64551 RC support
-# 0.0.7  removed custom.gz from partition 1, added static boot option
+0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
+0.0.7  removed custom.gz from partition 1, added static boot option
+0.0.8  Added the detection of EFI and the addition of withefi option to cmdline
+       Enhanced the synoinfo key reading to accept multiword keys
+       Fixed an a leading space in the synoinfo key reading
 EOF
 }
 
@@ -130,7 +135,7 @@ function getstaticmodule() {
         fi
     done
 
-    if [ -f /root/redpill.ko ] && [ -n $(strings /root/redpill.ko | grep -i $model) ]; then
+    if [ -f /root/redpill.ko ] && [ -n $(strings /root/redpill.ko | grep -i $model | head -1) ]; then
         echo "Copying redpill.ko module to ramdisk"
         cp /root/redpill.ko /root/rd.temp/usr/lib/modules/rp.ko
     else
@@ -235,10 +240,10 @@ function patchramdisk() {
         if [ -z "$VALUE" ]; then
             continue
         fi
-        echo "Key : $KEY Value: $VALUE"
-        _set_conf_kv $KEY $VALUE $temprd/etc/synoinfo.conf
-        echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
-        echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc.defaults/synoinfo.conf" >>"/root/rp.txt"
+        KEY="$(echo $KEY | xargs)" && VALUE="$(echo $VALUE | xargs)"
+        _set_conf_kv "${KEY}" "${VALUE}" $temprd/etc/synoinfo.conf
+        echo "_set_conf_kv \"${KEY}\" \"${VALUE}\" /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
+        echo "_set_conf_kv \"${KEY}\" \"${VALUE}\" /tmpRoot/etc.defaults/synoinfo.conf" >>"/root/rp.txt"
     done <<<$(echo $SYNOINFO_PATCH | jq . | grep ":" | sed -e 's/"//g' | sed -e 's/,//g')
 
     echo "Applying user synoinfo settings"
@@ -247,10 +252,10 @@ function patchramdisk() {
         if [ -z "$VALUE" ]; then
             continue
         fi
-        echo "Key : $KEY Value: $VALUE"
-        _set_conf_kv $KEY $VALUE $temprd/etc/synoinfo.conf
-        echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
-        echo "_set_conf_kv ${KEY} ${VALUE} /tmpRoot/etc.defaults/synoinfo.conf" >>"/root/rp.txt"
+        KEY="$(echo $KEY | xargs)" && VALUE="$(echo $VALUE | xargs)"
+        _set_conf_kv "${KEY}" "${VALUE}" $temprd/etc/synoinfo.conf
+        echo "_set_conf_kv \"${KEY}\" \"${VALUE}\" /tmpRoot/etc/synoinfo.conf" >>"/root/rp.txt"
+        echo "_set_conf_kv \"${KEY}\" \"${VALUE}\" /tmpRoot/etc.defaults/synoinfo.conf" >>"/root/rp.txt"
     done <<<$(echo $SYNOINFO_USER | jq . | grep ":" | sed -e 's/"//g' | sed -e 's/,//g')
 
     sed -e "/@@@CONFIG-GENERATED@@@/ {" -e "r /root/rp.txt" -e 'd' -e '}' -i "${temprd}/sbin/init.post"
@@ -390,6 +395,7 @@ function gethw() {
     echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS\n")"
     echo -ne "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq) With $(free -h | grep Mem | awk '{print $2}') Memory\n"
     echo -ne "System has $(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]" | wc -l) SAS/RAID HBAs and $(lspci -nn | egrep -e "\[0200\]" | wc -l) Network cards\n"
+    [ -d /sys/firmware/efi ] && msgnormal "System is running in UEFI boot mode\n" && EFIMODE="yes" || msgnormal "System is running in Legacy boot mode\n"    
 }
 
 function checkmachine() {
@@ -704,6 +710,11 @@ function boot() {
 
     [ $(grep mac /tmp/cmdline.check | wc -l) != $netif_num ] && msgalert "FAILED to match the count of configured netif_num and mac addresses, DSM will panic, exiting so you can fix this\n" && exit 99
 
+    #If EFI then add withefi to CMDLINE_LINE
+    if [ "$EFIMODE" = "yes" ] && [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -le 0 ]; then
+        CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
+    fi
+
     if [ "$staticboot" = "true" ]; then
         echo "Static boot set, rebooting to static ..."
         cp tools/libdevmapper.so.1.02 /usr/lib
@@ -730,7 +741,7 @@ function boot() {
         if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
             kexec -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         else
-            echo "Booting with noefi, please notice that this might cause issues"
+            msgwarning "Booting with noefi, please notice that this might cause issues"
             kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         fi
 
