@@ -62,11 +62,11 @@ jobs:
           echo "VERSION=`cat /home/runner/work/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/VERSION`" >> /opt/output/chksum
           sha256sum /opt/output/bzImage-friend >> /opt/output/chksum
           sha256sum /opt/output/initrd-friend >> /opt/output/chksum
-      #- name: Upload FriendFiles-${{ steps.updaterootfs.outputs.VERSION }}
-      #  uses: actions/upload-artifact@v3
-      #  with:
-      #    name: FriendFiles-${{ steps.updaterootfs.outputs.VERSION }}
-      #    path: /opt/output        
+      - name: Upload FriendFiles-${{ steps.updaterootfs.outputs.VERSION }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: FriendFiles-${{ steps.updaterootfs.outputs.VERSION }}
+          path: /opt/output        
  # Publish a release if is a tag
       - name: Release
         uses: softprops/action-gh-release@v1
