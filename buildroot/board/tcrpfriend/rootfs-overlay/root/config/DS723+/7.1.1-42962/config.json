@@ -1,20 +1,20 @@
 {
   "os": {
     "id": "ds723p_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-5/DSM_DS723%2B_42962.pat",
-    "sha256": "633a626f3dc31338eb41ca929d8f9927a7a63f646067372d02ac045aa768560f"
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_DS723%2B_42962.pat",
+    "sha256": "93b849708801d6efdf3e6ab9ca01e8e22dd8abd2e21bd90a0532e231cfa86d12"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "2bf64e284b4aa3965bdd284cd76ec441fd1ab7b136bee6613bcbae12ef9b770d"
+      "sha256": "351bbabd320ea2966594638aa81c5bf4ae66c520639c25151af2c3bccee9c921"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "3b5c813d61311fc2b65aab8aa7c5c0d19eee7ad99f24eaab254397c4c1c003af"
+      "sha256": "ae7fcd5cea940ebe44ec0d581bc1f636f7fa9182717596c251acefaa6528addb"
     },
     "vmlinux": {
-      "sha256": "37e9dbb350940b90a5c86fa9cd71ecaa9e784f00d65e12a6997a7c98867c6300"
+      "sha256": "0ac4aff0122e1780347977f3d055880f2a4cdc576e80586be5a05800538193fc"
     }
   },
   "patches": {
@@ -41,7 +41,9 @@
     "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
     "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.json",
     "small_info_path": "https://example.com/null",
-    "security_version_server": "https://example.com/smallupdate"
+    "security_version_server": "https://example.com/smallupdate",
+    "maxlanport": "8",
+    "netif_seq": "0 1 2 3 4 5 6 7"
   },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",

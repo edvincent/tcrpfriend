@@ -28,7 +28,10 @@
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
-  "synoinfo": {},
+  "synoinfo": {
+    "maxlanport": "8",
+    "netif_seq": "0 1 2 3 4 5 6 7"
+  },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",
     "base_cmdline": {
