@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230610
-# Version : 0.0.8
+# Date : 230702
+# Version : 0.0.8a
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8"
+BOOTVER="0.0.8a"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -36,6 +36,7 @@ function history() {
     0.0.8  Added the detection of EFI and the addition of withefi option to cmdline
            Enhanced the synoinfo key reading to accept multiword keys
            Fixed an a leading space in the synoinfo key reading
+    0.0.8a Updated configs to 64570 U1
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -48,6 +49,7 @@ function showlastupdate() {
 0.0.8  Added the detection of EFI and the addition of withefi option to cmdline
        Enhanced the synoinfo key reading to accept multiword keys
        Fixed an a leading space in the synoinfo key reading
+0.0.8a Updated configs to 64570 U1
 EOF
 }
 
