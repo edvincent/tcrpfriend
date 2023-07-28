@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230702
-# Version : 0.0.8a
+# Date : 230728
+# Version : 0.0.8b
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8a"
+BOOTVER="0.0.8b"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
 AUTOUPDATES="1"
@@ -37,6 +37,7 @@ function history() {
            Enhanced the synoinfo key reading to accept multiword keys
            Fixed an a leading space in the synoinfo key reading
     0.0.8a Updated configs to 64570 U1
+    0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -50,6 +51,7 @@ function showlastupdate() {
        Enhanced the synoinfo key reading to accept multiword keys
        Fixed an a leading space in the synoinfo key reading
 0.0.8a Updated configs to 64570 U1
+0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
 EOF
 }
 
@@ -366,12 +368,12 @@ function countdown() {
         printf '\e[32m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
-            'g') # j key
-                echo "g key pressed! Prepare Entering Getty Console!"
-                sleep 3
-                initialize
-                boot gettycon
-                ;;
+            #'g') # j key
+            #    echo "g key pressed! Prepare Entering Getty Console!"
+            #    sleep 3
+            #    initialize
+            #    boot gettycon
+            #    ;;
             'e') # e key
                 echo "e key pressed! Entering Menu for edit USB/SATA Command Line!"
                 sleep 3
@@ -669,7 +671,7 @@ function boot() {
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
     fi
 
-    [ "$1" = "gettycon" ] && CMDLINE_LINE+=" gettycon "
+    #[ "$1" = "gettycon" ] && CMDLINE_LINE+=" gettycon "
 
     [ "$1" = "forcejunior" ] && CMDLINE_LINE+=" force_junior "
 
@@ -692,12 +694,13 @@ function boot() {
     echo "Default TTYD root password is $(msgwarning "blank")"
     echo        
     echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"
-    if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
-        echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
+    #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
+    if [ "$1" != "forcejunior" ]; then    
+ #       echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
         echo "$(msgnormal "Press <e> to enter a menu for edit USB/SATA Command Line\n")"
         echo "$(msgwarning "Press <j> to enter a Junior mode\n")"
-    elif [ "$1" = "gettycon" ]; then
-        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
+#    elif [ "$1" = "gettycon" ]; then
+#        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
     elif [ "$1" = "forcejunior" ]; then
         echo "$(msgwarning "Entering a Junior mode...\n")"        
     fi
@@ -728,7 +731,8 @@ function boot() {
         reboot
     else
 
-        if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then
+        #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then
+        if [ "$1" != "forcejunior" ]; then
             countdown "booting"
         fi
         echo "Boot timeout exceeded, booting ... "
@@ -804,10 +808,10 @@ forcejunior)
     boot forcejunior
     ;;
 
-gettycon)
-    initialize
-    boot gettycon
-    ;;
+#gettycon)
+#    initialize
+#    boot gettycon
+#    ;;
 
 menu)
     mainmenu
