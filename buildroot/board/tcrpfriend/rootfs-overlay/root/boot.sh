@@ -119,9 +119,10 @@ function getredpillko() {
 
     echo "Removing any old redpill.ko modules"
     [ -f /root/redpill.ko ] && rm -f /root/redpill.ko
+
+    ORIGIN_PLATFORM=$(cat /mnt/tcrp-p1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
     
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
-
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
         LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
@@ -138,7 +139,7 @@ function getredpillko() {
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
         exit 99
     fi
-    unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+    unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
     gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
     cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /root/redpill.ko
 
