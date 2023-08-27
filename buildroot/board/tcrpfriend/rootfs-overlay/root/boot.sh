@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230728
-# Version : 0.0.8b
+# Date : 230828
+# Version : 0.0.8c
 # User Variables :
 ###############################################################################
 
@@ -10,9 +10,9 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8b"
+BOOTVER="0.0.8c"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
-RSS_SERVER="https://raw.githubusercontent.com/pocopico/redpill-load/develop"
+RSS_SERVER="https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0"
 AUTOUPDATES="1"
 
 function history() {
@@ -38,6 +38,7 @@ function history() {
            Fixed an a leading space in the synoinfo key reading
     0.0.8a Updated configs to 64570 U1
     0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
+    0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -52,6 +53,7 @@ function showlastupdate() {
        Fixed an a leading space in the synoinfo key reading
 0.0.8a Updated configs to 64570 U1
 0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
+0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
 EOF
 }
 
@@ -109,6 +111,45 @@ function upgradefriend() {
             msgalert "No IP yet to check for latest friend \n"
         fi
     fi
+}
+
+function getredpillko() {
+
+    cd /root
+
+    echo "Removing any old redpill.ko modules"
+    [ -f /root/redpill.ko ] && rm -f /root/redpill.ko
+    
+    echo "KERNEL VERSION of getredpillko() is ${KVER}"
+
+    echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+    else
+        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
+        TAG="${LATESTURL##*/}"
+        #TAG="23.5.4"
+        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+    fi    
+    echo "TAG is ${TAG}"
+    if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
+        exit 99
+    fi
+    unzip /tmp/rp-lkms.zip        rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+    gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
+    cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /root/redpill.ko
+
+    if [ -f /root/redpill.ko ] && [ -n $(strings /root/redpill.ko | grep -i $model | head -1) ]; then
+        echo "Copying redpill.ko module to ramdisk"
+        cp /root/redpill.ko /root/rd.temp/usr/lib/modules/rp.ko
+    else
+        echo "Module does not contain platform information for ${model}"
+    fi
+
+    [ -f /root/rd.temp/usr/lib/modules/rp.ko ] && echo "Redpill module is in place"
 }
 
 function getstaticmodule() {
@@ -273,7 +314,8 @@ function patchramdisk() {
     done <<<$(echo $RAMDISK_COPY | jq . | grep "COMMON" | sed -e 's/"//g' | sed -e 's/,//g' | sed -e 's/@@@COMMON@@@/\/root\/config\/_common/')
 
     echo "Adding precompiled redpill module"
-    getstaticmodule
+    getredpillko
+    #getstaticmodule
 
     echo "Adding custom.gz to image"
     cd $temprd
@@ -575,6 +617,7 @@ function readconfig() {
         staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
         loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
+        KVER="$(jq -r -e '.general.kver' $userconfigfile)"
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
