@@ -39,6 +39,7 @@ function history() {
     0.0.8a Updated configs to 64570 U1
     0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
     0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
+    0.0.8d Updated configs for remove fake rss info
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -54,6 +55,7 @@ function showlastupdate() {
 0.0.8a Updated configs to 64570 U1
 0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
 0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
+0.0.8d Updated configs for remove fake rss info
 EOF
 }
 
