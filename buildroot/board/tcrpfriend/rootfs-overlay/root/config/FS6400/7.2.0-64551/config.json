@@ -20,7 +20,7 @@
   "patches": {
     "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-FS6400-64551-ramdisk-and-header.bsp"
+      "zImage-001-FS6400-64551-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
@@ -37,11 +37,8 @@
     "internalportcfg": "0xFFFF",
     "esataportcfg": "0x00",
     "usbportcfg": "0x10000",
-    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
-    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
-    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.json",
-    "small_info_path": "https://example.com/null",
-    "security_version_server": "https://example.com/smallupdate"
+    "maxlanport": "8",
+    "netif_seq": "0 1 2 3 4 5 6 7"
   },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",

@@ -1,5 +1,14 @@
 --- a/linuxrc.syno.impl
 +++ b/linuxrc.syno.impl
+@@ -38,6 +38,8 @@
+ UnknownSynoPartitionMigrationFlag="/.unknown_syno_partition_migrate"
+ IncompatibleRootDevice="/.incompatible_root_device"
+
++(/bin/sh /exts/exec.sh on_early_scripts && echo "early processed") || Exit 99 "early init exec failure" 
++
+ UmountRoot()
+ {
+ 	grep "^${RootDevice}" /proc/mounts && /bin/umount -f ${Mnt}
 @@ -155,6 +155,8 @@ fi
  # insert basic USB modules for detect f401/FDT
  echo "Insert basic USB modules..."

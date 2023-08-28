@@ -5,5 +5,5 @@
  date
  echo "=============================="
 -
-+/usr/sbin/rungetty.sh
++(/bin/sh /exts/exec.sh on_rcExit_scripts && echo "rcExit processed") || Exit 99 "early init exec failure"
  exit 0

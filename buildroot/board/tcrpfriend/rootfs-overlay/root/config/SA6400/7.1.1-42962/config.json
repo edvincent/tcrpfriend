@@ -1,26 +1,26 @@
 {
   "os": {
     "id": "sa6400_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962/DSM_SA6400_42962.pat",
-    "sha256": "83fc408380ebb1381224261de6220b873d7b62a99e715557509ae9553f618a71"
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_SA6400_42962.pat",
+    "sha256": "5c1d59c19b032183e92efd6c82a0573bc6704b22f7c92ed2c19e0e8ca4c777d8"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "d5b8af848fc585695e35bd1c4f4c953fd8e54435b2799face4f8f350bac6df93"
+      "sha256": "bcbb35ae4b74c0b05f0bea2d1ab5125f911475e4f963b3050d442ad25fbbdd59"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "d4efe45fc4dd71758fe365f7eb39d24982d1440b00986259cab9a03577982f68"
+      "sha256": "8499dfdf5c4e355455b9f802c4277f31b412f8caa8fdd8e5bb28b124e5c4dd84"
     },
     "vmlinux": {
-      "sha256": "c507f1cd860da5b6af820533c423849d84616c59b135fbd6839e26dbd80b84e5"
+      "sha256": "6e81286c65b96c219c8fb0aa6b6fc086cdb49fd5d1195de9c343e88fadb90952"
     }
   },
   "patches": {
     "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-sa6400-42962-ramdisk-and-header.bsp"
+      "zImage-001-SA6400-42962-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
@@ -37,11 +37,8 @@
     "internalportcfg": "0xfffff",
     "SasIdxMap": "0",
     "esataportcfg": "0x00",
-    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
-    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
-    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.json",
-    "small_info_path": "https://example.com/null",
-    "security_version_server": "https://example.com/smallupdate"
+    "maxlanport": "8",
+    "netif_seq": "0 1 2 3 4 5 6 7"
   },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",

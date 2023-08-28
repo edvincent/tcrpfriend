@@ -1,26 +1,26 @@
 {
   "os": {
     "id": "rs4021xsp_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-5/DSM_RS4021xs%2B_42962.pat",
-    "sha256": "e2ddf670e54fe6b2b52b19125430dc82394df2722afd4f62128b95a63459ee3d"
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_RS4021xs%2B_42962.pat",
+    "sha256": "9b24656847eac5e94765f314e12f18b1dbec02b8f94c5366cc92211c4fba8c92"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "21b42a36e6542fbe1c12a3f3887b28b853c95b487cd9684cac361c0a67ccaedb"
+      "sha256": "2547ff79d8bce71cfa28e5bad84b8022d4278ef111a7b0730c3d6971ff026b9c"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "2cdb5bfb6017fc13493e6214f6455ec8e0b49e45f4c0442ec97502c8b21a66ca"
+      "sha256": "8bbdadb82ca305b98f4f161c94aa08e409a59afef0b0bcc5dddd7bf7ab2765a0"
     },
     "vmlinux": {
-      "sha256": "4b2a6353199fafae67c318cbb1fe37bccacdb394fbd4d50199a13277b76cacc7"
+      "sha256": "a4212a778210b9b90d259e6f13179830d78b414c4672001f8e8639ac0e1ca278"
     }
   },
   "patches": {
     "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-4021xsp-42962-ramdisk-and-header.bsp"
+      "zImage-001-4021xsp-42962-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
@@ -38,11 +38,8 @@
     "internalportcfg": "0xfffff",
     "SasIdxMap": "0",
     "esataportcfg": "0x00",
-    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
-    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.xml",
-    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.1.1/rss.json",
-    "small_info_path": "https://example.com/null",
-    "security_version_server": "https://example.com/smallupdate"
+    "maxlanport": "8",
+    "netif_seq": "0 1 2 3 4 5 6 7"
   },
   "grub": {
     "template": "@@@COMMON@@@/grub-template.conf",

@@ -30,11 +30,6 @@
     ]
   },
   "synoinfo": {
-    "rss_server": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
-    "rss_server_ssl": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.xml",
-    "rss_server_v2": "https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0/rss.json",
-    "small_info_path": "https://example.com/null",
-    "security_version_server": "https://example.com/smallupdate",
     "maxlanport": "8",
     "netif_seq": "0 1 2 3 4 5 6 7"
   },
@@ -55,6 +50,7 @@
       "syno_ttyS0": "serial,0x3f8",
       "syno_ttyS1": "serial,0x2f8",
       "root": "/dev/md0",
+      "withefi": null,
       "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
