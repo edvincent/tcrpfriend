@@ -366,18 +366,18 @@ function rebuildloader() {
     losetup -fP /mnt/tcrp/loader72.img
     loopdev=$(losetup -a /mnt/tcrp/loader72.img | awk '{print $1}' | sed -e 's/://')
 
-    if [ -d part1 ]; then
-        mount ${loopdev}p1 part1
+    if [ -d /root/part1 ]; then
+        mount ${loopdev}p1 /root/part1
     else
-        mkdir part1
-        mount ${loopdev}p1 part1
+        mkdir -p /root/part1
+        mount ${loopdev}p1 /root/part1
     fi
 
-    if [ -d part2 ]; then
-        mount ${loopdev}p2 part2
+    if [ -d /root/part2 ]; then
+        mount ${loopdev}p2 /root/part2
     else
-        mkdir part2
-        mount ${loopdev}p2 part2
+        mkdir -p /root/part2
+        mount ${loopdev}p2 /root/part2
     fi
 
     localdiskp1="/mnt/tcrp-p1"
@@ -414,8 +414,8 @@ function rebuildloader() {
 
     ####
 
-    umount part1
-    umount part2
+    umount /root/part1
+    umount /root/part2
     losetup -d ${loopdev}
     
 }
