@@ -395,25 +395,37 @@ function rebuildloader() {
     fi
 
     # Compining rd.gz and custom.gz
-    extractramdisk
+#    temprd="/root/rd.temp/"
+#    echo "Extracting ramdisk to $temprd"
+#    [ ! -d $temprd ] && mkdir $temprd
+#    cd $temprd
+#    if [ $(od /mnt/tcrp-p2/rd.gz | head -1 | awk '{print $2}') == "000135" ]; then
+#        echo "Ramdisk is compressed"
+#        xz -dc /mnt/tcrp-p2/rd.gz 2>/dev/null | cpio -idm >/dev/null 2>&1
+        
+#        unlzma -dc ${localdiskp1}/rd.gz | cpio -idm
+#        cat ${localdiskp1}/custom.gz | cpio -idm
+#        chmod +x /root/rd.temp/usr/sbin/modprobe
+#        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/tcrp/initrd-dsm) >/dev/null
+#    else
+#        echo "Ramdisk in not compressed "    
+#        sudo cat /mnt/tcrp-p2/rd.gz | cpio -idm 2>&1 >/dev/null
+        
+#        cat ${localdiskp1}/rd.gz | cpio -idm
+#        cat ${localdiskp1}/custom.gz | cpio -idm
+#        chmod +x /root/rd.temp/usr/sbin/modprobe
+#        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root >/mnt/tcrp/initrd-dsm) >/dev/null
+#    fi
 
-    echo "version = $version"
-
-    RD_COMPRESSED=$(cat /root/config/$model/$version/config.json | jq -r -e ' .extra .compress_rd')
-
-    if [ "$RD_COMPRESSED" = "false" ]; then
-        echo "Ramdisk in not compressed "
-        cat ${localdiskp1}/rd.gz | cpio -idm
-        cat ${localdiskp1}/custom.gz | cpio -idm
-        chmod +x /root/rd.temp/usr/sbin/modprobe
-        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root >/mnt/tcrp/initrd-dsm) >/dev/null
-    else
-        echo "Ramdisk in compressed "
-        unlzma -dc ${localdiskp1}/rd.gz | cpio -idm
-        cat ${localdiskp1}/custom.gz | cpio -idm
-        chmod +x /root/rd.temp/usr/sbin/modprobe
-        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/tcrp/initrd-dsm) >/dev/null
-    fi
+#    if [ -f $temprd/etc/VERSION ]; then
+#        . $temprd/etc/VERSION
+#        echo "Extracted ramdisk VERSION : ${major}.${minor}.${micro}-${buildnumber}"
+#    else
+#        echo "ERROR, Couldnt read extracted file version"
+#        exit 99
+#    fi
+#    version="${major}.${minor}.${micro}-${buildnumber}"
+#    echo "version = $version"
 
     echo "restore grub.cfg"
     cp -vf /root/grub.cfg /mnt/tcrp-p1/boot/grub/grub.cfg 
