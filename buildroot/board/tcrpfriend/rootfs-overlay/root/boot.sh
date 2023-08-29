@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 230828
-# Version : 0.0.8c
+# Version : 0.0.9
 # User Variables :
 ###############################################################################
 
@@ -10,9 +10,8 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8c"
+BOOTVER="0.0.9"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
-RSS_SERVER="https://raw.githubusercontent.com/PeterSuh-Q3/redpill-load/master/rss/7.2.0"
 AUTOUPDATES="1"
 
 function history() {
@@ -40,6 +39,7 @@ function history() {
     0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
     0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
     0.0.8d Updated configs for remove fake rss info
+    0.0.9  Added auto loader build function for DSM 7.2 and earlier
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -56,6 +56,7 @@ function showlastupdate() {
 0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
 0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
 0.0.8d Updated configs for remove fake rss info
+0.0.9  Added auto loader build function for DSM 7.2 and earlier
 EOF
 }
 
@@ -361,6 +362,9 @@ function patchramdisk() {
 
 function rebuildloader() {
 
+    echo "backup grub.cfg"
+    cp -vf /mnt/tcrp-p1/boot/grub/grub.cfg /root/grub.cfg
+    
     extractramdisk
 
     losetup -fP /mnt/tcrp/loader72.img
@@ -409,6 +413,9 @@ function rebuildloader() {
         chmod +x /root/rd.temp/usr/sbin/modprobe
         (cd /root/rd.temp && find . | cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/tcrp/initrd-dsm) >/dev/null
     fi
+
+    echo "restore grub.cfg"
+    cp -vf /root/grub.cfg /mnt/tcrp-p1/boot/grub/grub.cfg 
 
     cd /root/
 
