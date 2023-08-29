@@ -124,6 +124,19 @@ function getredpillko() {
     [ -f /root/redpill.ko ] && rm -f /root/redpill.ko
 
     ORIGIN_PLATFORM=$(cat /mnt/tcrp-p1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
+    DSM_VERSION=$(cat /mnt/tcrp-p1/GRUB_VER | grep DSM_VERSION | cut -d "=" -f2 | sed 's/"//g')
+
+    if [ ${DSM_VERSION} -lt 64570 ]; then
+        KVER="4.4.180"
+    else
+        KVER="4.4.302"
+    fi
+
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then    
+        KVER="5.10.55"
+    elif [ "${ORIGIN_PLATFORM}" = "bromolow" ]; then
+        KVER="3.10.108"        
+    fi
     
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
@@ -668,7 +681,6 @@ function readconfig() {
         staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
         loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
-        KVER="$(jq -r -e '.general.kver' $userconfigfile)"
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
