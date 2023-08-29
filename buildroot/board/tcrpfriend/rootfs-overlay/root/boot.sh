@@ -359,6 +359,67 @@ function patchramdisk() {
 
 }
 
+function rebuildloader() {
+
+    extractramdisk
+
+    losetup -fP /mnt/tcrp/loader72.img
+    loopdev=$(losetup -a /mnt/tcrp/loader72.img | awk '{print $1}' | sed -e 's/://')
+
+    if [ -d part1 ]; then
+        mount ${loopdev}p1 part1
+    else
+        mkdir part1
+        mount ${loopdev}p1 part1
+    fi
+
+    if [ -d part2 ]; then
+        mount ${loopdev}p2 part2
+    else
+        mkdir part2
+        mount ${loopdev}p2 part2
+    fi
+
+    localdiskp1="/mnt/tcrp-p1"
+    localdiskp2="/mnt/tcrp-p2"
+
+    if [ $(mount | grep -i part1 | wc -l) -eq 1 ] && [ $(mount | grep -i part2 | wc -l) -eq 1 ] && [ $(mount | grep -i ${localdiskp1} | wc -l) -eq 1 ] && [ $(mount | grep -i ${localdiskp2} | wc -l) -eq 1 ]; then
+        rm -rf ${localdiskp1}/*
+        cp -rf part1/* ${localdiskp1}/
+        rm -rf ${localdiskp2}/*
+        cp -rf part2/* ${localdiskp2}/
+    else
+        echo "ERROR: Failed to mount correctly all required partitions"
+    fi
+
+    # Compining rd.gz and custom.gz
+
+    RD_COMPRESSED=$(cat /root/config/$model/$version/config.json | jq -r -e ' .extra .compress_rd')
+
+    if [ "$RD_COMPRESSED" = "false" ]; then
+        echo "Ramdisk in not compressed "
+        cat ${localdiskp1}/rd.gz | cpio -idm
+        cat ${localdiskp1}/custom.gz | cpio -idm
+        chmod +x /root/rd.temp/usr/sbin/modprobe
+        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root >/mnt/tcrp/initrd-dsm) >/dev/null
+    else
+        echo "Ramdisk in compressed "
+        unlzma -dc ${localdiskp1}/rd.gz | cpio -idm
+        cat ${localdiskp1}/custom.gz | cpio -idm
+        chmod +x /root/rd.temp/usr/sbin/modprobe
+        (cd /root/rd.temp && find . | cpio -o -H newc -R root:root | xz -9 --format=lzma >/mnt/tcrp/initrd-dsm) >/dev/null
+    fi
+
+    cd /root/
+
+    ####
+
+    umount part1
+    umount part2
+    losetup -d ${loopdev}
+    
+}
+
 function setgrubdefault() {
 
     echo "Setting default boot entry to $1"
@@ -838,6 +899,11 @@ patchramdisk)
 patchkernel)
     initialize
     patchkernel
+    ;;
+
+rebuildloader)
+    initialize
+    rebuildloader
     ;;
 
 version)
