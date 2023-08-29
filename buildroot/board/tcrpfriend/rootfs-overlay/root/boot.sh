@@ -364,8 +364,6 @@ function rebuildloader() {
 
     echo "backup grub.cfg"
     cp -vf /mnt/tcrp-p1/boot/grub/grub.cfg /root/grub.cfg
-    
-    extractramdisk
 
     losetup -fP /mnt/tcrp/loader72.img
     loopdev=$(losetup -a /mnt/tcrp/loader72.img | awk '{print $1}' | sed -e 's/://')
@@ -397,6 +395,9 @@ function rebuildloader() {
     fi
 
     # Compining rd.gz and custom.gz
+    extractramdisk
+
+    echo "version = $version"
 
     RD_COMPRESSED=$(cat /root/config/$model/$version/config.json | jq -r -e ' .extra .compress_rd')
 
