@@ -419,6 +419,7 @@ function rebuildloader() {
 
 function checkversionup() {
     revision=$(echo "$version" | cut -d "-" -f2)
+    DSM_VERSION=$(cat /mnt/tcrp-p1/GRUB_VER | grep DSM_VERSION | cut -d "=" -f2 | sed 's/"//g')
     if [ ${revision} = '64570' ] && [ ${DSM_VERSION} != '64570' ]; then
         if [ -f /mnt/tcrp/loader72.img ] && [ -f /mnt/tcrp/grub72.cfg ]; then
             rebuildloader
