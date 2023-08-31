@@ -375,9 +375,6 @@ function patchramdisk() {
 
 function rebuildloader() {
 
-    echo "backup grub.cfg"
-    cp -vf /mnt/tcrp-p1/boot/grub/grub.cfg /root/grub.cfg
-
     losetup -fP /mnt/tcrp/loader72.img
     loopdev=$(losetup -a /mnt/tcrp/loader72.img | awk '{print $1}' | sed -e 's/://')
 
@@ -407,8 +404,8 @@ function rebuildloader() {
         echo "ERROR: Failed to mount correctly all required partitions"
     fi
 
-    echo "restore grub.cfg"
-    cp -vf /root/grub.cfg /mnt/tcrp-p1/boot/grub/grub.cfg 
+    echo "copy 7.2 grub.cfg"
+    cp -vf /mnt/tcrp/grub72.cfg /mnt/tcrp-p1/boot/grub/grub.cfg 
 
     cd /root/
 
@@ -418,6 +415,20 @@ function rebuildloader() {
     umount /root/part2
     losetup -d ${loopdev}
     
+}
+
+function checkversionup() {
+    revision=$(echo "$version" | cut -d "-" -f2)
+    if [ ${revision} = '64570' ] && [ ${DSM_VERSION} != '64570' ]; then
+        if [ -f /mnt/tcrp/loader72.img ] && [ -f /mnt/tcrp/grub72.cfg ]; then
+            rebuildloader
+        else
+            msgnormal "/mnt/tcrp/loader72.img or /mnt/tcrp/grub72.cfg file missing, stop loader full build !"
+            exit 0
+        fi
+        patchkernel
+        patchramdisk
+    fi
 }
 
 function setgrubdefault() {
@@ -745,6 +756,9 @@ function boot() {
         # Get IP Address after setting new mac address to display IP
         getip
     fi
+
+    # Check whether the major version has been updated from under 7.2 to 7.2
+    checkversionup
 
     # Check ip upgrade is required
     checkupgrade
