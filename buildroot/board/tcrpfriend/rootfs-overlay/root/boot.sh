@@ -404,9 +404,6 @@ function rebuildloader() {
         echo "ERROR: Failed to mount correctly all required partitions"
     fi
 
-    echo "copy 7.2 grub.cfg"
-    cp -vf /mnt/tcrp/grub72.cfg /mnt/tcrp-p1/boot/grub/grub.cfg 
-
     cd /root/
 
     ####
@@ -421,14 +418,18 @@ function checkversionup() {
     revision=$(echo "$version" | cut -d "-" -f2)
     DSM_VERSION=$(cat /mnt/tcrp-p1/GRUB_VER | grep DSM_VERSION | cut -d "=" -f2 | sed 's/"//g')
     if [ ${revision} = '64570' ] && [ ${DSM_VERSION} != '64570' ]; then
-        if [ -f /mnt/tcrp/loader72.img ] && [ -f /mnt/tcrp/grub72.cfg ]; then
+        if [ -f /mnt/tcrp/loader72.img ] && [ -f /mnt/tcrp/grub72.cfg ] && [ -f /mnt/tcrp/initrd-dsm72 ]; then
             rebuildloader
+            patchkernel
+            patchramdisk
+
+            echo "copy 7.2 initrd-dsm & grub.cfg"
+            cp -vf /mnt/tcrp/grub72.cfg /mnt/tcrp-p1/boot/grub/grub.cfg
+            cp -vf /mnt/tcrp/initrd-dsm72 /mnt/tcrp/initrd-dsm
         else
-            msgnormal "/mnt/tcrp/loader72.img or /mnt/tcrp/grub72.cfg file missing, stop loader full build !"
+            msgnormal "/mnt/tcrp/loader72.img or /mnt/tcrp/grub72.cfg or /mnt/tcrp/initrd-dsm72 file missing, stop loader full build, please rebuild the loader ..."
             exit 0
         fi
-        patchkernel
-        patchramdisk
     fi
 }
 
