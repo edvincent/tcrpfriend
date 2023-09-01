@@ -432,6 +432,7 @@ function checkversionup() {
             #checkupgrade
         fi
     else
+        msgnormal "Since the revision update was not detected, proceed to the next step. ..."
         # Check ip upgrade is required
         #checkupgrade
     fi
