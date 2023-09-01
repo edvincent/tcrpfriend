@@ -420,8 +420,8 @@ function checkversionup() {
     if [ ${revision} = '64570' ] && [ ${DSM_VERSION} != '64570' ]; then
         if [ -f /mnt/tcrp/loader72.img ] && [ -f /mnt/tcrp/grub72.cfg ] && [ -f /mnt/tcrp/initrd-dsm72 ]; then
             rebuildloader
-            patchkernel
-            patchramdisk
+            #patchkernel
+            #patchramdisk
 
             echo "copy 7.2 initrd-dsm & grub.cfg"
             cp -vf /mnt/tcrp/grub72.cfg /mnt/tcrp-p1/boot/grub/grub.cfg
