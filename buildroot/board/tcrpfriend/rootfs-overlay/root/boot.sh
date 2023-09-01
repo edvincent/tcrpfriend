@@ -429,11 +429,11 @@ function checkversionup() {
         else
             msgnormal "/mnt/tcrp/loader72.img or /mnt/tcrp/grub72.cfg or /mnt/tcrp/initrd-dsm72 file missing, stop loader full build, please rebuild the loader ..."
             # Check ip upgrade is required
-            checkupgrade
+            #checkupgrade
         fi
     else
         # Check ip upgrade is required
-        checkupgrade
+        #checkupgrade
     fi
 }
 
