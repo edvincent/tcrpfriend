@@ -428,8 +428,12 @@ function checkversionup() {
             cp -vf /mnt/tcrp/initrd-dsm72 /mnt/tcrp/initrd-dsm
         else
             msgnormal "/mnt/tcrp/loader72.img or /mnt/tcrp/grub72.cfg or /mnt/tcrp/initrd-dsm72 file missing, stop loader full build, please rebuild the loader ..."
-            exit 0
+            # Check ip upgrade is required
+            checkupgrade
         fi
+    else
+        # Check ip upgrade is required
+        checkupgrade
     fi
 }
 
@@ -761,9 +765,6 @@ function boot() {
 
     # Check whether the major version has been updated from under 7.2 to 7.2
     checkversionup
-
-    # Check ip upgrade is required
-    checkupgrade
 
     # Get USB list and set VID-PID Automatically
     getusb
