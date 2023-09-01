@@ -920,8 +920,10 @@ patchkernel)
 rebuildloader)
     initialize
     rebuildloader
-    patchkernel
-    patchramdisk
+    cp -vf /mnt/tcrp/grub72.cfg /mnt/tcrp-p1/boot/grub/grub.cfg
+    cp -vf /mnt/tcrp/initrd-dsm72 /mnt/tcrp/initrd-dsm    
+    #patchkernel
+    #patchramdisk
     ;;
 
 version)
