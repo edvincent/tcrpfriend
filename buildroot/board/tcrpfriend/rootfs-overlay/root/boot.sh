@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230828
+# Date : 230902
 # Version : 0.0.9
 # User Variables :
 ###############################################################################
@@ -765,7 +765,10 @@ function boot() {
     fi
 
     # Check whether the major version has been updated from under 7.2 to 7.2
-    checkversionup
+    #checkversionup
+
+    # Check ip upgrade is required
+    checkupgrade
 
     # Get USB list and set VID-PID Automatically
     getusb
@@ -789,7 +792,7 @@ function boot() {
 
         CMDLINE_LINE=$(jq -r -e '.general .sata_line' /mnt/tcrp/user_config.json)
         # Check dom size and set max size accordingly
-        CMDLINE_LINE+=" dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+        CMDLINE_LINE+=" dom_szmax=1024" #$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
 
     else
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
