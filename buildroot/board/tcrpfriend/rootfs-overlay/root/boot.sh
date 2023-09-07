@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230902
-# Version : 0.0.9
+# Date : 230907
+# Version : 0.0.8e
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9"
+BOOTVER="0.0.8e"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -38,8 +38,8 @@ function history() {
     0.0.8a Updated configs to 64570 U1
     0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
     0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
-    0.0.8d Updated configs for remove fake rss info
-    0.0.9  Added auto loader build function for DSM 7.2 and earlier
+    0.0.8d Updated configs to remove fake rss info
+    0.0.8e Updated configs to remove DSM auto-update loopback block
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -48,15 +48,9 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
-0.0.7  removed custom.gz from partition 1, added static boot option
-0.0.8  Added the detection of EFI and the addition of withefi option to cmdline
-       Enhanced the synoinfo key reading to accept multiword keys
-       Fixed an a leading space in the synoinfo key reading
-0.0.8a Updated configs to 64570 U1
-0.0.8b Remove Getty Console (apply debug util instead, logs are stored in /mnt/sd#1/logs/jr)
 0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
-0.0.8d Updated configs for remove fake rss info
-0.0.9  Added auto loader build function for DSM 7.2 and earlier
+0.0.8d Updated configs to remove fake rss info
+0.0.8e Updated configs to remove DSM auto-update loopback block
 EOF
 }
 
