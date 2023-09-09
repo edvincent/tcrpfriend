@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230907
-# Version : 0.0.8e
+# Date : 230909
+# Version : 0.0.8f
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8e"
+BOOTVER="0.0.8f"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -40,6 +40,7 @@ function history() {
     0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
     0.0.8d Updated configs to remove fake rss info
     0.0.8e Updated configs to remove DSM auto-update loopback block
+    0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -51,6 +52,7 @@ function showlastupdate() {
 0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
 0.0.8d Updated configs to remove fake rss info
 0.0.8e Updated configs to remove DSM auto-update loopback block
+0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
 EOF
 }
 
@@ -786,7 +788,7 @@ function boot() {
 
         CMDLINE_LINE=$(jq -r -e '.general .sata_line' /mnt/tcrp/user_config.json)
         # Check dom size and set max size accordingly
-        CMDLINE_LINE+=" dom_szmax=1024" #$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+        CMDLINE_LINE+=" dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
 
     else
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
