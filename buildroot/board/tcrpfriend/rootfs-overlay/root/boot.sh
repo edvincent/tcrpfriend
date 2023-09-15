@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230909
-# Version : 0.0.8f
+# Date : 230915
+# Version : 0.0.8g
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8f"
+BOOTVER="0.0.8g"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -41,6 +41,7 @@ function history() {
     0.0.8d Updated configs to remove fake rss info
     0.0.8e Updated configs to remove DSM auto-update loopback block
     0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
+    0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -53,6 +54,7 @@ function showlastupdate() {
 0.0.8d Updated configs to remove fake rss info
 0.0.8e Updated configs to remove DSM auto-update loopback block
 0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
+0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
 EOF
 }
 
@@ -148,8 +150,12 @@ function getredpillko() {
     fi    
     echo "TAG is ${TAG}"
     if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
-        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip"
-        exit 99
+        echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
+        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip -o /tmp/rp-lkms.zip
+        if [ $? -ne 0 ]; then
+            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
+            exit 99
+        fi      
     fi
     unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
     gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
