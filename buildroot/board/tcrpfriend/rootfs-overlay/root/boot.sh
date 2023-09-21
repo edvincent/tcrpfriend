@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 230915
-# Version : 0.0.8g
+# Version : 0.0.8h
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8g"
+BOOTVER="0.0.8h"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -42,6 +42,7 @@ function history() {
     0.0.8e Updated configs to remove DSM auto-update loopback block
     0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
     0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
+    0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -55,6 +56,7 @@ function showlastupdate() {
 0.0.8e Updated configs to remove DSM auto-update loopback block
 0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
 0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
+0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
 EOF
 }
 
@@ -269,6 +271,11 @@ function extractramdisk() {
 }
 
 function patchramdisk() {
+
+    if [ ! -n "$IP" ]; then
+        msgalert "The patch cannot proceed because there is no IP yet !!!! \n"
+        exit 99
+    fi
 
     extractramdisk
 
@@ -570,6 +577,7 @@ function getip() {
     while true; do
         if [ ${COUNT} -eq 10 ]; then
             msgalert "ERROR Could not get IP\n"
+            IP=""
             break
         fi
         COUNT=$((${COUNT} + 1))
@@ -769,6 +777,10 @@ function boot() {
     # Check whether the major version has been updated from under 7.2 to 7.2
     #checkversionup
 
+    if [ ! -n "$IP" ]; then
+        getip
+        echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"        
+    fi
     # Check ip upgrade is required
     checkupgrade
 
@@ -776,6 +788,10 @@ function boot() {
     getusb
 
     # check if new TCRP Friend version is available to download
+    if [ ! -n "$IP" ]; then
+        getip
+        echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"        
+    fi
     upgradefriend
 
     if [ -f /mnt/tcrp/stopatfriend ]; then
@@ -809,8 +825,6 @@ function boot() {
 
     gethw
 
-    getip
-    echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"
     echo
     echo -n "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), DSM Version : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), RedPillMake : $(msgnormal "${redpillmake}\n")"
     echo
