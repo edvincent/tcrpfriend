@@ -580,6 +580,7 @@ function getip() {
     # Wait for an IP
     COUNT=0
     while true; do
+        msgalert "IP Detecting "
         if [ ${COUNT} -eq 10 ]; then
             msgalert "ERROR Could not get IP\n"
             IP=""
@@ -591,6 +592,7 @@ function getip() {
             break
         fi
         sleep 1
+        msgalert "."
     done
 
 }
@@ -636,6 +638,9 @@ function checkupgrade() {
         msgnormal "Ramdisk OK ! "
     else
         msgwarning "Ramdisk upgrade has been detected and "
+        if [ ! -n "$IP" ]; then
+           getip
+        fi
         if [ -n "$IP" ]; then
             patchramdisk 2>&1 >>$FRIENDLOG
         else
