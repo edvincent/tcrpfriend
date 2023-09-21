@@ -118,6 +118,11 @@ function upgradefriend() {
 
 function getredpillko() {
 
+    if [ ! -n "$IP" ]; then
+        msgalert "The getredpillko() cannot proceed because there is no IP yet !!!! \n"
+        exit 99
+    fi
+
     cd /root
 
     echo "Removing any old redpill.ko modules"
@@ -631,7 +636,12 @@ function checkupgrade() {
         msgnormal "Ramdisk OK ! "
     else
         msgwarning "Ramdisk upgrade has been detected and "
-        patchramdisk 2>&1 >>$FRIENDLOG
+        if [ -n "$IP" ]; then
+            patchramdisk 2>&1 >>$FRIENDLOG
+        else
+            msgalert "The patch cannot proceed because there is no IP yet !!!! \n"
+            exit 99
+        fi
     fi
 
     if [ "$zimghash" = "$origzimghash" ]; then
