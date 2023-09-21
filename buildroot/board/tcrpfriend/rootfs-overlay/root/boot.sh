@@ -589,6 +589,7 @@ function getip() {
         COUNT=$((${COUNT} + 1))
         IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
         if [ -n "$IP" ]; then
+            msgalert "\n"
             echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"                
             break
         fi
