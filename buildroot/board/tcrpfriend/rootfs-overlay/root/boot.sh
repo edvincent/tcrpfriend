@@ -579,8 +579,8 @@ function getip() {
 
     # Wait for an IP
     COUNT=0
+    msgalert "IP Detecting "    
     while true; do
-        msgalert "IP Detecting "
         if [ ${COUNT} -eq 10 ]; then
             msgalert ", ERROR Could not get IP\n"
             IP=""
