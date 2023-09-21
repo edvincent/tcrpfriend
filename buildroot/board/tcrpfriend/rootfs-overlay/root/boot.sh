@@ -582,13 +582,15 @@ function getip() {
     while true; do
         msgalert "IP Detecting "
         if [ ${COUNT} -eq 10 ]; then
-            msgalert "ERROR Could not get IP\n"
+            msgalert ", ERROR Could not get IP\n"
             IP=""
             break
         fi
         COUNT=$((${COUNT} + 1))
         IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
         if [ -n "$IP" ]; then
+            echo "\n"
+            echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"                
             break
         fi
         sleep 1
@@ -794,7 +796,6 @@ function boot() {
 
     if [ ! -n "$IP" ]; then
         getip
-        echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"        
     fi
     # Check ip upgrade is required
     checkupgrade
@@ -805,7 +806,6 @@ function boot() {
     # check if new TCRP Friend version is available to download
     if [ ! -n "$IP" ]; then
         getip
-        echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"        
     fi
     upgradefriend
 
