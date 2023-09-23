@@ -67,7 +67,7 @@ jobs:
         with:
           name: FriendFiles-${{ steps.updaterootfs.outputs.VERSION }}
           path: /opt/output        
- # Publish a release if is a tag
+      # Publish a release if is a tag
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
@@ -76,5 +76,3 @@ jobs:
             /opt/output/bzImage-friend
             /opt/output/initrd-friend
             /opt/output/chksum
-          
-      
