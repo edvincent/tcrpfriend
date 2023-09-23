@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230915
-# Version : 0.0.8h
+# Date : 230923
+# Version : 0.0.9
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.8h"
+BOOTVER="0.0.9"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -43,6 +43,7 @@ function history() {
     0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
     0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
     0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
+    0.0.9  Added IP detection function on multiple ethernet devices
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -50,13 +51,9 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.6f Add Postupdate boot entry to Grub Boot for Jot Postupdate to utilize FRIEND's Ramdisk upgrade
-0.0.8c Change the Github repository used by getstatic module(): The reason is redpill.ko KP issue for Denverton found when patching ramdisk
-0.0.8d Updated configs to remove fake rss info
-0.0.8e Updated configs to remove DSM auto-update loopback block
-0.0.8f dom_szmax 1GB Restore from static size to dynamic setting
 0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
 0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
+0.0.9  Added IP detection function on multiple ethernet devices
 EOF
 }
 
@@ -575,28 +572,29 @@ function getusb() {
 
 function getip() {
 
-    ethdev=$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
+    ethdevs=$(ip a | grep UP | grep -v LOOP | awk '{print $2}' | sed -e 's/://g')
 
     # Wait for an IP
-    COUNT=0
-    msgalert "IP Detecting "    
-    while true; do
-        if [ ${COUNT} -eq 10 ]; then
-            msgalert ", ERROR Could not get IP\n"
-            IP=""
-            break
-        fi
-        COUNT=$((${COUNT} + 1))
-        IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
-        if [ -n "$IP" ]; then
-            msgalert "\n"
-            echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"                
-            break
-        fi
-        sleep 1
-        msgalert "."
+    for eth in $ethdevs; do 
+        COUNT=0
+        msgalert "IP Detecting on ${eth} "    
+        while true; do
+            if [ ${COUNT} -eq 10 ]; then
+                msgalert ", ERROR Could not get IP\n"
+                IP=""
+                break
+            fi
+            COUNT=$((${COUNT} + 1))
+            IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+            if [ -n "$IP" ]; then
+                msgalert "\n"
+                echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"                
+                break
+            fi
+            sleep 1
+            msgalert "."
+        done
     done
-
 }
 
 function checkfiles() {
