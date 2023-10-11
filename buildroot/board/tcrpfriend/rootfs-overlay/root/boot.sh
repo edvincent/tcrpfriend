@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 230923
-# Version : 0.0.9
+# Date : 231011
+# Version : 0.0.9a
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9"
+BOOTVER="0.0.9a"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -44,6 +44,8 @@ function history() {
     0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
     0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
     0.0.9  Added IP detection function on multiple ethernet devices
+    0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
+           Added ./boot.sh update (new function)
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -54,6 +56,8 @@ function showlastupdate() {
 0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
 0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
 0.0.9  Added IP detection function on multiple ethernet devices
+0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
+       Added ./boot.sh update (new function)
 EOF
 }
 
@@ -942,6 +946,11 @@ function initialize() {
 }
 
 case $1 in
+
+update)
+    getip
+    upgradefriend
+    ;;
 
 patchramdisk)
     initialize
