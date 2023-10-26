@@ -1,39 +1,34 @@
 {
   "os": {
-    "id": "ds3622xsp_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-1/DSM_DS3622xs%2B_42962.pat",
-    "sha256": "775933e32a9e04700fc10a155f5a26c0878c3cdec18b6ec6b1d5a4110e83d428"
+    "id": "ds923p_69057",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_DS923%2B_69057.pat",
+    "sha256": "7a825f5520851ce032821c1efb5bf76f9cc9ef2435783c709e7e727b57d52909"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "89155c534c5088fd28104c2f10543bf167d4e79a1f756b7f932e4a04a3bfaadb"
+      "sha256": "44f5f510ec82463df1a39d18462f7e6a5cb2a51cc6709810c83381f9fc47c40c"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "08b50768eacb7810ef87cc875de1d4ecf158aa75f3891359649ad247e8f23cc6"
+      "sha256": "eee8af95bf7d767c6b5230cd60f3950c2d82208baa314cacf40f691aa83249a2"
     },
     "vmlinux": {
-      "sha256": "4cf471b6b10908f901b6ac30e617a014af6ddaff0b57b6957304dfc0120ac56e"
+      "sha256": "946d8cd97037a5ee6a755aed7c70df3ce973e3cb47c1f8a57fa37a12beef96ad"
     }
   },
   "patches": {
-    "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-3622xs+-42962-ramdisk-and-header.bsp"
+      "zImage-001-923p-69057-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
-      "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-003-post-init-script-noatime.patch",
-      "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.2.1/ramdisk-003-post-init-script-noatime.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
   "synoinfo": {
-    "maxdisks": "24",
-    "support_bde_internal_10g": "no",
-    "support_disk_compatibility": "no",
     "maxlanport": "8",
     "netif_seq": "0 1 2 3 4 5 6 7"
   },
@@ -43,24 +38,22 @@
       "sn": "",
       "vid": "0x46f4",
       "pid": "0x0001",
-      "SataPortMap": "1",
-      "DiskIdxMap": "0",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "DS3622xs+",
-      "syno_hdd_powerup_seq": 0,
-      "HddHotplug": 0,
+      "syno_hw_version": "DS923+",
+      "SMBusHddDynamicPower": 1,
       "vender_format_version": 2,
       "console": "ttyS0,115200n8",
+      "synoboot2": null,
       "elevator": "elevator",
-      "syno_port_thaw": 1,
-      "syno_hdd_detect": 0,
+      "syno_ttyS0": "serial,0x3f8",
       "root": "/dev/md0",
       "earlycon": "uart8250,io,0x3f8,115200n8",
-      "withefi": null
+      "withefi": null,
+      "syno_ttyS1": "serial,0x2f8"
     },
     "menu_entries": {
-      "RedPill DS3622xs v7.1.1-42962 (USB, Verbose)": {
+      "RedPill DS923+ v7.2.1-69057 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -76,7 +69,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill DS3622xs v7.1.1-42962 (SATA, Verbose)": {
+      "RedPill DS923+ v7.2.1-69057 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -84,7 +77,8 @@
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
           "initrd (hd0,msdos3)/initrd-dsm",
-          "echo Starting kernel with SATA boot"
+          "echo Starting kernel with SATA boot",
+          "echo WARNING: SATA boot support on this platform is experimental!"
         ],
         "cmdline": {
           "earlyprintk": null,
@@ -98,7 +92,7 @@
   "extra": {
     "compress_rd": false,
     "ramdisk_copy": {
-      "@@@EXT@@@/rp-lkm/redpill-linux-v4.4.180+.ko": "usr/lib/modules/rp.ko",
+      "@@@EXT@@@/rp-lkm/redpill-linux-v4.4.302+.ko": "usr/lib/modules/rp.ko",
       "@@@COMMON@@@/iosched-trampoline.sh": "usr/sbin/modprobe"
     },
     "bootp1_copy": {
