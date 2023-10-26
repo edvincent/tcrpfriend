@@ -1,32 +1,31 @@
 {
   "os": {
-    "id": "rs4021xsp_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_RS4021xs%2B_42962.pat",
-    "sha256": "9b24656847eac5e94765f314e12f18b1dbec02b8f94c5366cc92211c4fba8c92"
+    "id": "rs3618xs_69057",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_RS3618xs_69057.pat",
+    "sha256": "394fdcb64ef00d51479ffa98778e914af106cb931acad352a71513ec43a3e047"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "21b42a36e6542fbe1c12a3f3887b28b853c95b487cd9684cac361c0a67ccaedb"
+      "sha256": "6fba28bc3743569d6d6ef761ea5d1d4d2f96128e9e13ee9312c43f50ff387bb5"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "8bbdadb82ca305b98f4f161c94aa08e409a59afef0b0bcc5dddd7bf7ab2765a0"
+      "sha256": "be56a71f003527b22cbb152423a3435e69e7b6e5bfd95905e3ac0d519468d595"
     },
     "vmlinux": {
-      "sha256": "a4212a778210b9b90d259e6f13179830d78b414c4672001f8e8639ac0e1ca278"
+      "sha256": "270e1c3fee0fcb1bc49056cfa4e1578fbf089fbd70d0262e7117b4e84b4c5e84"
     }
   },
   "patches": {
     "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-4021xsp-42962-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-3618xs-69057-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
-      "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-003-post-init-script-noatime.patch",
-      "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.2.1/ramdisk-003-post-init-script-noatime.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
@@ -50,20 +49,20 @@
       "DiskIdxMap": "0",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "RS4021xs+",
+      "syno_hw_version": "RS3618xs",
       "syno_hdd_powerup_seq": 0,
       "HddHotplug": 0,
       "vender_format_version": 2,
       "console": "ttyS0,115200n8",
+      "withefi": null,
       "elevator": "elevator",
       "syno_port_thaw": 1,
       "syno_hdd_detect": 0,
       "root": "/dev/md0",
-      "earlycon": "uart8250,io,0x3f8,115200n8",
-      "withefi": null
+      "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
-      "RedPill RS4021xs+ v7.1.1-42962 (USB, Verbose)": {
+      "RedPill RS3618xs v7.2.1-69057 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -79,7 +78,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill RS4021xs+ v7.1.1-42962 (SATA, Verbose)": {
+      "RedPill RS3618xs v7.2.1-69057 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -101,7 +100,7 @@
   "extra": {
     "compress_rd": false,
     "ramdisk_copy": {
-      "@@@EXT@@@/rp-lkm/redpill-linux-v4.4.180+.ko": "usr/lib/modules/rp.ko",
+      "@@@EXT@@@/rp-lkm/redpill-linux-v4.4.302+.ko": "usr/lib/modules/rp.ko",
       "@@@COMMON@@@/iosched-trampoline.sh": "usr/sbin/modprobe"
     },
     "bootp1_copy": {

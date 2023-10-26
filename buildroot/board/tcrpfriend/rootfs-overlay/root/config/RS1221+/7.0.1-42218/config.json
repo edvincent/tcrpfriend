@@ -1,42 +1,34 @@
 {
   "os": {
-    "id": "rs4021xsp_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_RS4021xs%2B_42962.pat",
-    "sha256": "9b24656847eac5e94765f314e12f18b1dbec02b8f94c5366cc92211c4fba8c92"
+    "id": "rs1221p_42218",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_RS1221+_42218.pat",
+    "sha256": "d71daffc317b9447fd28cec2db4c699ecde86ddc99819d68a5914a982692887f"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "21b42a36e6542fbe1c12a3f3887b28b853c95b487cd9684cac361c0a67ccaedb"
+      "sha256": "0ab3bf0ff027fb94863ef8822df787194f2d21079ecc66c0b0d4e46d24598855"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "8bbdadb82ca305b98f4f161c94aa08e409a59afef0b0bcc5dddd7bf7ab2765a0"
+      "sha256": "784dcce492a26d9280b4be675fa0a3cea02683b979fb11f5f7eb68dcad15fdb6"
     },
     "vmlinux": {
-      "sha256": "a4212a778210b9b90d259e6f13179830d78b414c4672001f8e8639ac0e1ca278"
+      "sha256": "d3af4f63e63d2517be7e753919b5248e1c0d8271f238f57c62286d998edee2bf"
     }
   },
   "patches": {
-    "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-4021xsp-42962-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-1221p-42218-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-003-post-init-script-noatime.patch",
-      "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
+      "@@@COMMON@@@/v7.0.1/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.0.1/ramdisk-003-post-init-script.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
   "synoinfo": {
-    "maxdisks": "24",
-    "support_bde_internal_10g": "no",
-    "support_disk_compatibility": "no",
-    "internalportcfg": "0xfffff",
-    "SasIdxMap": "0",
-    "esataportcfg": "0x00",
     "maxlanport": "8",
     "netif_seq": "0 1 2 3 4 5 6 7"
   },
@@ -46,24 +38,22 @@
       "sn": "",
       "vid": "0x46f4",
       "pid": "0x0001",
-      "SataPortMap": "1",
-      "DiskIdxMap": "0",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "RS4021xs+",
-      "syno_hdd_powerup_seq": 0,
-      "HddHotplug": 0,
+      "syno_hw_version": "RS1221+",
+      "SMBusHddDynamicPower": 1,
       "vender_format_version": 2,
       "console": "ttyS0,115200n8",
+      "synoboot2": null,
       "elevator": "elevator",
-      "syno_port_thaw": 1,
-      "syno_hdd_detect": 0,
+      "syno_ttyS0": "serial,0x3f8",
       "root": "/dev/md0",
       "earlycon": "uart8250,io,0x3f8,115200n8",
-      "withefi": null
+      "withefi": null,
+      "syno_ttyS1": "serial,0x2f8"
     },
     "menu_entries": {
-      "RedPill RS4021xs+ v7.1.1-42962 (USB, Verbose)": {
+      "RedPill RS1221+ v7.0.1-42218 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -79,7 +69,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill RS4021xs+ v7.1.1-42962 (SATA, Verbose)": {
+      "RedPill RS1221+ v7.0.1-42218 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -87,7 +77,8 @@
           "linux /zImage @@@CMDLINE@@@",
           "echo Loading initramfs...",
           "initrd (hd0,msdos3)/initrd-dsm",
-          "echo Starting kernel with SATA boot"
+          "echo Starting kernel with SATA boot",
+          "echo WARNING: SATA boot support on this platform is experimental!"
         ],
         "cmdline": {
           "earlyprintk": null,

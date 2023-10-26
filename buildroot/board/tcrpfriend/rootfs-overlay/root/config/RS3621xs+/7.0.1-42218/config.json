@@ -1,32 +1,31 @@
 {
   "os": {
-    "id": "rs4021xsp_42962",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.1.1/42962-6/DSM_RS4021xs%2B_42962.pat",
-    "sha256": "9b24656847eac5e94765f314e12f18b1dbec02b8f94c5366cc92211c4fba8c92"
+    "id": "rs3621xsp_42218",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.0.1/42218/DSM_RS3621xs%2B_42218.pat",
+    "sha256": "8c1187abe05449778cc11017cbda917a1f74479011c218760e75c4de56e5e996"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "21b42a36e6542fbe1c12a3f3887b28b853c95b487cd9684cac361c0a67ccaedb"
+      "sha256": "d6059bcd7160ed1f775a9323599ac8860b60ada32f0a4f3e5ca166c15a17784e"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "8bbdadb82ca305b98f4f161c94aa08e409a59afef0b0bcc5dddd7bf7ab2765a0"
+      "sha256": "7846ee38f8bea17067e335da893bba4dec2f8572cae8973ebf097879802bd7fa"
     },
     "vmlinux": {
-      "sha256": "a4212a778210b9b90d259e6f13179830d78b414c4672001f8e8639ac0e1ca278"
+      "sha256": "e952895df7c0d25509b46885bc73f420b91251efea2432cb793ccc06fac39b47"
     }
   },
   "patches": {
     "_comment": ".bsp patches are applied to FILES using bspatch(1); .patch are applied to DIRECTORIES using patch(1)",
     "zlinux": [
-      "zImage-001-4021xsp-42962-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-3621xsp-42218-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.1.1/ramdisk-003-post-init-script-noatime.patch",
-      "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
+      "@@@COMMON@@@/v7.0.1/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.0.1/ramdisk-003-post-init-script.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
@@ -50,7 +49,7 @@
       "DiskIdxMap": "0",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "RS4021xs+",
+      "syno_hw_version": "RS3621xs+",
       "syno_hdd_powerup_seq": 0,
       "HddHotplug": 0,
       "vender_format_version": 2,
@@ -63,7 +62,7 @@
       "withefi": null
     },
     "menu_entries": {
-      "RedPill RS4021xs+ v7.1.1-42962 (USB, Verbose)": {
+      "RedPill RS3621xs+ v7.0.1-42218 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -79,7 +78,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill RS4021xs+ v7.1.1-42962 (SATA, Verbose)": {
+      "RedPill RS3621xs+ v7.0.1-42218 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
