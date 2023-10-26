@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 231011
-# Version : 0.0.9a
+# Version : 0.0.9b
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9a"
+BOOTVER="0.0.9b"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -46,6 +46,7 @@ function history() {
     0.0.9  Added IP detection function on multiple ethernet devices
     0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
            Added ./boot.sh update (new function)
+    0.0.9b Updated to add support for 7.2.1-69057
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -58,6 +59,7 @@ function showlastupdate() {
 0.0.9  Added IP detection function on multiple ethernet devices
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
        Added ./boot.sh update (new function)
+0.0.9b Updated to add support for 7.2.1-69057       
 EOF
 }
 
