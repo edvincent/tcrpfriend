@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231011
-# Version : 0.0.9b
+# Date : 231030
+# Version : 0.0.9c
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9b"
+BOOTVER="0.0.9c"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -47,6 +47,7 @@ function history() {
     0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
            Added ./boot.sh update (new function)
     0.0.9b Updated to add support for 7.2.1-69057
+    0.0.9c Added QR code image for port 5000 access
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -59,7 +60,8 @@ function showlastupdate() {
 0.0.9  Added IP detection function on multiple ethernet devices
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
        Added ./boot.sh update (new function)
-0.0.9b Updated to add support for 7.2.1-69057       
+0.0.9b Updated to add support for 7.2.1-69057
+0.0.9c Added QR code image for port 5000 access
 EOF
 }
 
@@ -902,11 +904,16 @@ function boot() {
         fi
         echo "Boot timeout exceeded, booting ... "
         echo
-        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
-        echo
+        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may"
+        echo -n "\"$(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
         echo    
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
-
+        
+        [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
+        #python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
+        curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
+        [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
+        
         [ "${hidesensitive}" = "true" ] && clear
 
         if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
