@@ -904,8 +904,7 @@ function boot() {
         fi
         echo "Boot timeout exceeded, booting ... "
         echo
-        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may"
-        echo -n "\"$(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
+        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
         echo    
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
         
