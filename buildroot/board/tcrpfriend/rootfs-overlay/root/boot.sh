@@ -913,7 +913,12 @@ function boot() {
         #pip install qrcode
         #python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
         curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
-        [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
+        if [ -f "/tmp/qrcode.png" ]; then
+          fbv -acufi -x $(($(fbv -m | cut -d ' ' -f 1) - 240)) -y $(($(fbv -m | cut -d ' ' -f 2) - 240)) "/tmp/qrcode.png" >/dev/null 2>/dev/null
+        else
+          true
+        fi        
+        #[ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
         
         [ "${hidesensitive}" = "true" ] && clear
 
