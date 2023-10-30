@@ -887,6 +887,10 @@ function boot() {
         CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
     fi
 
+    pip install click >/dev/null 2>/dev/null
+    pip install qrcode >/dev/null 2>/dev/null
+    pip install Image >/dev/null 2>/dev/null
+
     if [ "$staticboot" = "true" ]; then
         echo "Static boot set, rebooting to static ..."
         cp tools/libdevmapper.so.1.02 /usr/lib
@@ -909,9 +913,6 @@ function boot() {
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
         
         [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
-        pip install click
-        pip install qrcode
-        pip install Image
         python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
         #curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
         [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
