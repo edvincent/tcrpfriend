@@ -909,9 +909,9 @@ function boot() {
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
         
         [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
-        pip install click
-        python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
-        #curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
+        #pip install click
+        #python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
+        curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
         [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
         
         [ "${hidesensitive}" = "true" ] && clear
