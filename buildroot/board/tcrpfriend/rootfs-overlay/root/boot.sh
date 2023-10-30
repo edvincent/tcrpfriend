@@ -909,20 +909,12 @@ function boot() {
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
         
         [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
-        #pip install click
-        #pip install qrcode
-        #python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
-        curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
-        if [ -f "/tmp/qrcode.png" ]; then
-          SCREEN_WIDTH=$(xdpyinfo | awk -F' ' '/dimensions:/ {print $2}' | cut -d 'x' -f 1)
-          SCREEN_HEIGHT=$(xdpyinfo | awk -F' ' '/dimensions:/ {print $2}' | cut -d 'x' -f 2)
-          X_POSITION=$((SCREEN_WIDTH - 240))
-          Y_POSITION=$((SCREEN_HEIGHT - 240))
-          fbv -acufi -x $X_POSITION -y $Y_POSITION "/tmp/qrcode.png" >/dev/null 2>/dev/null        
-        else
-          true
-        fi        
-        #[ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
+        pip install click
+        pip install qrcode
+        pip install Image
+        python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
+        #curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
+        [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
         
         [ "${hidesensitive}" = "true" ] && clear
 
