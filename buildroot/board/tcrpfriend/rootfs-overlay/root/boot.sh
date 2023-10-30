@@ -55,8 +55,6 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.8g Added retry processing when downloading rp-lkms.zip of ramdisk patch fails
-0.0.8h When performing Ramdisk Patch, check the IP grant status before proceeding. Thanks ExpBox.
 0.0.9  Added IP detection function on multiple ethernet devices
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
        Added ./boot.sh update (new function)
@@ -908,7 +906,8 @@ function boot() {
         fi
         echo "Boot timeout exceeded, booting ... "
         echo
-        echo -n "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds").(Network access is not immediately available)"
+        echo "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds")."
+        echo "(Network access is not immediately available)"
         echo    
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
         
