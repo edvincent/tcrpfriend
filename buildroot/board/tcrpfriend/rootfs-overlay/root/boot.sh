@@ -914,7 +914,11 @@ function boot() {
         #python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
         curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
         if [ -f "/tmp/qrcode.png" ]; then
-          fbv -acufi -x $(($(fbv -m | cut -d ' ' -f 1) - 240)) -y $(($(fbv -m | cut -d ' ' -f 2) - 240)) "/tmp/qrcode.png" >/dev/null 2>/dev/null
+          SCREEN_WIDTH=$(xdpyinfo | awk -F' ' '/dimensions:/ {print $2}' | cut -d 'x' -f 1)
+          SCREEN_HEIGHT=$(xdpyinfo | awk -F' ' '/dimensions:/ {print $2}' | cut -d 'x' -f 2)
+          X_POSITION=$((SCREEN_WIDTH - 240))
+          Y_POSITION=$((SCREEN_HEIGHT - 240))
+          fbv -acufi -x $X_POSITION -y $Y_POSITION "/tmp/qrcode.png" >/dev/null 2>/dev/null        
         else
           true
         fi        
