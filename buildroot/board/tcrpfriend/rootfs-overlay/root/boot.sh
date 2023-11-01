@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231030
-# Version : 0.0.9c
+# Date : 231101
+# Version : 0.0.9d
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9c"
+BOOTVER="0.0.9d"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -48,6 +48,7 @@ function history() {
            Added ./boot.sh update (new function)
     0.0.9b Updated to add support for 7.2.1-69057
     0.0.9c Added QR code image for port 5000 access
+    0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -60,6 +61,7 @@ function showlastupdate() {
        Added ./boot.sh update (new function)
 0.0.9b Updated to add support for 7.2.1-69057
 0.0.9c Added QR code image for port 5000 access
+0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
 EOF
 }
 
@@ -167,9 +169,16 @@ function getredpillko() {
             exit 99
         fi      
     fi
-    unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
-    gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
-    cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /root/redpill.ko
+
+    if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
+        unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko /root/redpill.ko
+    else
+        unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
+        cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /root/redpill.ko
+    fi    
 
     if [ -f /root/redpill.ko ] && [ -n $(strings /root/redpill.ko | grep -i $model | head -1) ]; then
         echo "Copying redpill.ko module to ramdisk"
