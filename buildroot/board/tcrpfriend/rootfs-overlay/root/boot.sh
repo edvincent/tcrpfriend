@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231101
-# Version : 0.0.9d
+# Date : 231102
+# Version : 0.0.9e
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9d"
+BOOTVER="0.0.9e"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -49,6 +49,7 @@ function history() {
     0.0.9b Updated to add support for 7.2.1-69057
     0.0.9c Added QR code image for port 5000 access
     0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
+    0.0.9e Maintenance of config/_common/v7*/ramdisk-002-init patch for ramdisk patch
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -62,6 +63,7 @@ function showlastupdate() {
 0.0.9b Updated to add support for 7.2.1-69057
 0.0.9c Added QR code image for port 5000 access
 0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
+0.0.9e Maintenance of config/_common/v7*/ramdisk-002-init patch for ramdisk patch
 EOF
 }
 
