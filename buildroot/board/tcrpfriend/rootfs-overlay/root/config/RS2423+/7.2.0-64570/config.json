@@ -1,30 +1,30 @@
 {
   "os": {
-    "id": "rs1221p_69057",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_RS1221%2B_69057.pat",
-    "sha256": "806ab78a2c348c9a3aacf103c61bd03a1b3de7ba9c2a7f49d4e176ca188a8073"
+    "id": "rs2423p_64570",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2/64570-1/DSM_RS2423%2B_64570.pat",
+    "sha256": "6c6764e53c2d434743c0f6ce2c0bd518dc2b7d462dce553d98e53018956ad0ba"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "bf38e397615d9f2fb8ebad1086925f5e4fd6da19bed454df442d4e96e685534f"
+      "sha256": "87d787143aadd08083956b171c0a7c6b67765635b5b609c1fe87ddf4ae7badd2"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "0b3daeea05970dcdf6630da03916a4753f6bbbe39ae4b7dbf5f6ef4a7e9c9fd6"
+      "sha256": "67f6f3ba6284c0a71462071f51b2fdb52c315eff5e5b4e12bd204509b54ff93f"
     },
     "vmlinux": {
-      "sha256": "dd5a2309039f2d6b80139267c2833c85c6fb643383b0d4d9f9a2b844ff1d456f"
+      "sha256": "31a7a9e97187352d513c6d6d5a50e749f017590d1e27b0ef93b8376f0e98b683"
     }
   },
   "patches": {
     "zlinux": [
-      "zImage-001-1221p-69057-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-2423p-64570-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-003-post-init-script-noatime.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-003-post-init-script-noatime.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
@@ -40,7 +40,7 @@
       "pid": "0x0001",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "RS1221+",
+      "syno_hw_version": "RS2423+",
       "SMBusHddDynamicPower": 1,
       "vender_format_version": 2,
       "console": "ttyS0,115200n8",
@@ -53,7 +53,7 @@
       "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
-      "RedPill RS1221+ v7.2.1-69057 (USB, Verbose)": {
+      "RedPill RS2423+ v7.2.0-64570 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -69,7 +69,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill RS1221+ v7.2.1-69057 (SATA, Verbose)": {
+      "RedPill RS2423+ v7.2.0-64570 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
