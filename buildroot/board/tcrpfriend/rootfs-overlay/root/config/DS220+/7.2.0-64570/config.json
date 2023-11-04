@@ -1,31 +1,30 @@
 {
   "os": {
-    "id": "ds620slim_69057",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_DS620slim_69057.pat",
-    "sha256": "4eaebc191b5bf4ef2e180281c47d1c5eec7c1f5d8276fa8fef6f9ecd4ddd03f9"
+    "id": "ds220p_64570",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2/64570-1/DSM_DS220%2B_64570.pat",
+    "sha256": "c1d03806c288b3986d55d8b4c770e29541f7e5047e9ba6f24f25c77733c0921a"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "2b3e1675e3143596d380f38cd66f867b46b052b80af4618676f012efed4efc0c"
+      "sha256": "8c7c68a47772ab4ee9c8f2e29f00bbddca6f178e1473f4705569b78effe98417"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "bf62dececb6a2f414eac2c2b98ac0166e5105a05cbabfeaa8de7923c774b99c2"
+      "sha256": "e845e0278ec8bd4c6031f5384970083eddaae97ef1f68298068eb2d705d5417d"
     },
     "vmlinux": {
-      "sha256": "7bb19066674bd047d952d0fe98c3ff37042a4c3437560df2cf834495610b399b"
+      "sha256": "bb5a7d6353805cdc920d54fbba7854a62a51609ed79625dd070014664d9fa116"
     }
   },
   "patches": {
     "zlinux": [
-      "zImage-001-620slim-69057-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-220p-64570-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-003-post-init-script-noatime.patch",
-      "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-003-post-init-script-noatime.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
   },
@@ -45,20 +44,20 @@
       "pid": "0x0001",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "DS620slim",
-      "syno_hdd_powerup_seq": 1,
-      "HddHotplug": 0,
+      "syno_hw_version": "DS220+",
+      "intel_iommu": "igfx_off",
+      "HddEnableDynamicPower": 1,
       "vender_format_version": 2,
       "console": "ttyS0,115200n8",
-      "withefi": null,
+      "synoboot2": null,
       "elevator": "elevator",
-      "syno_port_thaw": 1,
-      "syno_hdd_detect": 0,
+      "syno_ttyS0": "serial,0x3f8",
+      "syno_ttyS1": "serial,0x2f8",
       "root": "/dev/md0",
       "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
-      "RedPill DS620slim v7.2.1-69057 (USB, Verbose)": {
+      "RedPill DS220+ v7.2.0-64570 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -70,11 +69,12 @@
         ],
         "cmdline": {
           "earlyprintk": null,
+          "withefi": null,
           "loglevel": 15,
           "log_buf_len": "32M"
         }
       },
-      "RedPill DS620slim v7.2.1-69057 (SATA, Verbose)": {
+      "RedPill DS220+ v7.2.0-64570 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -87,6 +87,7 @@
         ],
         "cmdline": {
           "earlyprintk": null,
+          "withefi": null,
           "loglevel": 15,
           "synoboot_satadom": 2,
           "log_buf_len": "32M"

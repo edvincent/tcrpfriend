@@ -1,8 +1,8 @@
 {
   "os": {
-    "id": "ds620slim_69057",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_DS620slim_69057.pat",
-    "sha256": "4eaebc191b5bf4ef2e180281c47d1c5eec7c1f5d8276fa8fef6f9ecd4ddd03f9"
+    "id": "ds718p_69057",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_DS718%2B_69057.pat",
+    "sha256": "18fcde01b7f6d059387ef416885416b589b0d51db865504615391d7b653c7ce2"
   },
   "files": {
     "zlinux": {
@@ -11,7 +11,7 @@
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "bf62dececb6a2f414eac2c2b98ac0166e5105a05cbabfeaa8de7923c774b99c2"
+      "sha256": "16b1188b82dd8b789f5513a00a630fe6fefa82aa1138b6d6ddfe6119c55e4bd9"
     },
     "vmlinux": {
       "sha256": "7bb19066674bd047d952d0fe98c3ff37042a4c3437560df2cf834495610b399b"
@@ -19,7 +19,7 @@
   },
   "patches": {
     "zlinux": [
-      "zImage-001-620slim-69057-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-718p-69057-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
@@ -45,7 +45,7 @@
       "pid": "0x0001",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "DS620slim",
+      "syno_hw_version": "DS718+",
       "syno_hdd_powerup_seq": 1,
       "HddHotplug": 0,
       "vender_format_version": 2,
@@ -58,7 +58,7 @@
       "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
-      "RedPill DS620slim v7.2.1-69057 (USB, Verbose)": {
+      "RedPill DS718+ v7.2.1-69057 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -74,7 +74,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill DS620slim v7.2.1-69057 (SATA, Verbose)": {
+      "RedPill DS718+ v7.2.1-69057 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",

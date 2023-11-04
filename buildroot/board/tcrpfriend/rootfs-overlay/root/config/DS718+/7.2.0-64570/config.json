@@ -1,30 +1,30 @@
 {
   "os": {
-    "id": "ds620slim_69057",
-    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2.1/69057/DSM_DS620slim_69057.pat",
-    "sha256": "4eaebc191b5bf4ef2e180281c47d1c5eec7c1f5d8276fa8fef6f9ecd4ddd03f9"
+    "id": "ds718p_64570",
+    "pat_url": "https://global.download.synology.com/download/DSM/release/7.2/64570-1/DSM_DS718%2B_64570.pat",
+    "sha256": "379d2f93f6e09f8f53d5ba250d71e9286dc1c0e557dbc9a7b18dce49c34cea13"
   },
   "files": {
     "zlinux": {
       "name": "zImage",
-      "sha256": "2b3e1675e3143596d380f38cd66f867b46b052b80af4618676f012efed4efc0c"
+      "sha256": "00713e465ddf347e1683a41f7ffa75afd670945c568502d754d4a24c7cb9e4ab"
     },
     "ramdisk": {
       "name": "rd.gz",
-      "sha256": "bf62dececb6a2f414eac2c2b98ac0166e5105a05cbabfeaa8de7923c774b99c2"
+      "sha256": "b94e4888afcfe5bd954f8b4636a340ceb1328f74b4ea9ed3f50da428e9047a4d"
     },
     "vmlinux": {
-      "sha256": "7bb19066674bd047d952d0fe98c3ff37042a4c3437560df2cf834495610b399b"
+      "sha256": "e9dc5607fcce09f25ca08ec1f9f6a0087f4c25a21fdf8455604499d7c103a040"
     }
   },
   "patches": {
     "zlinux": [
-      "zImage-001-620slim-69057-ramdisk-and-flag-NOP.bsp"
+      "zImage-001-718p-64570-ramdisk-and-flag-NOP.bsp"
     ],
     "ramdisk": [
       "@@@COMMON@@@/v7.2.0/ramdisk-001-disable-root-pwd.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-002-init-script.patch",
-      "@@@COMMON@@@/v7.2.1/ramdisk-003-post-init-script-noatime.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-002-init-script.patch",
+      "@@@COMMON@@@/v7.2.0/ramdisk-003-post-init-script-noatime.patch",
       "@@@COMMON@@@/ramdisk-005-disable-disabled-ports.patch",
       "@@@COMMON@@@/ramdisk-common-etc-rc.patch"
     ]
@@ -45,7 +45,7 @@
       "pid": "0x0001",
       "mac1": "",
       "netif_num": 1,
-      "syno_hw_version": "DS620slim",
+      "syno_hw_version": "DS718+",
       "syno_hdd_powerup_seq": 1,
       "HddHotplug": 0,
       "vender_format_version": 2,
@@ -58,7 +58,7 @@
       "earlycon": "uart8250,io,0x3f8,115200n8"
     },
     "menu_entries": {
-      "RedPill DS620slim v7.2.1-69057 (USB, Verbose)": {
+      "RedPill DS718+ v7.2.0-64570 (USB, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
@@ -74,7 +74,7 @@
           "log_buf_len": "32M"
         }
       },
-      "RedPill DS620slim v7.2.1-69057 (SATA, Verbose)": {
+      "RedPill DS718+ v7.2.0-64570 (SATA, Verbose)": {
         "options": [
           "savedefault",
           "set root=(hd0,msdos1)",
