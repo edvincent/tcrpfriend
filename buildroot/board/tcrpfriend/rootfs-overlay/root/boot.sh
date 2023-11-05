@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 231102
-# Version : 0.0.9f
+# Version : 0.0.9g
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9f"
+BOOTVER="0.0.9g"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -51,6 +51,7 @@ function history() {
     0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
     0.0.9e Maintenance of config/_common/v7*/ramdisk-002-init patch for ramdisk patch
     0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton), DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
+    0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -61,12 +62,10 @@ function showlastupdate() {
 0.0.9  Added IP detection function on multiple ethernet devices
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
        Added ./boot.sh update (new function)
-0.0.9b Updated to add support for 7.2.1-69057
 0.0.9c Added QR code image for port 5000 access
-0.0.9d Bug fixes for Kernel 5 SA6400 Ramdisk patch
-0.0.9e Maintenance of config/_common/v7*/ramdisk-002-init patch for ramdisk patch
 0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton)
        DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
+0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2       
 EOF
 }
 
