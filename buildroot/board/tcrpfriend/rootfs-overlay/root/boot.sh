@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231102
-# Version : 0.0.9g
+# Date : 231124
+# Version : 0.0.9h
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9g"
+BOOTVER="0.0.9h"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -52,6 +52,7 @@ function history() {
     0.0.9e Maintenance of config/_common/v7*/ramdisk-002-init patch for ramdisk patch
     0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton), DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
     0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
+    0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk (use from the 3rd partition)
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -59,13 +60,13 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.9  Added IP detection function on multiple ethernet devices
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
        Added ./boot.sh update (new function)
-0.0.9c Added QR code image for port 5000 access
 0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton)
        DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
-0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2       
+0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
+0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk 
+       (use from the 3rd partition)
 EOF
 }
 
@@ -366,10 +367,10 @@ function patchramdisk() {
 
     echo "Adding custom.gz to image"
     cd $temprd
-    if [ -f /mnt/tcrp-p1/custom.gz ]; then
-        cat /mnt/tcrp-p1/custom.gz | cpio -idm >/dev/null 2>&1
-    else
+    if [ -f /mnt/tcrp/custom.gz ]; then
         cat /mnt/tcrp/custom.gz | cpio -idm >/dev/null 2>&1
+    else
+        cat /mnt/tcrp-p1/custom.gz | cpio -idm >/dev/null 2>&1
     fi
 
     for script in $(find /root/rd.temp/exts/ | grep ".sh"); do chmod +x $script; done
