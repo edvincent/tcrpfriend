@@ -20,21 +20,6 @@ function crc32() {
 
 }
 
-#zImage_head           16494
-#payload(
-#  vmlinux.bin         x
-#  padding             0xf00000-x
-#  vmlinux.bin size    4
-#)                     0xf00004
-#zImage_tail(
-#  unknown             72
-#  run_size            4
-#  unknown             30
-#  vmlinux.bin size    4
-#  unknown             114460
-#)                     114570
-#crc32                 4
-
 # Adapted from: scripts/Makefile.lib
 # Usage: size_append FILE [FILE2] [FILEn]...
 # Output: LE HEX with size of file in bytes (to STDOUT)
