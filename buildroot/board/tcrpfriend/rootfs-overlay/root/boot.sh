@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231124
-# Version : 0.0.9h
+# Date : 231126
+# Version : 0.0.9i
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9h"
+BOOTVER="0.0.9i"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -53,6 +53,7 @@ function history() {
     0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton), DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
     0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
     0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk (use from the 3rd partition)
+    0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -67,6 +68,7 @@ function showlastupdate() {
 0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
 0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk 
        (use from the 3rd partition)
+0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch       
 EOF
 }
 
