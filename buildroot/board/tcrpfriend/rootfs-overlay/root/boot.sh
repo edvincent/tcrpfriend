@@ -623,9 +623,9 @@ function getip() {
             sleep 1
             msgalert "."
         done
-        #if [ -n "$IP" ]; then
-        #    break
-        #fi
+        if [ -n "$IP" ]; then
+            break
+        fi
     done
 }
 
