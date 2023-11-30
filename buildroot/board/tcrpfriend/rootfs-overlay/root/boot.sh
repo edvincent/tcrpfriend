@@ -602,13 +602,11 @@ function getip() {
         exit 99
     fi    
 
-    msgnormal "Detected ${ethdevs} NIC."
-
     # Wait for an IP
     for eth in $ethdevs; do 
         COUNT=0
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        msgalert "IP Detecting on ${eth}(${DRIVER}) "    
+        msgalert "IP Detecting on ${eth} (${DRIVER}) "    
         while true; do
             if [ ${COUNT} -eq 10 ]; then
                 msgalert ", ERROR Could not get IP\n"
@@ -625,9 +623,9 @@ function getip() {
             sleep 1
             msgalert "."
         done
-        if [ -n "$IP" ]; then
-            break
-        fi
+        #if [ -n "$IP" ]; then
+        #    break
+        #fi
     done
 }
 
