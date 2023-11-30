@@ -594,12 +594,21 @@ function getusb() {
 
 function getip() {
 
-    ethdevs=$(ip a | grep UP | grep -v LOOP | awk '{print $2}' | sed -e 's/://g')
+    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
+
+    # No network devices
+    if [ $(echo ${ethdevs} | wc -w) -le 0 ]; then 
+        msgalert "No NIC found! - Loader does not work without Network connection."
+        exit 99
+    fi    
+
+    msgnormal "Detected ${ethdevs} NIC."
 
     # Wait for an IP
     for eth in $ethdevs; do 
         COUNT=0
-        msgalert "IP Detecting on ${eth} "    
+        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        msgalert "IP Detecting on ${eth}(${DRIVER}) "    
         while true; do
             if [ ${COUNT} -eq 10 ]; then
                 msgalert ", ERROR Could not get IP\n"
