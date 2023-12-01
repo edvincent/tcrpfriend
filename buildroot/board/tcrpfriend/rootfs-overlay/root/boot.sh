@@ -700,7 +700,7 @@ function setmac() {
     for eth in $ethdevs; do 
         I=1
         curmac=$(ip link | grep -A 1 ${eth} | tail -1 | awk '{print $2}' | sed -e 's/://g' | tr '[:lower:]' '[:upper:]')
-        usrmac=${mac${I}}
+        eval "usrmac=\${mac${I}}"
         MAC="${usrmac:0:2}:${usrmac:2:2}:${usrmac:4:2}:${usrmac:6:2}:${usrmac:8:2}:${usrmac:10:2}"
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         if [ -n "${usrmac}" ]; then
@@ -708,6 +708,9 @@ function setmac() {
             ip link set dev ${eth} address ${MAC} >/dev/null 2>&1 
         fi
         I=$((${I} + 1))
+        if [ "${eth}" = "eth4" ]; then
+            break
+        fi
     done
     /etc/init.d/S41dhcpcd restart >/dev/null 2>&1
 }
