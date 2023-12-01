@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231126
-# Version : 0.0.9i
+# Date : 231201
+# Version : 0.0.9j
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9i"
+BOOTVER="0.0.9j"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -54,6 +54,7 @@ function history() {
     0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
     0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk (use from the 3rd partition)
     0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
+    0.0.9j Added MAC address remapping function referring to user_config.json
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -68,7 +69,8 @@ function showlastupdate() {
 0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
 0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk 
        (use from the 3rd partition)
-0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch       
+0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
+0.0.9j Added MAC address remapping function referring to user_config.json
 EOF
 }
 
@@ -694,18 +696,19 @@ function checkupgrade() {
 function setmac() {
 
     # Set custom MAC if defined
-
-    ethdev=$(ip a | grep UP | grep -vi LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
-    curmac=$(ip link | grep -A 1 $ethdev | tail -1 | awk '{print $2}' | sed -e 's/://g' | tr '[:lower:]' '[:upper:]')
-    MAC="${mac1:0:2}:${mac1:2:2}:${mac1:4:2}:${mac1:6:2}:${mac1:8:2}:${mac1:10:2}"
-    ISMACREAL="$(ip a | grep link | grep -v loop | awk '{print $2}' | grep -i "${MAC}" | wc -l)"
-
-    if [ -n "${mac1}" ] && [ "${curmac}" != "${mac1}" ] && [ $ISMACREAL -eq 0 ]; then
-        echo "Setting MAC from ${curmac} to ${MAC}" | tee -a boot.log
-        ip link set dev $ethdev address ${MAC} >/dev/null 2>&1 &&
-            (/etc/init.d/S41dhcpcd restart >/dev/null 2>&1) || true
-    fi
-
+    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
+    for eth in $ethdevs; do 
+        I=1
+        curmac=$(ip link | grep -A 1 ${eth} | tail -1 | awk '{print $2}' | sed -e 's/://g' | tr '[:lower:]' '[:upper:]')
+        usrmac=mac${I}
+        MAC="${usrmac:0:2}:${usrmac:2:2}:${usrmac:4:2}:${usrmac:6:2}:${usrmac:8:2}:${usrmac:10:2}"
+        if [ -n "${usrmac}" ]; then
+            echo "Setting MAC from ${curmac} to ${MAC}" | tee -a boot.log
+            ip link set dev ${eth} address ${MAC} >/dev/null 2>&1 
+        fi
+        I=$((${I} + 1))
+    done
+    /etc/init.d/S41dhcpcd restart >/dev/null 2>&1
 }
 
 function setnetwork() {
@@ -747,6 +750,9 @@ function readconfig() {
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
+        mac2="$(jq -r -e '.extra_cmdline .mac2' $userconfigfile)"
+        mac3="$(jq -r -e '.extra_cmdline .mac3' $userconfigfile)"
+        mac4="$(jq -r -e '.extra_cmdline .mac4' $userconfigfile)"
         staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
         loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
