@@ -2,7 +2,7 @@
 #
 # Author : PeterSuh-Q3
 # Date : 231201
-# Version : 0.0.9j
+# Version : 0.0.9k
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9j"
+BOOTVER="0.0.9k"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -55,6 +55,7 @@ function history() {
     0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk (use from the 3rd partition)
     0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
     0.0.9j Added MAC address remapping function referring to user_config.json
+    0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -63,14 +64,10 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
-       Added ./boot.sh update (new function)
 0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton)
        DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
-0.0.9g Bug fixes for Kernel 5 SA6400-7.2.1-69057 Ramdisk patch #2
-0.0.9h Adjust the partition priority of custom.gz to be used when patching ramdisk 
-       (use from the 3rd partition)
-0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
 0.0.9j Added MAC address remapping function referring to user_config.json
+0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
 EOF
 }
 
@@ -160,31 +157,32 @@ function getredpillko() {
     echo "KERNEL VERSION of getredpillko() is ${KVER}"
     echo "Downloading ${ORIGIN_PLATFORM} ${KVER}+ redpill.ko ..."
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/latest"`"
-        TAG="${LATESTURL##*/}"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm5/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
+        v="5"
     else
-        LATESTURL="`curl -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/latest"`"
-        TAG="${LATESTURL##*/}"
-        #TAG="23.5.4"
-        STATUS=`curl -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms.zip"`
-    fi    
-    echo "TAG is ${TAG}"
-    if [ $? -ne 0 -o ${STATUS} -ne 200 ]; then
+        v=""
+    fi
+
+    LATESTURL="`curl --connect-timeout 5 -skL -w %{url_effective} -o /dev/null "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/latest"`"
+
+    if [ $? -ne 0 ]; then
         echo "Error downloading last version of ${ORIGIN_PLATFORM} ${KVER}+ rp-lkms.zip tring other path..."
-        curl -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip -o /tmp/rp-lkms.zip
+        curl --connect-timeout 5 -skL https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms.zip -o /tmp/rp-lkms${v}.zip
         if [ $? -ne 0 ]; then
-            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm/master/rp-lkms.zip"
-            exit 99
-        fi      
+            echo "Error downloading https://raw.githubusercontent.com/PeterSuh-Q3/redpill-lkm${v}/master/rp-lkms${v}.zip"
+            cp -vf /mnt/tcrp/rp-lkms${v}.zip /tmp/rp-lkms${v}.zip
+        fi    
+    else
+        TAG="${LATESTURL##*/}"
+        echo "TAG is ${TAG}"        
+        STATUS=`curl --connect-timeout 5 -skL -w "%{http_code}" "${PROXY}https://github.com/PeterSuh-Q3/redpill-lkm${v}/releases/download/${TAG}/rp-lkms.zip" -o "/tmp/rp-lkms${v}.zip"`
     fi
 
     if [ "${ORIGIN_PLATFORM}" = "epyc7002" ]; then
-        unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        unzip /tmp/rp-lkms${v}.zip rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${major}.${minor}-${KVER}-prod.ko /root/redpill.ko
     else
-        unzip /tmp/rp-lkms.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
+        unzip /tmp/rp-lkms${v}.zip rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz -d /tmp >/dev/null 2>&1
         gunzip -f /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko.gz >/dev/null 2>&1
         cp -vf /tmp/rp-${ORIGIN_PLATFORM}-${KVER}-prod.ko /root/redpill.ko
     fi    
