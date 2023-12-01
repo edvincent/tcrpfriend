@@ -703,7 +703,7 @@ function setmac() {
         eval "usrmac=\${mac${I}}"
         MAC="${usrmac:0:2}:${usrmac:2:2}:${usrmac:4:2}:${usrmac:6:2}:${usrmac:8:2}:${usrmac:10:2}"
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        if [ -n "${usrmac}" ]; then
+        if [ "${usrmac}" != "null" ]; then
             msgnormal "Setting MAC Address from ${curmacmask} to ${MAC} on ${eth} (${DRIVER})\n" | tee -a boot.log
             ip link set dev ${eth} address ${MAC} >/dev/null 2>&1 
         fi
