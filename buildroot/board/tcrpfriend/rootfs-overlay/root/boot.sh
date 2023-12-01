@@ -697,8 +697,8 @@ function setmac() {
 
     # Set custom MAC if defined
     ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
+    I=1
     for eth in $ethdevs; do 
-        I=1
         curmac=$(ip link | grep -A 1 ${eth} | tail -1 | awk '{print $2}' | sed -e 's/://g' | tr '[:lower:]' '[:upper:]')
         eval "usrmac=\${mac${I}}"
         MAC="${usrmac:0:2}:${usrmac:2:2}:${usrmac:4:2}:${usrmac:6:2}:${usrmac:8:2}:${usrmac:10:2}"
