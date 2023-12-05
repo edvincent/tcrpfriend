@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231201
-# Version : 0.0.9k
+# Date : 231205
+# Version : 0.0.9l
 # User Variables :
 ###############################################################################
 
@@ -10,7 +10,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9k"
+BOOTVER="0.0.9l"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -56,6 +56,7 @@ function history() {
     0.0.9i Bug fixes for Kernel 5 SA6400 Kernel patch
     0.0.9j Added MAC address remapping function referring to user_config.json
     0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
+    0.0.9l Added Reset DSM Password function
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -68,6 +69,7 @@ function showlastupdate() {
        DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
 0.0.9j Added MAC address remapping function referring to user_config.json
 0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
+0.0.9l Added Reset DSM Password function
 EOF
 }
 
@@ -887,7 +889,7 @@ function boot() {
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
-        echo "$(msgnormal "Press <e> to enter a menu for edit USB/SATA Command Line\n")"
+        echo "$(msgnormal "Press <e> to enter a menu for Reset DSM Password or Edit USB/SATA Command Line\n")"
         echo "$(msgwarning "Press <j> to enter a Junior mode\n")"
 #    elif [ "$1" = "gettycon" ]; then
 #        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
