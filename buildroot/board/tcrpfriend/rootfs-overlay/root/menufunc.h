@@ -160,7 +160,7 @@ function resetPassword() {
   [ -z "${USER}" ] && return
   while true; do
     dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
-      --inputbox "Type a new Password for User ${USER}" 0 70 "${CMDLINE[${NAME}]}" \
+      --inputbox "Type a new Password for User ${USER}" 0 70 \
       2>${TMP_PATH}/resp
     [ $? -ne 0 ] && break 2
     VALUE="$(<"${TMP_PATH}/resp")"
