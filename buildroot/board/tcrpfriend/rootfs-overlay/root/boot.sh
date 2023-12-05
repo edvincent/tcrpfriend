@@ -533,9 +533,14 @@ function countdown() {
             #    initialize
             #    boot gettycon
             #    ;;
-            'e') # e key
-                echo "e key pressed! Entering Menu for Reset DSM Password or Edit USB/SATA Command Line!"
+            'r') # r key
+                echo "r key pressed! Entering Menu for Reset DSM Password!"
                 pip install passlib >/dev/null 2>/dev/null
+                sleep 3
+                mainmenu
+            'e') # e key
+                echo "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
+                pip install passlib >/dev/null 2>/dev/null                
                 sleep 3
                 mainmenu
                 ;;
@@ -890,7 +895,8 @@ function boot() {
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
-        echo "$(msgnormal "Press <e> to enter a menu for Reset DSM Password or Edit USB/SATA Command Line\n")"
+        echo "$(msgalert   "Press <r> to enter a menu for Reset DSM Password\n")" 
+        echo "$(msgnormal  "Press <e> to enter a menu for Edit USB/SATA Command Line\n")"
         echo "$(msgwarning "Press <j> to enter a Junior mode\n")"
 #    elif [ "$1" = "gettycon" ]; then
 #        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
