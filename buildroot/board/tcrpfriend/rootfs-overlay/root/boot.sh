@@ -538,6 +538,7 @@ function countdown() {
                 pip install passlib >/dev/null 2>/dev/null
                 sleep 3
                 mainmenu
+                ;;
             'e') # e key
                 echo "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
                 pip install passlib >/dev/null 2>/dev/null                
