@@ -534,7 +534,7 @@ function countdown() {
             #    boot gettycon
             #    ;;
             'e') # e key
-                echo "e key pressed! Entering Menu for edit USB/SATA Command Line!"
+                echo "e key pressed! Entering Menu for Reset DSM Password or Edit USB/SATA Command Line!"
                 sleep 3
                 mainmenu
                 ;;
