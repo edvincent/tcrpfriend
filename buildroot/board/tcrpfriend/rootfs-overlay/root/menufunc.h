@@ -35,8 +35,7 @@ function readConfigMenu() {
 ###############################################################################
 # Mounts backtitle dynamically
 function backtitle() {
-  BACKTITLE="TCRP 0.9.4.3-1"
-  BACKTITLE+=" ${DMPM}"
+  BACKTITLE=" ${DMPM}"
   BACKTITLE+=" ${LDRMODE}"
   if [ -n "${MODEL}" ]; then
     BACKTITLE+=" ${MODEL}"
@@ -127,6 +126,66 @@ function bootmenu() {
     boot
 }
 
+###############################################################################
+# Reset DSM password
+function resetPassword() {
+
+  LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
+
+  rm -f "${TMP_PATH}/menu"
+  mkdir -p "${TMP_PATH}/sdX1"
+  for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${LOADER_DISK}1"); do
+    mount ${I} "${TMP_PATH}/sdX1"
+    if [ -f "${TMP_PATH}/sdX1/etc/shadow" ]; then
+      for U in $(cat "${TMP_PATH}/sdX1/etc/shadow" | awk -F ':' '{if ($2 != "*" && $2 != "!!") {print $1;}}'); do
+        grep -q "status=on" "${TMP_PATH}/sdX1/usr/syno/etc/packages/SecureSignIn/preference/${U}/method.config" 2>/dev/nulll
+        [ $? -eq 0 ] && SS="SecureSignIn" || SS="            "
+        printf "\"%-36s %-16s\"\n" "${U}" "${SS}" >>"${TMP_PATH}/menu"
+      done
+    fi
+    umount "${I}"
+    [ -f "${TMP_PATH}/menu" ] && break
+  done
+  rm -rf "${TMP_PATH}/sdX1"
+  if [ ! -f "${TMP_PATH}/menu" ]; then
+    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
+      --msgbox "The installed Syno system not found in the currently inserted disks!" 0 0
+    return
+  fi
+  dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
+    --no-items --menu "Choose a User" 0 0 0  --file "${TMP_PATH}/menu" \
+    2>${TMP_PATH}/resp
+  [ $? -ne 0 ] && return
+  USER="$(cat "${TMP_PATH}/resp" | awk '{print $1}')"
+  [ -z "${USER}" ] && return
+  while true; do
+    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
+      --inputbox "Type a new Password for User ${USER}" 0 70 "${CMDLINE[${NAME}]}" \
+      2>${TMP_PATH}/resp
+    [ $? -ne 0 ] && break 2
+    VALUE="$(<"${TMP_PATH}/resp")"
+    [ -n "${VALUE}" ] && break
+    dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
+      --msgbox "Invalid Password" 0 0
+  done
+  NEWPASSWD="$(python -c "from passlib.hash import sha512_crypt;pw=\"${VALUE}\";print(sha512_crypt.using(rounds=5000).hash(pw))")"
+  (
+    mkdir -p "${TMP_PATH}/sdX1"
+    for I in $(ls /dev/sd*1 2>/dev/null | grep -v "${LOADER_DISK}1"); do
+      mount "${I}" "${TMP_PATH}/sdX1"
+      OLDPASSWD="$(cat "${TMP_PATH}/sdX1/etc/shadow" | grep "^${USER}:" | awk -F ':' '{print $2}')"
+      [[ -n "${NEWPASSWD}" && -n "${OLDPASSWD}" ]] && sed -i "s|${OLDPASSWD}|${NEWPASSWD}|g" "${TMP_PATH}/sdX1/etc/shadow"
+      sed -i "s|status=on|status=off|g" "${TMP_PATH}/sdX1/usr/syno/etc/packages/SecureSignIn/preference/${USER}/method.config" 2>/dev/null
+      sync
+      umount "${I}"
+    done
+    rm -rf "${TMP_PATH}/sdX1"
+  ) 2>&1 | dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" \
+    --progressbox "Resetting ..." 20 100
+  dialog --backtitle "$(backtitle)" --colors --title "Reset DSM Password" --aspect 18 \
+    --msgbox "Password reset completed." 0 0
+}
+
 # Main function loop
 function mainmenu() {
   
@@ -135,7 +194,8 @@ function mainmenu() {
   NEXT="m"
   while true; do
 
-    echo "s \"Edit USB Line\""         > "${TMP_PATH}/menu"
+    echo "d \"Reset DSM Password\""    > "${TMP_PATH}/menu"     
+    echo "s \"Edit USB Line\""         >> "${TMP_PATH}/menu"
     echo "a \"Edit SATA Line\""        >> "${TMP_PATH}/menu"
     echo "r \"continue boot\""         >> "${TMP_PATH}/menu"
 
@@ -144,6 +204,7 @@ function mainmenu() {
       2>${TMP_PATH}/resp
     [ $? -ne 0 ] && break
     case `<"${TMP_PATH}/resp"` in
+      d) resetPassword; NEXT="r" ;;
       s) usbMenu;      NEXT="r" ;;
       a) sataMenu;     NEXT="r" ;;
       r) bootmenu ;;
