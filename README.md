@@ -4,4 +4,11 @@
 <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FPeterSuh-Q3%2Ftinycore-redpill&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/PeterSuh-Q3)
 
-![스크린샷 2023-10-30 오후 11 42 36](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/f290b2dd-f494-42f7-9439-f6bf8b049a8e)
+![스크린샷 2023-12-05 오후 1 57 11](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/4ebf100b-9e99-4b9b-908b-33d5486ee077)
+
+
+![스크린샷 2023-12-05 오후 1 55 06](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/f730cbb1-9653-4cf9-9eaa-e67a38ef9649)
+![스크린샷 2023-12-05 오후 1 55 17](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/5828c8b3-6d07-404f-8abd-4cb0eef6323a)
+![스크린샷 2023-12-05 오후 1 55 40](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/636885f8-57fa-4856-92b5-7d87f5c2fef1)
+![스크린샷 2023-12-05 오후 1 55 56](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/4cc77eb3-f7b4-432a-9403-d200cf1314e0)
+![스크린샷 2023-12-05 오후 1 56 13](https://github.com/PeterSuh-Q3/tcrpfriend/assets/85427533/dd12ed23-9bac-47fa-8ba4-6d62aaeed7a5)
