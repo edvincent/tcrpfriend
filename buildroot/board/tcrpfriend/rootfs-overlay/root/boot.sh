@@ -535,6 +535,7 @@ function countdown() {
             #    ;;
             'e') # e key
                 echo "e key pressed! Entering Menu for Reset DSM Password or Edit USB/SATA Command Line!"
+                pip install passlib >/dev/null 2>/dev/null
                 sleep 3
                 mainmenu
                 ;;
