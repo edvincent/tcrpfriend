@@ -94,11 +94,10 @@ function checkinternet() {
 
     curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
-        pip install click >/dev/null 2>/dev/null
-        pip install qrcode >/dev/null 2>/dev/null
-        pip install Image >/dev/null 2>/dev/null
+        INTERNET="ON"
     else
-        msgwarning "Error: No internet found, skip installing Python library for QR code\n"
+        INTERNET="OFF"
+        msgwarning "Error: No internet found, Skip updating friends and installing Python libraries for QR codes!"
     fi
 
 }
@@ -862,7 +861,9 @@ function boot() {
     if [ ! -n "$IP" ]; then
         getip
     fi
-    upgradefriend
+    checkinternet
+
+    [ "${INTERNET}" = "ON" ] && upgradefriend
 
     if [ -f /mnt/tcrp/stopatfriend ]; then
         echo "Stop at friend detected, stopping boot"
@@ -934,7 +935,11 @@ function boot() {
         CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
     fi
 
-    checkinternet
+    if [ "${INTERNET}" = "ON" ]; then
+        pip install click >/dev/null 2>/dev/null
+        pip install qrcode >/dev/null 2>/dev/null
+        pip install Image >/dev/null 2>/dev/null
+    fi   
 
     if [ "$staticboot" = "true" ]; then
         echo "Static boot set, rebooting to static ..."
@@ -957,11 +962,13 @@ function boot() {
         echo "(Network access is not immediately available)"
         echo    
         echo "Kernel loading has started, nothing will be displayed here anymore ..."
-        
-        [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
-        python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
-        #curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
-        [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
+
+        if [ "${INTERNET}" = "ON" ]; then
+            [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
+            python functions.py makeqr -d "${URL}" -l "br" -o "/tmp/qrcode.png"
+            #curl -skL https://quickchart.io/qr?text="${URL}" -o /tmp/qrcode.png
+            [ -f "/tmp/qrcode.png" ] && echo | fbv -acufi "/tmp/qrcode.png" >/dev/null 2>/dev/null || true
+        fi    
         
         [ "${hidesensitive}" = "true" ] && clear
 
