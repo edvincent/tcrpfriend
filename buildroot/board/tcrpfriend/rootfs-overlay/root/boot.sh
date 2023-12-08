@@ -92,12 +92,14 @@ function msgnormal() {
 
 function checkinternet() {
 
+    echo "Detecting Internet : ..."
     curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
         INTERNET="ON"
+        msgwarning "OK!\n"
     else
         INTERNET="OFF"
-        msgwarning "Error: No internet found, Skip updating friends and installing Python libraries for QR codes!"
+        msgwarning "No internet found, Skip updating friends and installing Python libraries for QR codes!\n"
     fi
 
 }
