@@ -23,10 +23,7 @@ on:
         default: 'tcrpfriend'
 jobs:
   build:
-    runs-on: ubuntu-20.04  # 또는 원하는 운영 체제 버전 지정
-    strategy:
-      matrix:
-        kernel-version: [6.1.32]  # 원하는 커널 버전으로 변경
+    runs-on: ubuntu-latest  # 또는 원하는 운영 체제 버전 지정
     steps:
       - uses: actions/checkout@v2
       - name: Clone source code
@@ -58,6 +55,7 @@ jobs:
           echo "Version: ${VERSION}"
           echo '---start make---'
           make ${{github.event.inputs.board}}_defconfig
+          make linux-defconfig # 또는 make linux-menuconfig
           make
           cp -r /opt/buildroot/output/images /opt/firmware
       - name: Upload buildroot-${{github.event.inputs.branches-tags}}-${{github.event.inputs.board}}
