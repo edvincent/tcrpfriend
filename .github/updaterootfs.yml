@@ -78,3 +78,5 @@ jobs:
             /opt/output/bzImage-friend
             /opt/output/initrd-friend
             /opt/output/chksum
+          body: |
+            ${{ inputs.version }}
