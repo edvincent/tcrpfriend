@@ -2,7 +2,6 @@
 #
 # Author : PeterSuh-Q3
 # Date : 231205
-# Version : 0.0.9l
 # User Variables :
 ###############################################################################
 
@@ -10,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9l"
+BOOTVER="0.0.9m"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -57,6 +56,7 @@ function history() {
     0.0.9j Added MAC address remapping function referring to user_config.json
     0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
     0.0.9l Added Reset DSM Password function
+    0.0.9m If no internet, skip installing the Python library for QR codes.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -70,6 +70,7 @@ function showlastupdate() {
 0.0.9j Added MAC address remapping function referring to user_config.json
 0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
 0.0.9l Added Reset DSM Password function
+0.0.9m If no internet, skip installing the Python library for QR codes.
 EOF
 }
 
@@ -87,6 +88,19 @@ function msgwarning() {
 }
 function msgnormal() {
     echo -en "\033[1;32m$1\033[0m"
+}
+
+function checkinternet() {
+
+    curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
+    if [ $? -eq 0 ]; then
+        pip install click >/dev/null 2>/dev/null
+        pip install qrcode >/dev/null 2>/dev/null
+        pip install Image >/dev/null 2>/dev/null
+    else
+        msgwarning "Error: No internet found, skip installing Python library for QR code/n"
+    fi
+
 }
 
 function upgradefriend() {
@@ -920,9 +934,7 @@ function boot() {
         CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
     fi
 
-    pip install click >/dev/null 2>/dev/null
-    pip install qrcode >/dev/null 2>/dev/null
-    pip install Image >/dev/null 2>/dev/null
+    checkinternet
 
     if [ "$staticboot" = "true" ]; then
         echo "Static boot set, rebooting to static ..."
