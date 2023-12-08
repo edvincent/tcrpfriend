@@ -92,7 +92,7 @@ function msgnormal() {
 
 function checkinternet() {
 
-    echo "Detecting Internet : ..."
+    echo -n "Detecting Internet -> "
     curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
         INTERNET="ON"
