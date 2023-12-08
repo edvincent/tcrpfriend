@@ -55,8 +55,11 @@ jobs:
           echo "Version: ${VERSION}"
           echo '---start make---'
           make ${{github.event.inputs.board}}_defconfig
-          make linux-defconfig # 또는 make linux-menuconfig
           make
+
+          KERNEL_VERSION="$(grep BR2_LINUX_KERNEL_VERSION ${{github.event.inputs.board}}_defconfig | cut -d'=' -f2 | tr -d '"')"
+          echo "KERNEL_VERSION=${KERNEL_VERSION}" >> $GITHUB_ENV
+          
           cp -r /opt/buildroot/output/images /opt/firmware
       - name: Upload buildroot-${{github.event.inputs.branches-tags}}-${{github.event.inputs.board}}
         uses: actions/upload-artifact@v3
