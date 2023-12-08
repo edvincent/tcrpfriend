@@ -98,7 +98,7 @@ function checkinternet() {
         pip install qrcode >/dev/null 2>/dev/null
         pip install Image >/dev/null 2>/dev/null
     else
-        msgwarning "Error: No internet found, skip installing Python library for QR code/n"
+        msgwarning "Error: No internet found, skip installing Python library for QR code\n"
     fi
 
 }
