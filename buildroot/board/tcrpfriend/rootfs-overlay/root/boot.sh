@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231205
+# Date : 231209
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.0.9m"
+BOOTVER="0.1.0"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -57,6 +57,7 @@ function history() {
     0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
     0.0.9l Added Reset DSM Password function
     0.0.9m If no internet, skip installing the Python library for QR codes.
+    0.1.0  friend kernel version up from 5.15.26 to 6.1.64
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -71,6 +72,7 @@ function showlastupdate() {
 0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
 0.0.9l Added Reset DSM Password function
 0.0.9m If no internet, skip installing the Python library for QR codes.
+0.1.0  friend kernel version up from 5.15.26 to 6.1.64
 EOF
 }
 
