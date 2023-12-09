@@ -128,6 +128,10 @@ function upgradefriend() {
             if [ "$(sha256sum /mnt/tcrp/bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum /mnt/tcrp/initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ]; then
                 msgnormal "OK, latest \n"
             else
+                if [ "${FRIENDVERSION}" = "v0.1.0" ]; then
+                    msgwarning "Remove vga=791 parameter from grub.cfg friend boot entry to prevent console dead.\n"
+                    sed -i "s#vga=791 net#net#g" /mnt/tcrp-p1/boot/grub/grub.cfg
+                fi
                 msgwarning "Found new version, bringing over new friend version : $FRIENDVERSION \n"
                 URLS=$(curl --insecure -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
                 for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done
