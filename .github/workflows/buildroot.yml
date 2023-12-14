@@ -1,12 +1,6 @@
 name: buildroot
 
 on:
-  push:
-#    branches:
-#      - main
-    tags:
-      - v*
-      
   workflow_dispatch:
     inputs:
       git-address:
