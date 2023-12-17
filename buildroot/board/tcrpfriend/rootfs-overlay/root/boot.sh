@@ -625,6 +625,7 @@ function getip() {
 
     ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
 
+    sleep 2
     # Wait for an IP
     for eth in $ethdevs; do 
         COUNT=0
@@ -636,15 +637,11 @@ function getip() {
             COUNT=$((${COUNT} + 1))
             IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
             if [ -n "${IP}" ]; then
-                ${eth}"IP"=${IP}
                 break
             fi
             sleep 1
         done
-    done
-
-    for eth in $ethdevs; do 
-        echo "IP Detecting on ${eth} (${DRIVER}), IP Address : $(msgnormal "${eth}IP")"
+        echo "IP Detecting on ${eth} (${DRIVER}), IP Address : $(msgnormal "${IP}")"        
     done
 }
 
