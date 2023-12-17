@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231209
+# Date : 231217
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0"
+BOOTVER="0.1.0a"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -643,7 +643,7 @@ function getip() {
             fi
             sleep 1
         done
-        echo "IP Detecting on ${eth} (${DRIVER}), IP Address : $(msgnormal "${IP}")"        
+        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} (${DRIVER})"        
     done
 }
 
@@ -834,7 +834,6 @@ function boot() {
     #     "ipdns": "",
     #     "ipproxy" : ""
     # },
-    echo "Module Processing Method : $(msgnormal "${dmpm}")"
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
 
         setnetwork
@@ -901,7 +900,7 @@ function boot() {
     echo
     echo -n "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), DSM Version : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), RedPillMake : $(msgnormal "${redpillmake}\n")"
     echo
-    echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}"
+    echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo
     echo "cmdline : ${CMDLINE_LINE}"
     echo
