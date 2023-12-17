@@ -635,7 +635,9 @@ function getip() {
                 break
             fi
             COUNT=$((${COUNT} + 1))
-            IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+            IP=$(ip route show dev ${eth} 2>/dev/null | sed -n 's/.* via .* src \(.*\)  metric .*/\1/p')
+            [ -z "${IP}" ] && IP=$(ip addr show ${eth} | grep -E "inet .* eth" | awk '{print $2}' | cut -f1 -d'/' | head -1)             
+            #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
             if [ -n "${IP}" ]; then
                 break
             fi
