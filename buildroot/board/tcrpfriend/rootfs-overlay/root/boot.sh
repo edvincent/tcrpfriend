@@ -58,6 +58,7 @@ function history() {
     0.0.9l Added Reset DSM Password function
     0.0.9m If no internet, skip installing the Python library for QR codes.
     0.1.0  friend kernel version up from 5.15.26 to 6.4.16
+    0.1.0a Added IP detection function for all NICs
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -65,14 +66,12 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.9a Added friend kernel 5.15.26 compatible NIC firmware in bulk
-0.0.9f Added new model configs DS1522+(r1000), DS220+(geminilake), DS2419+(denverton)
-       DS423+(geminilake), DS718+(apollolake), RS2423+(v1000)
 0.0.9j Added MAC address remapping function referring to user_config.json
 0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
 0.0.9l Added Reset DSM Password function
 0.0.9m If no internet, skip installing the Python library for QR codes.
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
+0.1.0a Added IP detection function for all NICs
 EOF
 }
 
@@ -630,26 +629,22 @@ function getip() {
     for eth in $ethdevs; do 
         COUNT=0
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        msgalert "IP Detecting on ${eth} (${DRIVER}) "    
         while true; do
-            if [ ${COUNT} -eq 10 ]; then
-                msgalert ", ERROR Could not get IP\n"
-                IP=""
+            if [ ${COUNT} -eq 3 ]; then
                 break
             fi
             COUNT=$((${COUNT} + 1))
             IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
-            if [ -n "$IP" ]; then
-                msgalert "\n"
-                echo "IP Address : $(msgnormal "${IP}"), Module Processing Method : $(msgnormal "${dmpm}")"                
+            if [ -n "${IP}" ]; then
+                ${eth}"IP"=${IP}
                 break
             fi
             sleep 1
-            msgalert "."
         done
-        if [ -n "$IP" ]; then
-            break
-        fi
+    done
+
+    for eth in $ethdevs; do 
+        echo "IP Detecting on ${eth} (${DRIVER}), IP Address : $(msgnormal "${eth}IP")"
     done
 }
 
@@ -840,7 +835,7 @@ function boot() {
     #     "ipdns": "",
     #     "ipproxy" : ""
     # },
-
+    echo "Module Processing Method : $(msgnormal "${dmpm}")"
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
 
         setnetwork
