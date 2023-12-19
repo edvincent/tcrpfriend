@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231217
+# Date : 231219
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0a"
+BOOTVER="0.1.0b"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -59,6 +59,7 @@ function history() {
     0.0.9m If no internet, skip installing the Python library for QR codes.
     0.1.0  friend kernel version up from 5.15.26 to 6.4.16
     0.1.0a Added IP detection function for all NICs
+    0.1.0b Added IP detection function for all NICs (Fix bugs)
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -72,6 +73,7 @@ function showlastupdate() {
 0.0.9m If no internet, skip installing the Python library for QR codes.
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
 0.1.0a Added IP detection function for all NICs
+0.1.0b Added IP detection function for all NICs (Fix bugs)
 EOF
 }
 
@@ -635,8 +637,7 @@ function getip() {
                 break
             fi
             COUNT=$((${COUNT} + 1))
-            IP=$(ip route show dev ${eth} 2>/dev/null | sed -n 's/.* via .* src \(.*\)  metric .*/\1/p')
-            [ -z "${IP}" ] && IP=$(ip addr show ${eth} | grep -E "inet .* eth" | awk '{print $2}' | cut -f1 -d'/' | head -1)             
+            IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
             #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
             if [ -n "${IP}" ]; then
                 break
