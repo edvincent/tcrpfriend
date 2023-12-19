@@ -633,14 +633,13 @@ function getip() {
         COUNT=0
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         while true; do
-            if [ ${COUNT} -eq 3 ]; then
+            if [ ${COUNT} -eq 5 ]; then
                 break
             fi
             COUNT=$((${COUNT} + 1))
-            ip route | grep default
-            IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
-            #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
-            if [ -n "${IP}" ]; then
+            if [ $(ip route | grep default | grep ${eth} | wc -l) -eq 1 ]; then
+                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
+                #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
                 break
             fi
             sleep 1
