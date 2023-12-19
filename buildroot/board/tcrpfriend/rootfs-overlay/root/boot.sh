@@ -640,12 +640,16 @@ function getip() {
             if [ $(ip route | grep default | grep ${eth} | wc -l) -eq 1 ]; then
                 IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
                 #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+                LASTIP="${IP}"
                 break
+            else
+                IP=""
             fi
             sleep 1
         done
         echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} (${DRIVER})"        
     done
+    IP="${LASTIP}"
 }
 
 function checkfiles() {
