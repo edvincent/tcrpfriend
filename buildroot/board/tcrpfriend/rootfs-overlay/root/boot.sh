@@ -627,7 +627,7 @@ function getip() {
 
     ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
 
-    sleep 2
+    sleep 3
     # Wait for an IP
     for eth in $ethdevs; do 
         COUNT=0
@@ -637,6 +637,7 @@ function getip() {
                 break
             fi
             COUNT=$((${COUNT} + 1))
+            ip route show dev ${eth}
             IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
             #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
             if [ -n "${IP}" ]; then
