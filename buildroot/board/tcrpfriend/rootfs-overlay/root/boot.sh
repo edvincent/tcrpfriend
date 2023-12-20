@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231219
+# Date : 231220
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0b"
+BOOTVER="0.1.0c"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -60,6 +60,7 @@ function history() {
     0.1.0  friend kernel version up from 5.15.26 to 6.4.16
     0.1.0a Added IP detection function for all NICs
     0.1.0b Added IP detection function for all NICs (Fix bugs)
+    0.1.0c Fix First IP CR Issue
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -68,12 +69,11 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.0.9j Added MAC address remapping function referring to user_config.json
-0.0.9k Switch to local storage when rp-lkms.zip download fails when ramdisk patch occurs without internet
 0.0.9l Added Reset DSM Password function
 0.0.9m If no internet, skip installing the Python library for QR codes.
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
-0.1.0a Added IP detection function for all NICs
 0.1.0b Added IP detection function for all NICs (Fix bugs)
+0.1.0c Fix First IP CR Issue
 EOF
 }
 
