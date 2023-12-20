@@ -640,7 +640,7 @@ function getip() {
             if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
                 IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
                 #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
-                IP=$(echo -n "${IP}")
+                IP=$(echo -n "${IP}" | tr '\n' '\b')
                 LASTIP="${IP}"
                 break
             else
