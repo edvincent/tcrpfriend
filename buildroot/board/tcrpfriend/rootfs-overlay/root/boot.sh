@@ -931,14 +931,14 @@ function boot() {
     echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
- #       echo "$(msgalert "Press <g> to enter a Getty Console to solve trouble\n")"
-        echo "$(msgalert   "Press <r> to enter a menu for Reset DSM Password\n")" 
-        echo "$(msgnormal  "Press <e> to enter a menu for Edit USB/SATA Command Line\n")"
-        echo "$(msgwarning "Press <j> to enter a Junior mode\n")"
+ #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
+        msgalert   "Press <r> to enter a menu for Reset DSM Password\n"
+        msgnormal  "Press <e> to enter a menu for Edit USB/SATA Command Line\n"
+        msgwarning "Press <j> to enter a Junior mode\n"
 #    elif [ "$1" = "gettycon" ]; then
-#        echo "$(msgalert "Entering a Getty Console to solve trouble...\n")"
+#        msgalert "Entering a Getty Console to solve trouble...\n"
     elif [ "$1" = "forcejunior" ]; then
-        echo "$(msgwarning "Entering a Junior mode...\n")"        
+        msgwarning "Entering a Junior mode...\n"
     fi
     
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
