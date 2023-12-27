@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 231220
+# Date : 231227
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0c"
+BOOTVER="0.1.0d"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -61,6 +61,7 @@ function history() {
     0.1.0a Added IP detection function for all NICs
     0.1.0b Added IP detection function for all NICs (Fix bugs)
     0.1.0c Fix First IP CR Issue
+    0.1.0d Fix Some H/W Display Info
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -68,12 +69,11 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.9j Added MAC address remapping function referring to user_config.json
 0.0.9l Added Reset DSM Password function
 0.0.9m If no internet, skip installing the Python library for QR codes.
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
 0.1.0b Added IP detection function for all NICs (Fix bugs)
-0.1.0c Fix First IP CR Issue
+0.1.0d Fix Some H/W Display Info
 EOF
 }
 
@@ -86,11 +86,20 @@ function version() {
 function msgalert() {
     echo -en "\033[1;31m$1\033[0m"
 }
+function msgnormal() {
+    echo -en "\033[1;32m$1\033[0m"
+}
 function msgwarning() {
     echo -en "\033[1;33m$1\033[0m"
 }
-function msgnormal() {
-    echo -en "\033[1;32m$1\033[0m"
+function msgblue() {
+    echo -en "\033[1;34m$1\033[0m"
+}
+function msgpurple() {
+    echo -en "\033[1;35m$1\033[0m"
+}
+function msgcyan() {
+    echo -en "\033[1;36m$1\033[0m"
 }
 
 function checkinternet() {
@@ -584,9 +593,16 @@ function gethw() {
 
     checkmachine
 
+    echo -ne "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), LKM : $(msgnormal "${redpillmake}\n")"
     echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS\n")"
-    echo -ne "Running on $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l) Processor $(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq) With $(free -h | grep Mem | awk '{print $2}') Memory\n"
-    echo -ne "System has $(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]" | wc -l) SAS/RAID HBAs and $(lspci -nn | egrep -e "\[0200\]" | wc -l) Network cards\n"
+    THREADS="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l)"
+    CPU="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
+    MEM="$(free -h | grep Mem | awk '{print $2}')"
+    echo -ne "CPU,MEM: $(msgblue "$THREADS") Processor $(msgblue "$CPU") With $(msgblue "$MEM") Memory\n"
+    DMI="$(dmesg | grep -i "DMI:" | sed 's/\[.*\] DMI: //i')"
+    echo -ne "DMI: $(msgblue "$DMI\n")"
+    echo -ne "SAS/RAID HBAs : $(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]")\n"
+    echo -ne "NICs: $(lspci -nn | egrep -e "\[0200\]")\n"
     [ -d /sys/firmware/efi ] && msgnormal "System is running in UEFI boot mode\n" && EFIMODE="yes" || msgnormal "System is running in Legacy boot mode\n"    
 }
 
@@ -830,6 +846,8 @@ function boot() {
     # Welcome message
     welcome
 
+    gethw
+
     # user_config.json ipsettings block
     # user_config.json ipsettings block
 
@@ -901,10 +919,6 @@ function boot() {
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
     export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
 
-    gethw
-
-    echo
-    echo -n "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), DSM Version : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), RedPillMake : $(msgnormal "${redpillmake}\n")"
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo
