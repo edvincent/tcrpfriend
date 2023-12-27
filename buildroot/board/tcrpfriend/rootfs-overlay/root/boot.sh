@@ -556,7 +556,7 @@ function countdown() {
     local timeout=7
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[32m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
+        printf '\e[34m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
             #'g') # j key
