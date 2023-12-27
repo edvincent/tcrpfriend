@@ -919,12 +919,13 @@ function boot() {
 
     [ "$1" = "forcejunior" ] && CMDLINE_LINE+=" force_junior "
 
+    CMDLINE_LINE+=" skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
+
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
     export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
 
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
-    echo
     echo "cmdline : ${CMDLINE_LINE}"
     echo
     echo "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem."
