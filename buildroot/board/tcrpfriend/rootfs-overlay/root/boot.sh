@@ -598,13 +598,13 @@ function gethw() {
     THREADS="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l)"
     CPU="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     MEM="$(free -h | grep Mem | awk '{print $2}')"
-    echo -ne "CPU,MEM: $(msgblue "$THREADS") Processor $(msgblue "$CPU") With $(msgblue "$MEM") Memory\n"
+    echo -ne "CPU,MEM: $(msgblue "$CPU") [$(msgnormal "$THREADS") Thread(s)], $(msgblue "$MEM") Memory\n"
     DMI="$(dmesg | grep -i "DMI:" | sed 's/\[.*\] DMI: //i')"
-    echo -ne "DMI: $(msgblue "$DMI")\n"
+    echo -ne "DMI: $(msgwarning "$DMI")\n"
     HBACNT=$(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]" | wc -l)
     NICCNT=$(lspci -nn | egrep -e "\[0200\]" | wc -l)
     echo -ne "SAS/RAID HBAs Count : $(msgblue "$HBACNT") , NICs Count : $(msgblue "$NICCNT")\n"
-    [ -d /sys/firmware/efi ] && msgnormal "System is running in UEFI boot mode\n" && EFIMODE="yes" || msgnormal "System is running in Legacy boot mode\n"    
+    [ -d /sys/firmware/efi ] && msgnormal "System is running in UEFI boot mode\n" && EFIMODE="yes" || msgblue "System is running in Legacy boot mode\n"    
 }
 
 function checkmachine() {
