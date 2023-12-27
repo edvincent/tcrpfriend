@@ -593,16 +593,17 @@ function gethw() {
 
     checkmachine
 
-    echo -ne "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), LKM : $(msgnormal "${redpillmake}\n")"
-    echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS\n")"
+    echo -ne "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), LKM : $(msgnormal "${redpillmake}")\n"
+    echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS")\n"
     THREADS="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l)"
     CPU="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     MEM="$(free -h | grep Mem | awk '{print $2}')"
     echo -ne "CPU,MEM: $(msgblue "$THREADS") Processor $(msgblue "$CPU") With $(msgblue "$MEM") Memory\n"
     DMI="$(dmesg | grep -i "DMI:" | sed 's/\[.*\] DMI: //i')"
-    echo -ne "DMI: $(msgblue "$DMI\n")"
-    echo -ne "SAS/RAID HBAs : $(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]")\n"
-    echo -ne "NICs: $(lspci -nn | egrep -e "\[0200\]")\n"
+    echo -ne "DMI: $(msgblue "$DMI")\n"
+    HBACNT=$(lspci -nn | egrep -e "\[0104\]" -e "\[0107\]" | wc -l)
+    NICCNT=$(lspci -nn | egrep -e "\[0200\]" | wc -l)
+    echo -ne "SAS/RAID HBAs Count : $(msgblue "$HBACNT") , NICs Count : $(msgblue "$NICCNT")\n"
     [ -d /sys/firmware/efi ] && msgnormal "System is running in UEFI boot mode\n" && EFIMODE="yes" || msgnormal "System is running in Legacy boot mode\n"    
 }
 
@@ -648,6 +649,8 @@ function getip() {
     for eth in $ethdevs; do 
         COUNT=0
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
         while true; do
             if [ ${COUNT} -eq 5 ]; then
                 break
@@ -664,7 +667,7 @@ function getip() {
             fi
             sleep 1
         done
-        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} (${DRIVER})"        
+        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
     done
     IP="${LASTIP}"
 }
