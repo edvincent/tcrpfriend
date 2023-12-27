@@ -910,7 +910,7 @@ function boot() {
 
         CMDLINE_LINE=$(jq -r -e '.general .sata_line' /mnt/tcrp/user_config.json)
         # Check dom size and set max size accordingly
-        CMDLINE_LINE+=" dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+        CMDLINE_LINE+="dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
 
     else
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
@@ -918,9 +918,9 @@ function boot() {
 
     #[ "$1" = "gettycon" ] && CMDLINE_LINE+=" gettycon "
 
-    [ "$1" = "forcejunior" ] && CMDLINE_LINE+=" force_junior "
+    [ "$1" = "forcejunior" ] && CMDLINE_LINE+="force_junior "
 
-    CMDLINE_LINE+=" skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
+    CMDLINE_LINE+="skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
 
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
     export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
