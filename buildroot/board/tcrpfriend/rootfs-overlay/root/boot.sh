@@ -62,6 +62,7 @@ function history() {
     0.1.0b Added IP detection function for all NICs (Fix bugs)
     0.1.0c Fix First IP CR Issue
     0.1.0d Fix Some H/W Display Info, Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
+    0.1.0e Add Re-install DSM wording to force_junior
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -75,6 +76,7 @@ function showlastupdate() {
 0.1.0b Added IP detection function for all NICs (Fix bugs)
 0.1.0d Fix Some H/W Display Info, 
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
+0.1.0e Add Re-install DSM wording to force_junior       
 EOF
 }
 
@@ -578,7 +580,7 @@ function countdown() {
                 mainmenu
                 ;;
             'j') # j key
-                echo "j key pressed! Prepare Entering Force Junior!"
+                echo "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
                 sleep 3
                 initialize
                 boot forcejunior
@@ -939,11 +941,11 @@ function boot() {
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
         msgalert   "Press <r> to enter a menu for Reset DSM Password\n"
         msgnormal  "Press <e> to enter a menu for Edit USB/SATA Command Line\n"
-        msgwarning "Press <j> to enter a Junior mode\n"
+        msgwarning "Press <j> to enter a Junior mode (to re-install DSM)\n"
 #    elif [ "$1" = "gettycon" ]; then
 #        msgalert "Entering a Getty Console to solve trouble...\n"
     elif [ "$1" = "forcejunior" ]; then
-        msgwarning "Entering a Junior mode...\n"
+        msgwarning "Entering a Junior mode (to re-install DSM)...\n"
     fi
     
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
