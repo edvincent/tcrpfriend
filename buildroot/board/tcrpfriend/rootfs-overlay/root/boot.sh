@@ -646,8 +646,8 @@ function getusb() {
 
 function matchpciidmodule() {
 
-    vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
-    device="$(echo $2 | sed 's/[a-z]/\U&/g')"
+    vendor="$(echo $1 | tr 'a-z' 'A-Z')"
+    device="$(echo $2 | tr 'a-z' 'A-Z')"
 
     pciid="${vendor}d0000${device}"
 
