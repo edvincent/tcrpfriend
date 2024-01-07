@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240102
+# Date : 240107
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0e"
+BOOTVER="0.1.0f"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -63,6 +63,7 @@ function history() {
     0.1.0c Fix First IP CR Issue
     0.1.0d Fix Some H/W Display Info, Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
     0.1.0e Add Re-install DSM wording to force_junior
+    0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -76,7 +77,8 @@ function showlastupdate() {
 0.1.0b Added IP detection function for all NICs (Fix bugs)
 0.1.0d Fix Some H/W Display Info, 
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
-0.1.0e Add Re-install DSM wording to force_junior       
+0.1.0e Add Re-install DSM wording to force_junior
+0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
 EOF
 }
 
@@ -175,7 +177,6 @@ function getredpillko() {
     echo "Removing any old redpill.ko modules"
     [ -f /root/redpill.ko ] && rm -f /root/redpill.ko
 
-    ORIGIN_PLATFORM=$(cat /mnt/tcrp-p1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
     DSM_VERSION=$(cat /mnt/tcrp-p1/GRUB_VER | grep DSM_VERSION | cut -d "=" -f2 | sed 's/"//g')
 
     if [ ${DSM_VERSION} -lt 64570 ]; then
@@ -643,6 +644,21 @@ function getusb() {
 
 }
 
+function matchpciidmodule() {
+
+    vendor="$(echo $1 | sed 's/[a-z]/\U&/g')"
+    device="$(echo $2 | sed 's/[a-z]/\U&/g')"
+
+    pciid="${vendor}d0000${device}"
+
+    # Correction to work with tinycore jq
+    matchedmodule=$(jq -e -r ".modules[] | select(.alias | contains(\"${pciid}\")?) | .name " $MODULE_ALIAS_FILE)
+
+    # Call listextensions for extention matching
+    echo "$matchedmodule"
+
+}
+
 function getip() {
 
     ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
@@ -654,6 +670,12 @@ function getip() {
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+        MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+        if [ ! -z "${MATCHDRIVER}" ]; then
+            if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                DRIVER=${MATCHDRIVER}
+            fi
+        fi
         while true; do
             if [ ${COUNT} -eq 5 ]; then
                 break
@@ -1040,6 +1062,20 @@ function initialize() {
 
     [ "${smallfixnumber}" = "null" ] && patchramdisk 2>&1 >>$FRIENDLOG
 
+    # unzip modules.alias
+    [ -f modules.alias.3.json.gz ] && gunzip -f modules.alias.3.json.gz
+    [ -f modules.alias.4.json.gz ] && gunzip -f modules.alias.4.json.gz    
+
+    ORIGIN_PLATFORM=$(cat /mnt/tcrp-p1/GRUB_VER | grep PLATFORM | cut -d "=" -f2 | tr '[:upper:]' '[:lower:]' | sed 's/"//g')
+
+    case $ORIGIN_PLATFORM in
+    bromolow | braswell)
+        MODULE_ALIAS_FILE="modules.alias.3.json"
+        ;;
+    apollolake | broadwell | broadwellnk | v1000 | denverton | geminilake | broadwellnkv2 | broadwellntbap | purley | *)
+        MODULE_ALIAS_FILE="modules.alias.4.json"
+        ;;
+    esac
 }
 
 case $1 in
