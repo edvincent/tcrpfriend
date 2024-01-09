@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240107
+# Date : 240109
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0f"
+BOOTVER="0.1.0g"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -64,6 +64,7 @@ function history() {
     0.1.0d Fix Some H/W Display Info, Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
     0.1.0e Add Re-install DSM wording to force_junior
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
+    0.1.0g Fix bug of v0.1.0f
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -74,11 +75,10 @@ function showlastupdate() {
 0.0.9l Added Reset DSM Password function
 0.0.9m If no internet, skip installing the Python library for QR codes
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
-0.1.0b Added IP detection function for all NICs (Fix bugs)
 0.1.0d Fix Some H/W Display Info, 
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
-0.1.0e Add Re-install DSM wording to force_junior
 0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
+0.1.0g Fix bug of v0.1.0f
 EOF
 }
 
@@ -670,12 +670,14 @@ function getip() {
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
         DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-        if [ ! -z "${MATCHDRIVER}" ]; then
-            if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                DRIVER=${MATCHDRIVER}
+        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            if [ ! -z "${MATCHDRIVER}" ]; then
+                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                    DRIVER=${MATCHDRIVER}
+                fi
             fi
-        fi
+        fi    
         while true; do
             if [ ${COUNT} -eq 5 ]; then
                 break
