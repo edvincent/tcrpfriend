@@ -64,7 +64,7 @@ function history() {
     0.1.0d Fix Some H/W Display Info, Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
     0.1.0e Add Re-install DSM wording to force_junior
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
-    0.1.0g Fix bug of v0.1.0f
+    0.1.0g Fix bug of 0.1.0f
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -78,7 +78,7 @@ function showlastupdate() {
 0.1.0d Fix Some H/W Display Info, 
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
 0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
-0.1.0g Fix bug of v0.1.0f
+0.1.0g Fix bug of 0.1.0f
 EOF
 }
 
