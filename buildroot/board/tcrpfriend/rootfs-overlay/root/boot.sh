@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240109
+# Date : 240125
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0g"
+BOOTVER="0.1.0h"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -65,6 +65,7 @@ function history() {
     0.1.0e Add Re-install DSM wording to force_junior
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
     0.1.0g Fix bug of 0.1.0f
+    0.1.0h Add process to abort boot if corrupted user_config.json is used
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -79,6 +80,7 @@ function showlastupdate() {
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
 0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
 0.1.0g Fix bug of 0.1.0f
+0.1.0h Add process to abort boot if corrupted user_config.json is used
 EOF
 }
 
@@ -717,6 +719,15 @@ function checkfiles() {
 
 function checkupgrade() {
 
+    if [ ! -f /mnt/tcrp-p2/rd.gz ]; then
+        echo "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
+        exit 99
+    fi
+    if [ ! -f /mnt/tcrp-p2/zImage ]; then
+        echo "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
+        exit 99
+    fi
+
     origrdhash=$(sha256sum /mnt/tcrp-p2/rd.gz | awk '{print $1}')
     origzimghash=$(sha256sum /mnt/tcrp-p2/zImage | awk '{print $1}')
     rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
@@ -819,15 +830,35 @@ function readconfig() {
 
     if [ -f $userconfigfile ]; then
         model="$(jq -r -e '.general .model' $userconfigfile)"
+        if [ -z "$model" ]; then
+            echo "model is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
         version="$(jq -r -e '.general .version' $userconfigfile)"
+        if [ -z "$version" ]; then
+            echo "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
         smallfixnumber="$(jq -r -e '.general .smallfixnumber' $userconfigfile)"
+        if [ -z "$smallfixnumber" ]; then
+            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
         redpillmake="$(jq -r -e '.general .redpillmake' $userconfigfile)"
         friendautoupd="$(jq -r -e '.general .friendautoupd' $userconfigfile)"
         hidesensitive="$(jq -r -e '.general .hidesensitive' $userconfigfile)"
         serial="$(jq -r -e '.extra_cmdline .sn' $userconfigfile)"
+        if [ -z "$serial" ]; then
+            echo "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
+        if [ -z "$mac1" ]; then
+            echo "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
         mac2="$(jq -r -e '.extra_cmdline .mac2' $userconfigfile)"
         mac3="$(jq -r -e '.extra_cmdline .mac3' $userconfigfile)"
         mac4="$(jq -r -e '.extra_cmdline .mac4' $userconfigfile)"
