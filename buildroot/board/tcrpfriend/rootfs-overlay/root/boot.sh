@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240125
+# Date : 240130
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0h"
+BOOTVER="0.1.0i"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -66,6 +66,7 @@ function history() {
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
     0.1.0g Fix bug of 0.1.0f
     0.1.0h Add process to abort boot if corrupted user_config.json is used
+    0.1.0i Remove smallfixnumber check routine in user_config.json
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -81,6 +82,7 @@ function showlastupdate() {
 0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
 0.1.0g Fix bug of 0.1.0f
 0.1.0h Add process to abort boot if corrupted user_config.json is used
+0.1.0i Remove smallfixnumber check routine in user_config.json
 EOF
 }
 
@@ -841,8 +843,8 @@ function readconfig() {
         fi        
         smallfixnumber="$(jq -r -e '.general .smallfixnumber' $userconfigfile)"
         if [ -z "$smallfixnumber" ]; then
-            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
-            exit 99
+            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file."
+        #    exit 99
         fi        
         redpillmake="$(jq -r -e '.general .redpillmake' $userconfigfile)"
         friendautoupd="$(jq -r -e '.general .friendautoupd' $userconfigfile)"
