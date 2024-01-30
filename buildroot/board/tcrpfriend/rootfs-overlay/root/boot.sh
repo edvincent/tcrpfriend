@@ -66,7 +66,7 @@ function history() {
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
     0.1.0g Fix bug of 0.1.0f
     0.1.0h Add process to abort boot if corrupted user_config.json is used
-    0.1.0i Remove smallfixnumber check routine in user_config.json
+    0.1.0i Remove smallfixnumber check routine in user_config.json 
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
