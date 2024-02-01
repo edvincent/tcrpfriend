@@ -67,7 +67,7 @@ function history() {
     0.1.0g Fix bug of 0.1.0f
     0.1.0h Add process to abort boot if corrupted user_config.json is used
     0.1.0i Remove smallfixnumber check routine in user_config.json
-    0.1.0j Remove skip_vender_mac_interfaces and panic cmdline
+    0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -84,7 +84,7 @@ function showlastupdate() {
 0.1.0g Fix bug of 0.1.0f
 0.1.0h Add process to abort boot if corrupted user_config.json is used
 0.1.0i Remove smallfixnumber check routine in user_config.json
-0.1.0j Remove skip_vender_mac_interfaces and panic cmdline
+0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
 EOF
 }
 
@@ -565,7 +565,7 @@ function countdown() {
     local timeout=7
     while [ $timeout -ge 0 ]; do
         sleep 1
-        printf '\e[34m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
+        printf '\e[35m%s\e[0m\r' "Press <ctrl-c> to stop boot $1 in : $timeout"
         read -t 1 -n 1 key
         case $key in
             #'g') # j key
