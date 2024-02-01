@@ -66,7 +66,8 @@ function history() {
     0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
     0.1.0g Fix bug of 0.1.0f
     0.1.0h Add process to abort boot if corrupted user_config.json is used
-    0.1.0i Remove smallfixnumber check routine in user_config.json 
+    0.1.0i Remove smallfixnumber check routine in user_config.json
+    0.1.0j Remove skip_vender_mac_interfaces and panic cmdline
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -83,6 +84,7 @@ function showlastupdate() {
 0.1.0g Fix bug of 0.1.0f
 0.1.0h Add process to abort boot if corrupted user_config.json is used
 0.1.0i Remove smallfixnumber check routine in user_config.json
+0.1.0j Remove skip_vender_mac_interfaces and panic cmdline
 EOF
 }
 
@@ -979,7 +981,7 @@ function boot() {
 
     [ "$1" = "forcejunior" ] && CMDLINE_LINE+="force_junior "
 
-    CMDLINE_LINE+="skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
+    #CMDLINE_LINE+="skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
 
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
     export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
