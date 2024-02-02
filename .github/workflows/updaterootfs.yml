@@ -97,6 +97,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          VERSION="`cat /home/runner/work/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/VERSION`"
           git add .
           git commit -a -m "${VERSION}"
           git push            
