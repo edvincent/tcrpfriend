@@ -80,3 +80,23 @@ jobs:
             /opt/output/chksum
           body: |
             ${{ inputs.version }}
+        
+      - name: Set up Git
+        run: |
+          git config --global user.name "PeterSuh-Q3"
+          git config --global user.email dante9000@gmail.com
+          
+      - name: copy friend kernel to repo
+        run: |
+          #echo "Param1: ${{ github.event.client_payload.param1 }}"
+          ROOT_PATH=${{ github.workspace }}
+          cd ${ROOT_PATH}/
+          cp /opt/output/bzImage-friend .
+          cp /opt/output/initrd-friend .
+          cp /opt/output/chksum .
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -a -m "${{ inputs.version }}"
+          git push            
