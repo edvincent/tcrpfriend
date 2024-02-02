@@ -3,8 +3,7 @@
 name: Upload Friend Kernel
 
 on:
-  repository_dispatch:
-    types: [trigger-workflow]
+  workflow_dispatch:
 
 jobs:
   upload_and_commit:
