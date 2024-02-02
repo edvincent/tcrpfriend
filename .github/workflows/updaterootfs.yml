@@ -98,5 +98,5 @@ jobs:
       - name: Commit and push changes
         run: |
           git add .
-          git commit -a -m "${{ inputs.version }}"
+          git commit -a -m "${VERSION}"
           git push            
