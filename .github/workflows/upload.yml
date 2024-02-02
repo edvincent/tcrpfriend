@@ -23,9 +23,8 @@ jobs:
           #echo "Param1: ${{ github.event.client_payload.param1 }}"
           ROOT_PATH=${{ github.workspace }}
           cd ${ROOT_PATH}/
-          cp /opt/output/bzImage-friend .
-          cp /opt/output/initrd-friend .
-          cp /opt/output/chksum .
+          URLS=$(curl -k -s https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r ".assets[].browser_download_url")
+          for file in $URLS; do curl --insecure --location --progress-bar "$file" -O; done          
 
       - name: Commit and push changes
         run: |
