@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240130
+# Date : 240205
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0i"
+BOOTVER="0.1.0k"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -68,6 +68,7 @@ function history() {
     0.1.0h Add process to abort boot if corrupted user_config.json is used
     0.1.0i Remove smallfixnumber check routine in user_config.json
     0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
+    0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -75,16 +76,12 @@ EOF
 
 function showlastupdate() {
     cat <<EOF
-0.0.9l Added Reset DSM Password function
-0.0.9m If no internet, skip installing the Python library for QR codes
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
 0.1.0d Fix Some H/W Display Info, 
        Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
-0.1.0f Fixed module name notation error in Realtek derived device [ex) r8125]
-0.1.0g Fix bug of 0.1.0f
 0.1.0h Add process to abort boot if corrupted user_config.json is used
-0.1.0i Remove smallfixnumber check routine in user_config.json
 0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
+0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
 EOF
 }
 
@@ -759,7 +756,7 @@ function checkupgrade() {
            getip
         fi
         if [ -n "$IP" ]; then
-            patchramdisk 2>&1 >>$FRIENDLOG
+            patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
         else
             msgalert "The patch cannot proceed because there is no IP yet !!!! \n"
             exit 99
@@ -770,7 +767,7 @@ function checkupgrade() {
         msgnormal "zImage OK ! \n"
     else
         msgwarning "zImage upgrade has been detected \n"
-        patchkernel 2>&1 >>$FRIENDLOG
+        patchkernel 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
    
         if [ "$loadermode" == "JOT" ]; then
             msgwarning "Ramdisk upgrade and zImage upgrade for JOT completed successfully !!! \n"
@@ -1097,7 +1094,7 @@ function initialize() {
     # Update user config file to latest version
     updateuserconfigfile
 
-    [ "${smallfixnumber}" = "null" ] && patchramdisk 2>&1 >>$FRIENDLOG
+    [ "${smallfixnumber}" = "null" ] && patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
 
     # unzip modules.alias
     [ -f modules.alias.3.json.gz ] && gunzip -f modules.alias.3.json.gz
