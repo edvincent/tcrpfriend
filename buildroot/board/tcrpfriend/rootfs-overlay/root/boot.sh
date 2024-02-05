@@ -1020,9 +1020,9 @@ function boot() {
     fi
 
     if [ "${INTERNET}" = "ON" ]; then
-        pip install click >/dev/null 2>/dev/null
-        pip install qrcode >/dev/null 2>/dev/null
-        pip install Image >/dev/null 2>/dev/null
+        pip install click 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
+        pip install qrcode 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
+        pip install Image 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
     fi   
 
     if [ "$staticboot" = "true" ]; then
