@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240205
+# Date : 240217
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0k"
+BOOTVER="0.1.0l"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -69,6 +69,7 @@ function history() {
     0.1.0i Remove smallfixnumber check routine in user_config.json
     0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
+    0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -82,6 +83,7 @@ function showlastupdate() {
 0.1.0h Add process to abort boot if corrupted user_config.json is used
 0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
 0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
+0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
 EOF
 }
 
@@ -1063,7 +1065,7 @@ function boot() {
             kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         fi
 
-        kexec -e -a
+        kexec -f -e
     fi
 }
 
