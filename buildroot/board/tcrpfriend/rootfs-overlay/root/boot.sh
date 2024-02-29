@@ -886,33 +886,43 @@ function mountall() {
     [ ! -d /mnt/tcrp-p1 ] && mkdir /mnt/tcrp-p1
     [ ! -d /mnt/tcrp-p2 ] && mkdir /mnt/tcrp-p2
 
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}7 ]; then
-      p1="5"
-      p2="6"
-      p3="7"
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+      [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
+      [ "$(mount | grep sdb5 | wc -l)" = "0" ] && mount /dev/sdb5 /mnt/tcrp
+
+      if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/sda5 to /mnt/tcrp-p1, stopping boot process"
+          exit 99
+      fi
+
+      if [ "$(mount | grep sdb5 | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/sdb5 to /mnt/tcrp, stopping boot process"
+          exit 99
+      fi
+      
     else
       p1="1"
       p2="2"
       p3="3"
-    fi
+      [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p1} /mnt/tcrp-p1
+      [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p2} /mnt/tcrp-p2
+      [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
 
-    [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p1} /mnt/tcrp-p1
-    [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p2} /mnt/tcrp-p2
-    [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
-    
-    if [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev/${LOADER_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
-        exit 99
-    fi
+      if [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/${LOADER_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
+          exit 99
+      fi
 
-    if [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev${LOADER_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
-        exit 99
-    fi
+      if [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/${LOADER_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
+          exit 99
+      fi
 
-    if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
-        exit 99
+      if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
+          exit 99
+      fi
+      
     fi
 
 }
