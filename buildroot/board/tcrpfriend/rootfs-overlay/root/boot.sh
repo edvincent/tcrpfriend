@@ -888,10 +888,16 @@ function mountall() {
 
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
       [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
+      [ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p2
       [ "$(mount | grep sdb5 | wc -l)" = "0" ] && mount /dev/sdb5 /mnt/tcrp
 
       if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
           echo "Failed mount /dev/sda5 to /mnt/tcrp-p1, stopping boot process"
+          exit 99
+      fi
+
+      if [ "$(mount | grep sda6 | wc -l)" = "0" ]; then
+          echo "Failed mount /dev/sda6 to /mnt/tcrp-p2, stopping boot process"
           exit 99
       fi
 
