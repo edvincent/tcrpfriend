@@ -70,7 +70,7 @@ function history() {
     0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-    0.1.0m When a loader is inserted into /dev/sda, change to additionally mount partitions 1,2 and 3 to 5,6 and 7.
+    0.1.0m When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -85,7 +85,8 @@ function showlastupdate() {
 0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
 0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
 0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-0.1.0m When a loader is inserted into /dev/sda, change to additionally mount partitions 1,2 and 3 to 5,6 and 7.
+0.1.0m When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
+       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
 EOF
 }
 
