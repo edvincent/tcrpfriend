@@ -431,7 +431,7 @@ function patchramdisk() {
     fi
     [ -f /root/initrd-dsm ] && echo "Patched ramdisk created $(ls -l /root/initrd-dsm)"
 
-    echo "Copying file to ${LOADER_DISK}3"
+    echo "Copying file to ${LOADER_DISK}"
 
     cp -f /root/initrd-dsm /mnt/tcrp
 
@@ -888,8 +888,8 @@ function mountall() {
 
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
       [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
-      [ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p2
-      [ "$(mount | grep sdb5 | wc -l)" = "0" ] && mount /dev/sdb5 /mnt/tcrp
+      [ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda6 /mnt/tcrp-p2
+      [ "$(mount | grep ${LOADER_DISK}5 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}5 /mnt/tcrp
 
       if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
           echo "Failed mount /dev/sda5 to /mnt/tcrp-p1, stopping boot process"
