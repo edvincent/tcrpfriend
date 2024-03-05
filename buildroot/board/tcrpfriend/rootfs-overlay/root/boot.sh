@@ -890,8 +890,9 @@ function mountall() {
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
       [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
       #[ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda6 /mnt/tcrp-p2
-      cp -vf /mnt/tcrp/rd.gz /mnt/tcrp-p2/rd.gz && cp -vf /mnt/tcrp-p1/zImage-dsm /mnt/tcrp-p2/zImage
       [ "$(mount | grep ${LOADER_DISK}5 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}5 /mnt/tcrp
+      cp -vf /mnt/tcrp/rd.gz /mnt/tcrp-p2/rd.gz
+      cp -vf /mnt/tcrp-p1/zImage-dsm /mnt/tcrp-p2/zImage
 
       if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
           echo "Failed mount /dev/sda5 to /mnt/tcrp-p1, stopping boot process"
