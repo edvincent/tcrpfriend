@@ -890,6 +890,7 @@ function mountall() {
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
       [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
       #[ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda6 /mnt/tcrp-p2
+      cp -vf /mnt/tcrp/rd.gz /mnt/tcrp-p2/rd.gz && cp -vf /mnt/tcrp-p1/zImage-dsm /mnt/tcrp-p2/zImage
       [ "$(mount | grep ${LOADER_DISK}5 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}5 /mnt/tcrp
 
       if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
@@ -1011,8 +1012,13 @@ function boot() {
 
     #CMDLINE_LINE+="skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
 
-    export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
-    export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+        export MOD_ZIMAGE_FILE="/mnt/tcrp-p1/zImage-dsm"
+        export MOD_RDGZ_FILE="/mnt/tcrp-p1/initrd-dsm"
+    else
+        export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
+        export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
+    fi
 
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
