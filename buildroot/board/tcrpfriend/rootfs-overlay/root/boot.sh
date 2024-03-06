@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240227
+# Date : 240217
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0m"
+BOOTVER="0.1.0l"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -70,7 +70,6 @@ function history() {
     0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-    0.1.0m When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -85,8 +84,6 @@ function showlastupdate() {
 0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
 0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
 0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-0.1.0m When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
-       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
 EOF
 }
 
@@ -432,7 +429,7 @@ function patchramdisk() {
     fi
     [ -f /root/initrd-dsm ] && echo "Patched ramdisk created $(ls -l /root/initrd-dsm)"
 
-    echo "Copying file to ${LOADER_DISK}"
+    echo "Copying file to ${LOADER_DISK}3"
 
     cp -f /root/initrd-dsm /mnt/tcrp
 
@@ -887,49 +884,23 @@ function mountall() {
     [ ! -d /mnt/tcrp-p1 ] && mkdir /mnt/tcrp-p1
     [ ! -d /mnt/tcrp-p2 ] && mkdir /mnt/tcrp-p2
 
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
-      [ "$(mount | grep sda5 | wc -l)" = "0" ] && mount /dev/sda5 /mnt/tcrp-p1
-      [ "$(mount | grep sda6 | wc -l)" = "0" ] && mount /dev/sda6 /mnt/tcrp-p2
-      [ "$(mount | grep ${LOADER_DISK}5 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}5 /mnt/tcrp
+    [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}1 /mnt/tcrp-p1
+    [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}2 /mnt/tcrp-p2
+    [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}3 /mnt/tcrp
+    
+    if [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev/${LOADER_DISK}1 to /mnt/tcrp-p1, stopping boot process"
+        exit 99
+    fi
 
-      if [ "$(mount | grep sda5 | wc -l)" = "0" ]; then
-          echo "Failed mount /dev/sda5 to /mnt/tcrp-p1, stopping boot process"
-          exit 99
-      fi
+    if [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev${LOADER_DISK}2 to /mnt/tcrp-p2, stopping boot process"
+        exit 99
+    fi
 
-      #if [ "$(mount | grep sda6 | wc -l)" = "0" ]; then
-      #    echo "Failed mount /dev/sda6 to /mnt/tcrp-p2, stopping boot process"
-      #    exit 99
-      #fi
-
-      if [ "$(mount | grep sdb5 | wc -l)" = "0" ]; then
-          echo "Failed mount /dev/sdb5 to /mnt/tcrp, stopping boot process"
-          exit 99
-      fi
-      
-    else
-      p1="1"
-      p2="2"
-      p3="3"
-      [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p1} /mnt/tcrp-p1
-      [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p2} /mnt/tcrp-p2
-      [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
-
-      if [ "$(mount | grep ${LOADER_DISK}${p1} | wc -l)" = "0" ]; then
-          echo "Failed mount /dev/${LOADER_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
-          exit 99
-      fi
-
-      if [ "$(mount | grep ${LOADER_DISK}${p2} | wc -l)" = "0" ]; then
-          echo "Failed mount /dev/${LOADER_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
-          exit 99
-      fi
-
-      if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
-          echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
-          exit 99
-      fi
-      
+    if [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ]; then
+        echo "Failed mount /dev${LOADER_DISK}3 to /mnt/tcrp, stopping boot process"
+        exit 99
     fi
 
 }
@@ -1011,13 +982,8 @@ function boot() {
 
     #CMDLINE_LINE+="skip_vender_mac_interfaces=0,1,2,3,4,5,6,7 panic=5 "
 
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
-        export MOD_ZIMAGE_FILE="/mnt/tcrp-p1/zImage-dsm"
-        export MOD_RDGZ_FILE="/mnt/tcrp-p1/initrd-dsm"
-    else
-        export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
-        export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
-    fi
+    export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
+    export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
 
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
