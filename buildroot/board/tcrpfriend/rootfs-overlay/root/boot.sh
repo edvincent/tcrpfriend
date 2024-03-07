@@ -129,6 +129,12 @@ function checkinternet() {
 
 function upgradefriend() {
 
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+      chgpart="-p1"
+    else
+      chgpart="" 
+    fi
+    
     if [ ! -z "$IP" ]; then
 
         if [ "${friendautoupd}" = "false" ]; then
@@ -146,7 +152,7 @@ function upgradefriend() {
             FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
             BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
             INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
-            if [ "$(sha256sum /mnt/tcrp/bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum /mnt/tcrp/initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ]; then
+            if [ "$(sha256sum /mnt/tcrp${chgpart}/bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum /mnt/tcrp${chgpart}/initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ]; then
                 msgnormal "OK, latest \n"
             else
                 if [ "${FRIENDVERSION}" = "v0.1.0" ]; then
@@ -159,8 +165,8 @@ function upgradefriend() {
                 FRIENDVERSION="$(grep VERSION chksum | awk -F= '{print $2}')"
                 BZIMAGESHA256="$(grep bzImage-friend chksum | awk '{print $1}')"
                 INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
-                [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f bzImage-friend /mnt/tcrp/ && msgnormal "bzImage OK! \n"
-                [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f initrd-friend /mnt/tcrp/ && msgnormal "initrd-friend OK! \n"
+                [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f bzImage-friend /mnt/tcrp${chgpart}/ && msgnormal "bzImage OK! \n"
+                [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f initrd-friend /mnt/tcrp${chgpart}/ && msgnormal "initrd-friend OK! \n"
                 msgnormal "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT\n"
                 countdown "REBOOT"
                 reboot -f
