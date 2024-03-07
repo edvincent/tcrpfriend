@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240306
+# Date : 240307
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0m"
+BOOTVER="0.1.0n"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -71,6 +71,8 @@ function history() {
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
+    0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
+    
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
 EOF
@@ -79,13 +81,10 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
-0.1.0d Fix Some H/W Display Info, 
-       Add skip_vender_mac_interfaces cmdline to enable DSM's dhcp to use the correct mac and ip
-0.1.0h Add process to abort boot if corrupted user_config.json is used
-0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
-0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
 0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
+0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
+       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
 EOF
 }
 
@@ -440,7 +439,7 @@ function patchramdisk() {
     fi
     [ -f /root/initrd-dsm ] && echo "Patched ramdisk created $(ls -l /root/initrd-dsm)"
 
-    echo "Copying file to ${LOADER_DISK}3"
+    echo "Copying file to ${LOADER_DISK}"
 
     cp -f /root/initrd-dsm /mnt/tcrp
 
@@ -895,22 +894,34 @@ function mountall() {
     [ ! -d /mnt/tcrp-p1 ] && mkdir /mnt/tcrp-p1
     [ ! -d /mnt/tcrp-p2 ] && mkdir /mnt/tcrp-p2
 
-    [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}1 /mnt/tcrp-p1
-    [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}2 /mnt/tcrp-p2
-    [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}3 /mnt/tcrp
-    
-    if [ "$(mount | grep ${LOADER_DISK}1 | wc -l)" = "0" ]; then
-        echo "Failed mount /dev/${LOADER_DISK}1 to /mnt/tcrp-p1, stopping boot process"
+    BOOT_DISK="${LOADER_DISK}"
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+      BOOT_DISK="sda"
+      p1="5"
+      p2="6"
+      p3="5"
+    else
+      p1="1"
+      p2="2"
+      p3="3"
+    fi
+
+    [ "$(mount | grep ${BOOT_DISK}${p1} | wc -l)" = "0" ] && mount /dev/${BOOT_DISK}${p1} /mnt/tcrp-p1
+    [ "$(mount | grep ${BOOT_DISK}${p2} | wc -l)" = "0" ] && mount /dev/${BOOT_DISK}${p2} /mnt/tcrp-p2
+    [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
+
+    if [ "$(mount | grep ${BOOT_DISK}${p1} | wc -l)" = "0" ]; then
+        echo "Failed mount /dev/${BOOT_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
         exit 99
     fi
 
-    if [ "$(mount | grep ${LOADER_DISK}2 | wc -l)" = "0" ]; then
-        echo "Failed mount /dev${LOADER_DISK}2 to /mnt/tcrp-p2, stopping boot process"
+    if [ "$(mount | grep ${BOOT_DISK}${p2} | wc -l)" = "0" ]; then
+        echo "Failed mount /dev/${BOOT_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
         exit 99
     fi
 
-    if [ "$(mount | grep ${LOADER_DISK}3 | wc -l)" = "0" ]; then
-        echo "Failed mount /dev${LOADER_DISK}3 to /mnt/tcrp, stopping boot process"
+    if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
+        echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
         exit 99
     fi
 
