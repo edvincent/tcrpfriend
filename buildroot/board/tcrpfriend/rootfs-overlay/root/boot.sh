@@ -71,7 +71,7 @@ function history() {
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
-    0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
+    0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb4.
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ function showlastupdate() {
 0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
 0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
-       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
+       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb4.
 EOF
 }
 
@@ -129,7 +129,7 @@ function checkinternet() {
 
 function upgradefriend() {
 
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       chgpart="-p1"
     else
       chgpart="" 
@@ -901,11 +901,11 @@ function mountall() {
     [ ! -d /mnt/tcrp-p2 ] && mkdir /mnt/tcrp-p2
 
     BOOT_DISK="${LOADER_DISK}"
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       BOOT_DISK="sda"
       p1="5"
       p2="6"
-      p3="5"
+      p3="4"
     else
       p1="1"
       p2="2"
