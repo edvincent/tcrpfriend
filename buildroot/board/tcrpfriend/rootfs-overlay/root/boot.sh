@@ -70,7 +70,7 @@ function history() {
     0.1.0j Remove skip_vender_mac_interfaces and panic cmdline (SAN MANAGER Cause of damage)
     0.1.0k Added timestamp recording function before line in /mnt/tcrp/friendlog.log file.
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-    0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
+    0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
     
     Current Version : ${BOOTVER}
@@ -418,19 +418,19 @@ function patchramdisk() {
 
     echo "Adding custom.gz or initrd-dsm to image"
     cd $temprd
-    # 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
-    if [ -f /mnt/tcrp/initrd-dsm ]; then
-        echo "Found initrd-dsm and extract /exts from " 
-        cat /mnt/tcrp/initrd-dsm | cpio -idm "*exts*" >/dev/null 2>&1
-        cat /mnt/tcrp/initrd-dsm | cpio -idm "*modprobe*"  >/dev/null 2>&1
-        cat /mnt/tcrp/initrd-dsm | cpio -idm "*rp.ko*"  >/dev/null 2>&1
-    else
-        echo "Not found initrd-dsm, so extract from custom.gz " 
+    # 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
+    if [ -f /mnt/tcrp/custom.gz ]; then
+        echo "Found custom.gz, so extract from custom.gz " 
         if [ -f /mnt/tcrp/custom.gz ]; then
             cat /mnt/tcrp/custom.gz | cpio -idm >/dev/null 2>&1
         else
             cat /mnt/tcrp-p1/custom.gz | cpio -idm >/dev/null 2>&1
         fi
+    else
+        echo "Not found custom.gz, so extract from initrd-dsm " 
+        cat /mnt/tcrp/initrd-dsm | cpio -idm "*exts*" >/dev/null 2>&1
+        cat /mnt/tcrp/initrd-dsm | cpio -idm "*modprobe*"  >/dev/null 2>&1
+        cat /mnt/tcrp/initrd-dsm | cpio -idm "*rp.ko*"  >/dev/null 2>&1
     fi
 
     for script in $(find /root/rd.temp/exts/ | grep ".sh"); do chmod +x $script; done
