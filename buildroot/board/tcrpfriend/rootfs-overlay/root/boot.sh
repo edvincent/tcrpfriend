@@ -907,7 +907,7 @@ function mountall() {
       for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
             echo "This is BASIC Type Disk & Has Syno Boot Partition. $edisk"
-            BOOT_DISK=$(echo "$edisk" | sed "s#/dev/#${edisk}#")
+            BOOT_DISK=$(echo "$edisk" | cut -c 6-8)
         fi
       done
       if [ "${BOOT_DISK}" = "${LOADER_DISK}" ]; then
