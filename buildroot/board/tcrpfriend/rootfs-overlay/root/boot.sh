@@ -908,11 +908,12 @@ function mountall() {
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
             echo "This is BASIC Type Disk & Has Syno Boot Partition. $edisk"
             BOOT_DISK=$(echo "$edisk" | sed "s#/dev/#${edisk}#")
-        else
-            echo "Failed to find boot Partition on #${edisk} !!!"
-            exit 99
         fi
       done
+      if [ "${BOOT_DISK}" = "${LOADER_DISK}" ]; then
+        echo "Failed to find boot Partition on !!!"
+        exit 99
+      fi
       p1="5"
       p2="6"
       p3="5"
