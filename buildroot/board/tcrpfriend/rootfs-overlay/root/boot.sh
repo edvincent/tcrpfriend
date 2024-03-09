@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240307
+# Date : 240309
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0n"
+BOOTVER="0.1.0o"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -72,6 +72,7 @@ function history() {
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
+    0.1.0o Fix bug of 0.1.0n (Fixed the problem of not being able to find the boot disk HDD)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -85,6 +86,7 @@ function showlastupdate() {
 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
 0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
        change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
+0.1.0o Fix bug of 0.1.0n (Fixed the problem of not being able to find the boot disk HDD)      
 EOF
 }
 
@@ -902,7 +904,15 @@ function mountall() {
 
     BOOT_DISK="${LOADER_DISK}"
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
-      BOOT_DISK="sda"
+      for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
+            echo "This is BASIC Type Disk & Has Syno Boot Partition. $edisk"
+            BOOT_DISK=$(echo "$edisk" | sed "s#/dev/#${edisk}#")
+        else
+            echo "Failed to find boot Partition on #${edisk} !!!"
+            exit 99
+        fi
+      done
       p1="5"
       p2="6"
       p3="5"
