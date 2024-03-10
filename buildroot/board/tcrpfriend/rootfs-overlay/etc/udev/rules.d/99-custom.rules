@@ -1,0 +1,1 @@
+KERNEL=="sda", ACTION=="add", RUN+="/bin/bash /root/load-sda-first.sh"
