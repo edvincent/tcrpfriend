@@ -1,1 +1,1 @@
-KERNEL=="sda", ACTION=="add", RUN+="/bin/sh /root/load-sda-first.sh"
+ACTION=="add", RUN+="/bin/sh /root/load-sda-first.sh"
