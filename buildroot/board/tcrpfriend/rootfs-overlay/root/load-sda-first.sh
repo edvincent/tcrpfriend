@@ -3,6 +3,4 @@
 echo "Mounting /root/boot-image-dummy-sda.img to /dev/sda"
 imgpath="/root/boot-image-dummy-sda.img"
 gunzip -f "${imgpath}.gz"
-LOOPX=$(losetup -f)
-losetup -P ${LOOPX} ${imgpath}
-ln -s ${LOOPX}  /dev/sda
+losetup -P /dev/loop0 ${imgpath}
