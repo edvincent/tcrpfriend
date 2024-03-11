@@ -1,1 +1,1 @@
-ACTION=="add", RUN+="/bin/sh /root/load-sda-first.sh"
+KERNEL=="loop: module loaded", ACTION=="add", RUN+="/bin/sh /root/load-sda-first.sh"
