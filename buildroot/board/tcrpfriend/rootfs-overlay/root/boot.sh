@@ -72,7 +72,7 @@ function history() {
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
-    0.1.0o Fix bug of 0.1.0n (Fixed the problem of not being able to find the boot disk HDD)
+    0.1.0o Added RedPill bootloader hard disk porting function 
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ function showlastupdate() {
 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
 0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
        change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
-0.1.0o Fix bug of 0.1.0n (Fixed the problem of not being able to find the boot disk HDD)      
+0.1.0o Added RedPill bootloader hard disk porting function 
 EOF
 }
 
