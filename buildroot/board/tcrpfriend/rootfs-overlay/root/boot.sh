@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240309
+# Date : 240314
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0o"
+BOOTVER="0.1.0p"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -72,7 +72,8 @@ function history() {
     0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
     0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts), The priority starts from custom.gz
     0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
-    0.1.0o Added RedPill bootloader hard disk porting function 
+    0.1.0o Added RedPill bootloader hard disk porting function
+    0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -86,7 +87,8 @@ function showlastupdate() {
 0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
 0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
        change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
-0.1.0o Added RedPill bootloader hard disk porting function 
+0.1.0o Added RedPill bootloader hard disk porting function
+0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
 EOF
 }
 
@@ -844,7 +846,16 @@ function setnetwork() {
 
 function readconfig() {
 
-    LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
+    for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+            break
+        elif [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+            break
+        fi    
+    done
+    #LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
     LOADER_BUS="$(udevadm info --query property --name /dev/${LOADER_DISK} | grep -i ID_BUS | awk -F= '{print $2}')"
 
     userconfigfile=/mnt/tcrp/user_config.json
@@ -896,7 +907,16 @@ function readconfig() {
 
 function mountall() {
 
-    LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
+    for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
+        if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+            break
+        elif [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
+            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
+            break
+        fi    
+    done
+    #LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
 
     [ ! -d /mnt/tcrp ] && mkdir /mnt/tcrp
     [ ! -d /mnt/tcrp-p1 ] && mkdir /mnt/tcrp-p1
