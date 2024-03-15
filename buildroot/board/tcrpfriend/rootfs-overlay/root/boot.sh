@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0p"
+BOOTVER="0.1.0q"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -74,6 +74,8 @@ function history() {
     0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
     0.1.0o Added RedPill bootloader hard disk porting function
     0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
+    0.1.0q Added support for SHR type to HDD for bootloader injection. 
+           synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -89,6 +91,8 @@ function showlastupdate() {
        change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
 0.1.0o Added RedPill bootloader hard disk porting function
 0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
+0.1.0q Added support for SHR type to HDD for bootloader injection. 
+       synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
 EOF
 }
 
@@ -936,7 +940,7 @@ function mountall() {
       fi
       p1="5"
       p2="6"
-      p3="5"
+      p3="4"
     else
       p1="1"
       p2="2"
