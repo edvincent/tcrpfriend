@@ -76,7 +76,7 @@ function history() {
     0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
     0.1.0q Added support for SHR type to HDD for bootloader injection. 
            synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
-    0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)       
+    0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -139,7 +139,7 @@ function checkinternet() {
 
 function upgradefriend() {
 
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       chgpart="-p1"
     else
       chgpart="" 
