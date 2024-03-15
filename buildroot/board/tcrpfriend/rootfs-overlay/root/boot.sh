@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240314
+# Date : 240316
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0q"
+BOOTVER="0.1.0r"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -76,6 +76,7 @@ function history() {
     0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
     0.1.0q Added support for SHR type to HDD for bootloader injection. 
            synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
+    0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)       
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -93,6 +94,7 @@ function showlastupdate() {
 0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
        synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
+0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
 EOF
 }
 
@@ -927,7 +929,7 @@ function mountall() {
     [ ! -d /mnt/tcrp-p2 ] && mkdir /mnt/tcrp-p2
 
     BOOT_DISK="${LOADER_DISK}"
-    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}5 ]; then
+    if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
             echo "This is BASIC Type Disk & Has Syno Boot Partition. $edisk"
