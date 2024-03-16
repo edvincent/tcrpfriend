@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240316
+# Date : 240317
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0r"
+BOOTVER="0.1.0s"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -77,6 +77,7 @@ function history() {
     0.1.0q Added support for SHR type to HDD for bootloader injection. 
            synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
     0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
+    0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -95,6 +96,7 @@ function showlastupdate() {
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
        synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
 0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
+0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
 EOF
 }
 
@@ -1035,7 +1037,12 @@ function boot() {
 
         CMDLINE_LINE=$(jq -r -e '.general .sata_line' /mnt/tcrp/user_config.json)
         # Check dom size and set max size accordingly
-        CMDLINE_LINE+="dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+        # 2024.03.17 Force the dom_szmax limit of the injected bootloader to be 16GB
+        if [ "${BOOT_DISK}" = "${LOADER_DISK}" ]; then
+            CMDLINE_LINE+="dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
+        else
+            CMDLINE_LINE+="dom_szmax=16384 "
+        fi
 
     else
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
