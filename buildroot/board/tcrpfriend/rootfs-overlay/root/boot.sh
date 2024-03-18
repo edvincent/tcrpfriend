@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240317
+# Date : 240318
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0s"
+BOOTVER="0.1.0t"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -78,6 +78,8 @@ function history() {
            synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
     0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
     0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
+    0.1.0t Supports bootloader injection with SHR disk only
+           dom_szmax=32GB (limit size of the injected bootloader)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -97,6 +99,9 @@ function showlastupdate() {
        synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
 0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
 0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
+0.1.0t Supports bootloader injection with SHR disk only
+       dom_szmax=32GB (limit size of the injected bootloader)
+
 EOF
 }
 
@@ -934,7 +939,7 @@ function mountall() {
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
-            echo "This is BASIC Type Disk & Has Syno Boot Partition. $edisk"
+            echo "This is BASIC or RAID Type Disk & Has Syno Boot Partition. $edisk"
             BOOT_DISK=$(echo "$edisk" | cut -c 6-8)
         fi
       done
@@ -942,7 +947,11 @@ function mountall() {
         echo "Failed to find boot Partition on !!!"
         exit 99
       fi
-      p1="5"
+      if [ $(fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
+        p1="4"
+      else  
+        p1="5"
+      fi  
       p2="6"
       p3="4"
     else
@@ -1041,7 +1050,7 @@ function boot() {
         if [ "${BOOT_DISK}" = "${LOADER_DISK}" ]; then
             CMDLINE_LINE+="dom_szmax=$(fdisk -l /dev/${LOADER_DISK} | head -1 | awk -F: '{print $2}' | awk '{ print $1*1024}') "
         else
-            CMDLINE_LINE+="dom_szmax=16384 "
+            CMDLINE_LINE+="dom_szmax=32768 "
         fi
 
     else
