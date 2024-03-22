@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240318
+# Date : 240322
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0t"
+BOOTVER="0.1.0u"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -80,6 +80,7 @@ function history() {
     0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
     0.1.0t Supports bootloader injection with SHR disk only
            dom_szmax=32GB (limit size of the injected bootloader)
+    0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -101,6 +102,7 @@ function showlastupdate() {
 0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
 0.1.0t Supports bootloader injection with SHR disk only
        dom_szmax=32GB (limit size of the injected bootloader)
+0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)       
 
 EOF
 }
@@ -636,7 +638,7 @@ function gethw() {
     checkmachine
 
     echo -ne "Model : $(msgnormal "$model"), Serial : $(msgnormal "$serial"), Mac : $(msgnormal "$mac1"), Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber"), LKM : $(msgnormal "${redpillmake}")\n"
-    echo -ne "Loader BUS: $(msgnormal "$LOADER_BUS")\n"
+    echo -ne "Loader BUS: $(msgnormal "${BUS}")\n"
     THREADS="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | wc -l)"
     CPU="$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | uniq)"
     MEM="$(free -h | grep Mem | awk '{print $2}')"
@@ -661,12 +663,26 @@ function checkmachine() {
 
 }
 
+###############################################################################
+# get bus of disk
+# 1 - device path
+function getBus() {
+  BUS=""
+  # usb/ata(sata/ide)/scsi
+  [ -z "${BUS}" ] && BUS=$(udevadm info --query property --name "${1}" 2>/dev/null | grep ID_BUS | cut -d= -f2 | sed 's/ata/sata/')
+  # usb/sata(sata/ide)/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,TRAN 2>/dev/null | grep "${1} " | awk '{print $2}') #Spaces are intentional
+  # usb/scsi(sata/ide)/virtio(scsi/virtio)/mmc/nvme
+  [ -z "${BUS}" ] && BUS=$(lsblk -dpno KNAME,SUBSYSTEMS 2>/dev/null | grep "${1} " | awk -F':' '{print $(NF-1)}' | sed 's/_host//') #Spaces are intentional
+  echo "${BUS}"
+}
+
 function getusb() {
 
     # Get the VID/PID if we are in USB
     VID="0x0000"
     PID="0x0000"
-    BUS=$(udevadm info --query property --name ${LOADER_DISK} | grep BUS | cut -d= -f2)
+    
     if [ "${BUS}" = "usb" ]; then
         VID="0x$(udevadm info --query property --name ${LOADER_DISK} | grep ID_VENDOR_ID | cut -d= -f2)"
         PID="0x$(udevadm info --query property --name ${LOADER_DISK} | grep ID_MODEL_ID | cut -d= -f2)"
@@ -676,8 +692,8 @@ function getusb() {
         curvid=$(jq -r -e .general.usb_line $userconfigfile | awk -Fvid= '{print $2}' | awk '{print  $1}')
         sed -i "s/${curpid}/${PID}/" $userconfigfile
         sed -i "s/${curvid}/${VID}/" $userconfigfile
-    elif [ "${BUS}" != "ata" ]; then
-        echo "Loader disk neither USB or DoM"
+    elif [ "${BUS}" != "sata" ]; then
+        echo "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
     fi
 
 }
@@ -857,67 +873,6 @@ function setnetwork() {
 
 }
 
-function readconfig() {
-
-    for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
-        if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-            break
-        elif [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
-            LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-            break
-        fi    
-    done
-    #LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
-    LOADER_BUS="$(udevadm info --query property --name /dev/${LOADER_DISK} | grep -i ID_BUS | awk -F= '{print $2}')"
-
-    userconfigfile=/mnt/tcrp/user_config.json
-
-    if [ -f $userconfigfile ]; then
-        model="$(jq -r -e '.general .model' $userconfigfile)"
-        if [ -z "$model" ]; then
-            echo "model is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
-            exit 99
-        fi        
-        version="$(jq -r -e '.general .version' $userconfigfile)"
-        if [ -z "$version" ]; then
-            echo "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
-            exit 99
-        fi        
-        smallfixnumber="$(jq -r -e '.general .smallfixnumber' $userconfigfile)"
-        if [ -z "$smallfixnumber" ]; then
-            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file."
-        #    exit 99
-        fi        
-        redpillmake="$(jq -r -e '.general .redpillmake' $userconfigfile)"
-        friendautoupd="$(jq -r -e '.general .friendautoupd' $userconfigfile)"
-        hidesensitive="$(jq -r -e '.general .hidesensitive' $userconfigfile)"
-        serial="$(jq -r -e '.extra_cmdline .sn' $userconfigfile)"
-        if [ -z "$serial" ]; then
-            echo "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
-            exit 99
-        fi        
-        rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
-        zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
-        mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
-        if [ -z "$mac1" ]; then
-            echo "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
-            exit 99
-        fi        
-        mac2="$(jq -r -e '.extra_cmdline .mac2' $userconfigfile)"
-        mac3="$(jq -r -e '.extra_cmdline .mac3' $userconfigfile)"
-        mac4="$(jq -r -e '.extra_cmdline .mac4' $userconfigfile)"
-        staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
-        dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
-        loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
-    else
-        echo "ERROR ! User config file : $userconfigfile not found"
-    fi
-
-    [ -z "$redpillmake" ] || [ "$redpillmake" = "null" ] && echo "redpillmake setting not found while reading $userconfigfile, defaulting to dev" && redpillmake="dev"
-
-}
-
 function mountall() {
 
     for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
@@ -930,6 +885,7 @@ function mountall() {
         fi    
     done
     #LOADER_DISK=$(blkid | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')
+    getBus "${LOADER_DISK}"    
 
     [ ! -d /mnt/tcrp ] && mkdir /mnt/tcrp
     [ ! -d /mnt/tcrp-p1 ] && mkdir /mnt/tcrp-p1
@@ -978,6 +934,55 @@ function mountall() {
         echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
         exit 99
     fi
+
+}
+
+function readconfig() {
+
+    userconfigfile=/mnt/tcrp/user_config.json
+
+    if [ -f $userconfigfile ]; then
+        model="$(jq -r -e '.general .model' $userconfigfile)"
+        if [ -z "$model" ]; then
+            echo "model is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
+        version="$(jq -r -e '.general .version' $userconfigfile)"
+        if [ -z "$version" ]; then
+            echo "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
+        smallfixnumber="$(jq -r -e '.general .smallfixnumber' $userconfigfile)"
+        if [ -z "$smallfixnumber" ]; then
+            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file."
+        #    exit 99
+        fi        
+        redpillmake="$(jq -r -e '.general .redpillmake' $userconfigfile)"
+        friendautoupd="$(jq -r -e '.general .friendautoupd' $userconfigfile)"
+        hidesensitive="$(jq -r -e '.general .hidesensitive' $userconfigfile)"
+        serial="$(jq -r -e '.extra_cmdline .sn' $userconfigfile)"
+        if [ -z "$serial" ]; then
+            echo "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
+        rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
+        zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
+        mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
+        if [ -z "$mac1" ]; then
+            echo "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            exit 99
+        fi        
+        mac2="$(jq -r -e '.extra_cmdline .mac2' $userconfigfile)"
+        mac3="$(jq -r -e '.extra_cmdline .mac3' $userconfigfile)"
+        mac4="$(jq -r -e '.extra_cmdline .mac4' $userconfigfile)"
+        staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
+        dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
+        loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
+    else
+        echo "ERROR ! User config file : $userconfigfile not found"
+    fi
+
+    [ -z "$redpillmake" ] || [ "$redpillmake" = "null" ] && echo "redpillmake setting not found while reading $userconfigfile, defaulting to dev" && redpillmake="dev"
 
 }
 
@@ -1042,7 +1047,7 @@ function boot() {
         exit 0
     fi
 
-    if [ "$LOADER_BUS" = "ata" ]; then
+    if [ "${BUS}" = "sata" ]; then
 
         CMDLINE_LINE=$(jq -r -e '.general .sata_line' /mnt/tcrp/user_config.json)
         # Check dom size and set max size accordingly
@@ -1114,8 +1119,8 @@ function boot() {
         cp tools/grub-editenv /usr/bin
         chmod +x /usr/bin/grub-editenv
         /usr/bin/grub-editenv /mnt/tcrp-p1/boot/grub/grubenv create        
-        [ "$LOADER_BUS" = "ata" ] && setgrubdefault 1
-        [ "$LOADER_BUS" = "usb" ] && setgrubdefault 0
+        [ "${BUS}" = "sata" ] && setgrubdefault 1
+        [ "${BUS}" = "usb" ] && setgrubdefault 0
         reboot
     else
 
