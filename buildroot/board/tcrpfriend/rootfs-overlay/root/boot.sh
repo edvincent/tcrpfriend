@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240322
+# Date : 240323
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0u"
+BOOTVER="0.1.0v"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -81,6 +81,7 @@ function history() {
     0.1.0t Supports bootloader injection with SHR disk only
            dom_szmax=32GB (limit size of the injected bootloader)
     0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
+    0.1.0v Improved functionality to skip non-bootloader devices
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -90,19 +91,13 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
-0.1.0l Modified the kexec option from -a (memory) to -f (file) to accurately load the patched initrd-dsm.
-0.1.0m Recycle initrd-dsm instead of custom.gz (extract /exts)
-0.1.0n When a loader is inserted into syno disk /dev/sda and /dev/sdb, 
-       change to additionally mount partitions 1,2 and 3 to /dev/sda5,/dev/sda6 and /dev/sdb5.
 0.1.0o Added RedPill bootloader hard disk porting function
-0.1.0p Added priority search for USB or VMDK bootloader over bootloader injected into HDD
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
        synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
-0.1.0r Fix bug of 0.1.0q (Fix typo for partition number 4)
-0.1.0s Force the dom_szmax limit of the injected bootloader to be 16GB
 0.1.0t Supports bootloader injection with SHR disk only
        dom_szmax=32GB (limit size of the injected bootloader)
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
+0.1.0v Improved functionality to skip non-bootloader devices
 
 EOF
 }
@@ -879,16 +874,23 @@ function mountall() {
     for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
             LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-            break
+            [ -z "${LOADER_DISK}" ] && continue || break
         elif [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 1 ]; then
             LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-8 | awk -F\/ '{print $3}')"
-            break
+            [ -z "${LOADER_DISK}" ] && continue || break
         fi    
     done
     if [ -z "${LOADER_DISK}" ]; then
         for edisk in $(fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
             if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
                 LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+            fi    
+        done
+    fi    
+    if [ -z "${LOADER_DISK}" ]; then
+        for edisk in $(fdisk -l | grep "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
+            if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+                LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"
             fi    
         done
     fi    
