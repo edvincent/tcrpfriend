@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240323
+# Date : 240324
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0v"
+BOOTVER="0.1.0w"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -82,6 +82,7 @@ function history() {
            dom_szmax=32GB (limit size of the injected bootloader)
     0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
     0.1.0v Improved functionality to skip non-bootloader devices
+    0.1.0w Improved setnetwork function for using static IP
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -98,6 +99,7 @@ function showlastupdate() {
        dom_szmax=32GB (limit size of the injected bootloader)
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.0v Improved functionality to skip non-bootloader devices
+0.1.0w Improved setnetwork function for using static IP
 
 EOF
 }
@@ -864,7 +866,7 @@ function setnetwork() {
         export HTTP_PROXY="$staticproxy" && export HTTPS_PROXY="$staticproxy" &&
         export http_proxy="$staticproxy" && export https_proxy="$staticproxy" | tee -a boot.log
 
-    IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
+    IP="$(ip a | grep $staticip | grep $ethdev | awk -F\/ '{print $1}' | awk '{print $2}')"
 
 }
 
@@ -881,16 +883,9 @@ function mountall() {
         fi    
     done
     if [ -z "${LOADER_DISK}" ]; then
-        for edisk in $(fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
+        for edisk in $(fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
             if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
                 LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
-            fi    
-        done
-    fi    
-    if [ -z "${LOADER_DISK}" ]; then
-        for edisk in $(fdisk -l | grep "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
-            if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
-                LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"
             fi    
         done
     fi    
@@ -1024,7 +1019,7 @@ function boot() {
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
 
         setnetwork
-        getip
+        [ ! -n "$IP" ] && getip
     else
         # Set Mac Address according to user_config
         setmac
@@ -1036,9 +1031,8 @@ function boot() {
     # Check whether the major version has been updated from under 7.2 to 7.2
     #checkversionup
 
-    if [ ! -n "$IP" ]; then
-        getip
-    fi
+    [ ! -n "$IP" ] && getip
+    
     # Check ip upgrade is required
     checkupgrade
 
@@ -1046,9 +1040,8 @@ function boot() {
     getusb
 
     # check if new TCRP Friend version is available to download
-    if [ ! -n "$IP" ]; then
-        getip
-    fi
+    [ ! -n "$IP" ] && getip
+    
     checkinternet
 
     [ "${INTERNET}" = "ON" ] && upgradefriend
