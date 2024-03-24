@@ -844,14 +844,11 @@ function getip() {
             sleep 1
         done
         if [ -n "${1}" ]; then
-            echo "1"
             if [ -n "${IP}" ] && [ "${eth}" = "${ethdev}" ]; then
-                echo "2"
-                if [ $(ip a | grep "${1}" | wc -l) -eq 0 ]; then
-                    echo "3"
-                    ip a del "${IP}" dev ${eth} && ip a add "${1}" dev ${eth} | tee -a boot.log
-                    break
-                fi
+                ip a del "${IP}" dev ${eth}
+                ip a add "${1}" dev ${eth}
+                ip a
+                break
             fi
         else
             echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
