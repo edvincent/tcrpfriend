@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240324
+# Date : 240323
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0w"
+BOOTVER="0.1.0v"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -82,7 +82,6 @@ function history() {
            dom_szmax=32GB (limit size of the injected bootloader)
     0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
     0.1.0v Improved functionality to skip non-bootloader devices
-    0.1.0w Improved setnetwork function for using static IP
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -99,7 +98,6 @@ function showlastupdate() {
        dom_szmax=32GB (limit size of the injected bootloader)
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.0v Improved functionality to skip non-bootloader devices
-0.1.0w Improved setnetwork function for using static IP
 
 EOF
 }
@@ -710,6 +708,45 @@ function matchpciidmodule() {
 
 }
 
+function getip() {
+
+    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
+
+    sleep 3
+    # Wait for an IP
+    for eth in $ethdevs; do 
+        COUNT=0
+        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            if [ ! -z "${MATCHDRIVER}" ]; then
+                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                    DRIVER=${MATCHDRIVER}
+                fi
+            fi
+        fi    
+        while true; do
+            if [ ${COUNT} -eq 5 ]; then
+                break
+            fi
+            COUNT=$((${COUNT} + 1))
+            if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
+                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
+                #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+                IP=$(echo -n "${IP}" | tr '\n' '\b')
+                LASTIP="${IP}"
+                break
+            else
+                IP=""
+            fi
+            sleep 1
+        done
+        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
+    done
+    IP="${LASTIP}"
+}
 
 function checkfiles() {
 
@@ -761,7 +798,9 @@ function checkupgrade() {
         msgnormal "Ramdisk OK ! "
     else
         msgwarning "Ramdisk upgrade has been detected and "
-        [ -z "$IP" ] && getip ""
+        if [ ! -n "$IP" ]; then
+           getip
+        fi
         if [ -n "$IP" ]; then
             patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
         else
@@ -808,58 +847,6 @@ function setmac() {
     /etc/init.d/S41dhcpcd restart >/dev/null 2>&1
 }
 
-function getip() {
-
-    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
-
-    sleep 3
-    # Wait for an IP
-    for eth in $ethdevs; do 
-        COUNT=0
-        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
-        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-            if [ ! -z "${MATCHDRIVER}" ]; then
-                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                    DRIVER=${MATCHDRIVER}
-                fi
-            fi
-        fi    
-        while true; do
-            if [ ${COUNT} -eq 5 ]; then
-                break
-            fi
-            COUNT=$((${COUNT} + 1))
-            if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
-                #IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
-                IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
-                IP=$(echo -n "${IP}" | tr '\n' '\b')
-                LASTIP="${IP}"
-                break
-            else
-                IP=""
-            fi
-            sleep 1
-        done
-        if [ -n "${1}" ]; then
-            if [ -n "${IP}" ] && [ "${eth}" = "${ethdev}" ]; then
-                echo "IP = ${IP}"
-                echo "eth = ${eth}"
-                echo "staticip = ${1}"
-                ip a del "${IP}" dev ${eth}
-                ip a add "${1}" dev ${eth}
-                ip a
-                break
-            fi
-        else
-            echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
-        fi
-    done
-    IP="${LASTIP}"
-}
-
 function setnetwork() {
 
     ethdev=$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
@@ -870,16 +857,14 @@ function setnetwork() {
     staticgw="$(jq -r -e .ipsettings.ipgw /mnt/tcrp/user_config.json)"
     staticproxy="$(jq -r -e .ipsettings.ipproxy /mnt/tcrp/user_config.json)"
 
-    # getip first for delete ip
-    getip "${staticip}"
-
+    [ -n "$staticip" ] && [ $(ip a | grep $staticip | wc -l) -eq 0 ] && ip a add "$staticip" dev $ethdev | tee -a boot.log
     [ -n "$staticdns" ] && [ $(grep ${staticdns} /etc/resolv.conf | wc -l) -eq 0 ] && sed -i "a nameserver $staticdns" /etc/resolv.conf | tee -a boot.log
     [ -n "$staticgw" ] && [ $(ip route | grep "default via ${staticgw}" | wc -l) -eq 0 ] && ip route add default via $staticgw dev $ethdev | tee -a boot.log
     [ -n "$staticproxy" ] &&
         export HTTP_PROXY="$staticproxy" && export HTTPS_PROXY="$staticproxy" &&
         export http_proxy="$staticproxy" && export https_proxy="$staticproxy" | tee -a boot.log
 
-    getip ""
+    IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
 
 }
 
@@ -896,9 +881,16 @@ function mountall() {
         fi    
     done
     if [ -z "${LOADER_DISK}" ]; then
-        for edisk in $(fdisk -l | grep -e "Disk /dev/nvme" -e "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
+        for edisk in $(fdisk -l | grep "Disk /dev/nvme" | awk '{print $2}' | sed 's/://' ); do
             if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
                 LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"    
+            fi    
+        done
+    fi    
+    if [ -z "${LOADER_DISK}" ]; then
+        for edisk in $(fdisk -l | grep "Disk /dev/mmc" | awk '{print $2}' | sed 's/://' ); do
+            if [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 3 ]; then
+                LOADER_DISK="$(blkid | grep ${edisk} | grep "6234-C863" | cut -c 1-12 | awk -F\/ '{print $3}')"
             fi    
         done
     fi    
@@ -1030,20 +1022,23 @@ function boot() {
     #     "ipproxy" : ""
     # },
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
+
         setnetwork
+        getip
     else
         # Set Mac Address according to user_config
         setmac
 
         # Get IP Address after setting new mac address to display IP
-        getip ""
+        getip
     fi
 
     # Check whether the major version has been updated from under 7.2 to 7.2
     #checkversionup
 
-    [ -z "$IP" ] && getip ""
-    
+    if [ ! -n "$IP" ]; then
+        getip
+    fi
     # Check ip upgrade is required
     checkupgrade
 
@@ -1051,8 +1046,9 @@ function boot() {
     getusb
 
     # check if new TCRP Friend version is available to download
-    [ -z "$IP" ] && getip ""
-    
+    if [ ! -n "$IP" ]; then
+        getip
+    fi
     checkinternet
 
     [ "${INTERNET}" = "ON" ] && upgradefriend
@@ -1225,7 +1221,7 @@ function initialize() {
 case $1 in
 
 update)
-    getip ""
+    getip
     upgradefriend
     ;;
 
