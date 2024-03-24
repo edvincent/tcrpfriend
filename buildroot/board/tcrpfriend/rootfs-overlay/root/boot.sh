@@ -833,8 +833,8 @@ function getip() {
             fi
             COUNT=$((${COUNT} + 1))
             if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
-                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
-                #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+                #IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
+                IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
                 IP=$(echo -n "${IP}" | tr '\n' '\b')
                 LASTIP="${IP}"
                 break
@@ -845,6 +845,9 @@ function getip() {
         done
         if [ -n "${1}" ]; then
             if [ -n "${IP}" ] && [ "${eth}" = "${ethdev}" ]; then
+                echo "IP = ${IP}"
+                echo "eth = ${eth}"
+                echo "staticip = ${1}"
                 ip a del "${IP}" dev ${eth}
                 ip a add "${1}" dev ${eth}
                 ip a
