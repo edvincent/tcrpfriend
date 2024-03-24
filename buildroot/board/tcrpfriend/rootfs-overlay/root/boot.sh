@@ -710,45 +710,6 @@ function matchpciidmodule() {
 
 }
 
-function getip() {
-
-    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
-
-    sleep 3
-    # Wait for an IP
-    for eth in $ethdevs; do 
-        COUNT=0
-        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
-        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-            if [ ! -z "${MATCHDRIVER}" ]; then
-                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                    DRIVER=${MATCHDRIVER}
-                fi
-            fi
-        fi    
-        while true; do
-            if [ ${COUNT} -eq 5 ]; then
-                break
-            fi
-            COUNT=$((${COUNT} + 1))
-            if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
-                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
-                #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
-                IP=$(echo -n "${IP}" | tr '\n' '\b')
-                LASTIP="${IP}"
-                break
-            else
-                IP=""
-            fi
-            sleep 1
-        done
-        echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
-    done
-    IP="${LASTIP}"
-}
 
 function checkfiles() {
 
@@ -849,6 +810,53 @@ function setmac() {
     /etc/init.d/S41dhcpcd restart >/dev/null 2>&1
 }
 
+function getip() {
+
+    ethdevs=$(ls /sys/class/net/ | grep -v lo || true)
+
+    sleep 3
+    # Wait for an IP
+    for eth in $ethdevs; do 
+        COUNT=0
+        DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
+        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+            if [ ! -z "${MATCHDRIVER}" ]; then
+                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                    DRIVER=${MATCHDRIVER}
+                fi
+            fi
+        fi    
+        while true; do
+            if [ ${COUNT} -eq 5 ]; then
+                break
+            fi
+            COUNT=$((${COUNT} + 1))
+            if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
+                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
+                #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
+                IP=$(echo -n "${IP}" | tr '\n' '\b')
+                LASTIP="${IP}"
+                break
+            else
+                IP=""
+            fi
+            sleep 1
+        done
+        if [ $# -eq 1 ]; then
+            if [ -n "${IP}" ] && [ "${eth}" = "${ethdev}" ]; then
+                [ -n "${1}" ] && [ $(ip a | grep "${1}" | wc -l) -eq 0 ] && ip a del "${IP}" dev ${eth} && ip a add "${1}" dev ${eth} | tee -a boot.log
+                break
+            fi
+        else
+            echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
+        fi
+    done
+    IP="${LASTIP}"
+}
+
 function setnetwork() {
 
     ethdev=$(ip a | grep UP | grep -v LOOP | head -1 | awk '{print $2}' | sed -e 's/://g')
@@ -859,14 +867,16 @@ function setnetwork() {
     staticgw="$(jq -r -e .ipsettings.ipgw /mnt/tcrp/user_config.json)"
     staticproxy="$(jq -r -e .ipsettings.ipproxy /mnt/tcrp/user_config.json)"
 
-    [ -n "$staticip" ] && [ $(ip a | grep $staticip | wc -l) -eq 0 ] && ip a add "$staticip" dev $ethdev | tee -a boot.log
+    # getip first for delete ip
+    getip "${staticip}"
+
     [ -n "$staticdns" ] && [ $(grep ${staticdns} /etc/resolv.conf | wc -l) -eq 0 ] && sed -i "a nameserver $staticdns" /etc/resolv.conf | tee -a boot.log
     [ -n "$staticgw" ] && [ $(ip route | grep "default via ${staticgw}" | wc -l) -eq 0 ] && ip route add default via $staticgw dev $ethdev | tee -a boot.log
     [ -n "$staticproxy" ] &&
         export HTTP_PROXY="$staticproxy" && export HTTPS_PROXY="$staticproxy" &&
         export http_proxy="$staticproxy" && export https_proxy="$staticproxy" | tee -a boot.log
 
-    IP="$(ip a | grep $staticip | grep $ethdev | awk -F\/ '{print $1}' | awk '{print $2}')"
+    getip
 
 }
 
@@ -1017,9 +1027,7 @@ function boot() {
     #     "ipproxy" : ""
     # },
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
-
         setnetwork
-        [ ! -n "$IP" ] && getip
     else
         # Set Mac Address according to user_config
         setmac
