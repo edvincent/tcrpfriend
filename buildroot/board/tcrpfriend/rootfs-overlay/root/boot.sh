@@ -761,9 +761,7 @@ function checkupgrade() {
         msgnormal "Ramdisk OK ! "
     else
         msgwarning "Ramdisk upgrade has been detected and "
-        if [ ! -n "$IP" ]; then
-           getip
-        fi
+        [ -z "$IP" ] && getip ""
         if [ -n "$IP" ]; then
             patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
         else
@@ -845,10 +843,15 @@ function getip() {
             fi
             sleep 1
         done
-        if [ $# -eq 1 ]; then
+        if [ -n "${1}" ]; then
+            echo "1"
             if [ -n "${IP}" ] && [ "${eth}" = "${ethdev}" ]; then
-                [ -n "${1}" ] && [ $(ip a | grep "${1}" | wc -l) -eq 0 ] && ip a del "${IP}" dev ${eth} && ip a add "${1}" dev ${eth} | tee -a boot.log
-                break
+                echo "2"
+                if [ $(ip a | grep "${1}" | wc -l) -eq 0 ]; then
+                    echo "3"
+                    ip a del "${IP}" dev ${eth} && ip a add "${1}" dev ${eth} | tee -a boot.log
+                    break
+                fi
             fi
         else
             echo "IP Address : $(msgnormal "${IP}"), Network Interface Card : ${eth} [${VENDOR}:${DEVICE}] (${DRIVER}) "
@@ -876,7 +879,7 @@ function setnetwork() {
         export HTTP_PROXY="$staticproxy" && export HTTPS_PROXY="$staticproxy" &&
         export http_proxy="$staticproxy" && export https_proxy="$staticproxy" | tee -a boot.log
 
-    getip
+    getip ""
 
 }
 
@@ -1033,13 +1036,13 @@ function boot() {
         setmac
 
         # Get IP Address after setting new mac address to display IP
-        getip
+        getip ""
     fi
 
     # Check whether the major version has been updated from under 7.2 to 7.2
     #checkversionup
 
-    [ ! -n "$IP" ] && getip
+    [ -z "$IP" ] && getip ""
     
     # Check ip upgrade is required
     checkupgrade
@@ -1048,7 +1051,7 @@ function boot() {
     getusb
 
     # check if new TCRP Friend version is available to download
-    [ ! -n "$IP" ] && getip
+    [ -z "$IP" ] && getip ""
     
     checkinternet
 
@@ -1222,7 +1225,7 @@ function initialize() {
 case $1 in
 
 update)
-    getip
+    getip ""
     upgradefriend
     ;;
 
