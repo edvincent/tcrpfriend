@@ -864,7 +864,7 @@ function setnetwork() {
         export HTTP_PROXY="$staticproxy" && export HTTPS_PROXY="$staticproxy" &&
         export http_proxy="$staticproxy" && export https_proxy="$staticproxy" | tee -a boot.log
 
-    IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $5}')"
+    IP="$(ip route get 1.1.1.1 2>/dev/null | grep $ethdev | awk '{print $7}')"
     if [ -n "${IP}" ]; then
         DRIVER=$(ls -ld /sys/class/net/${ethdev}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
         VENDOR=$(cat /sys/class/net/${ethdev}/device/vendor | sed 's/0x//')
