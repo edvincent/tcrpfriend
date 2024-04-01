@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240324
+# Date : 240402
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0w"
+BOOTVER="0.1.0x"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -83,6 +83,7 @@ function history() {
     0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
     0.1.0v Improved functionality to skip non-bootloader devices
     0.1.0w Improved setnetwork function for using static IP
+    0.1.0x Multilingual explanation support
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -1002,6 +1003,12 @@ function readconfig() {
         staticboot="$(jq -r -e '.general .staticboot' $userconfigfile)"
         dmpm="$(jq -r -e '.general.devmod' $userconfigfile)"
         loadermode="$(jq -r -e '.general.loadermode' $userconfigfile)"
+        ucode=$(jq -r -e '.general.ucode' "$userconfigfile")
+        tz=$(echo $ucode | cut -c 4-)
+
+        export LANG=${ucode}.UTF-8
+        export LC_ALL=${ucode}.UTF-8
+  
     else
         echo "ERROR ! User config file : $userconfigfile not found"
     fi
@@ -1181,6 +1188,7 @@ function welcome() {
 
     # Echo Version
     echo "TCRP Friend Version : $BOOTVER"
+    echo "한국어 디스플레이 테스트"
     showlastupdate
 }
 
