@@ -4,6 +4,8 @@ BR2_x86_64=y
 # Toolchain, required for eudev (to autoload drivers)
 BR2_TOOLCHAIN_BUILDROOT_GLIBC=y
 BR2_TOOLCHAIN_BUILDROOT_CXX=y
+BR2_TOOLCHAIN_HAS_LOCALE=y
+BR2_TOOLCHAIN_HAS_WCHAR=y
 
 # System
 BR2_TARGET_GENERIC_HOSTNAME="tcrpfriend"
