@@ -1132,11 +1132,11 @@ function boot() {
         CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
     fi
 
-    if [ "${INTERNET}" = "ON" ]; then
-        pip install click 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
-        pip install qrcode 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
-        pip install Image 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
-    fi   
+    #if [ "${INTERNET}" = "ON" ]; then
+    #    pip install click 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
+    #    pip install qrcode 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
+    #    pip install Image 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >> $FRIENDLOG
+    #fi   
 
     if [ "$staticboot" = "true" ]; then
         echo "Static boot set, rebooting to static ..."
