@@ -1187,7 +1187,7 @@ function welcome() {
 
     # Echo Version
     echo "TCRP Friend Version : $BOOTVER"
-    echo "한국어 디스플레이 테스트"
+    echo -e "\xEF\xBB\xBF한국어디스플레이테스트수정본"
     showlastupdate
 }
 
