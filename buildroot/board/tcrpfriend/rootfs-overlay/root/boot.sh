@@ -1103,13 +1103,13 @@ function boot() {
 
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
-    echo "cmdline : ${CMDLINE_LINE}"
+    echo "cmdline : \033[1;36m${CMDLINE_LINE}\033[0m"
     echo
-    echo -en "\r$(TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem.")\n"
-    echo -en "\r$(TEXT "If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access.")\n"
-    echo -en "\r$(TEXT "Default TTYD root password is $(msgalert "blank")")\n"
-    echo        
-    echo -en "\r$(TEXT "User config is on $(msgwarning "/mnt/tcrp/user_config.json")")\n"
+    echo -e "$(msgpurple "$(TEXT "Access http://${IP}:7681 via the TTYD web terminal to check the problem.")")"
+    echo -e "$(msgwarning "$(TEXT "If you have any problems with the DSM installation steps, check the '/var/log/linuxrc.syno.log' file in this access.")")"
+    echo -e "$(msgalert "$(TEXT "Default TTYD root password is 'blank' ")")"
+    echo -e "$(msgcyan "$(TEXT "User config is on '/mnt/tcrp/user_config.json'")")"
+    echo            
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
