@@ -31,7 +31,7 @@ jobs:
             msgfmt ${P} -o ${P/.po/.mo}
           done
           echo "Convert po2mo end"          
-          ll ${DEST_PATH}/*/LC_MESSAGES/
+          ls -lrt ${DEST_PATH}/*/LC_MESSAGES/
       - name: Commit and push changes
         run: |
           git add .
