@@ -25,7 +25,7 @@ jobs:
           echo "Convert po2mo begin"
           sudo apt-get update
           sudo apt-get install gettext
-          DEST_PATH="${ROOT_PATH}/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/lang"
+          DEST_PATH="${ROOT_PATH}/buildroot/board/tcrpfriend/rootfs-overlay/root/lang"
           echo "${DEST_PATH}"
           for P in $(ls ${DEST_PATH}/*/LC_MESSAGES/msg.po 2>/dev/null); do
             # Use msgfmt command to compile the .po file into a binary .mo file
@@ -33,7 +33,7 @@ jobs:
             msgfmt ${P} -o ${P/.po/.mo}
           done
           echo "Convert po2mo end"          
-          #ls -lrt ${DEST_PATH}/*/LC_MESSAGES/
+          ls -lrt ${DEST_PATH}/*/LC_MESSAGES/
       - name: Commit and push changes
         run: |
           git add .
