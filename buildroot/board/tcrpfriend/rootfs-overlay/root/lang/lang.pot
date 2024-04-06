@@ -113,10 +113,6 @@ msgstr ""
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
 msgstr ""
 
-#: boot.sh:637 boot.sh:638 boot.sh:642 boot.sh:644 boot.sh:647
-msgid "-ne"
-msgstr ""
-
 #: boot.sh:693
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
 msgstr ""
