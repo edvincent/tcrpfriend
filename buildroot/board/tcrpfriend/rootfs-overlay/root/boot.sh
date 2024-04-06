@@ -1105,11 +1105,11 @@ function boot() {
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo "cmdline : ${CMDLINE_LINE}"
     echo
-    TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem.\n"
-    TEXT "(If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access.\n"
-    TEXT "Default TTYD root password is $(msgalert "blank")\n"
+    echo -en "\r$(TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem.")\n"
+    echo -en "\r$(TEXT "If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access.")\n"
+    echo -en "\r$(TEXT "Default TTYD root password is $(msgalert "blank")")\n"
     echo        
-    TEXT "User config is on $(msgwarning "/mnt/tcrp/user_config.json")\n"
+    echo -en "\r$(TEXT "User config is on $(msgwarning "/mnt/tcrp/user_config.json")")\n"
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
