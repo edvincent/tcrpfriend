@@ -58,7 +58,7 @@ msgid "Applying user synoinfo settings"
 msgstr ""
 
 #: boot.sh:424
-msgid "Copying extra ramdisk files "
+msgid "Copying extra ramdisk files"
 msgstr ""
 
 #: boot.sh:431
@@ -70,11 +70,11 @@ msgid "Adding custom.gz or initrd-dsm to image"
 msgstr ""
 
 #: boot.sh:439
-msgid "Found custom.gz, so extract from custom.gz "
+msgid "Found custom.gz, so extract from custom.gz"
 msgstr ""
 
 #: boot.sh:446
-msgid "Not found custom.gz, so extract from initrd-dsm "
+msgid "Not found custom.gz, so extract from initrd-dsm"
 msgstr ""
 
 #: boot.sh:456
@@ -83,10 +83,6 @@ msgstr ""
 
 #: boot.sh:511
 msgid "ERROR: Failed to mount correctly all required partitions"
-msgstr ""
-
-#: boot.sh:533
-msgid "copy 7.2 initrd-dsm & grub.cfg"
 msgstr ""
 
 #: boot.sh:567
@@ -126,7 +122,7 @@ msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
 msgstr ""
 
 #: boot.sh:820
-msgid "A reboot is required. Press any key to reboot..."
+msgid "A reboot is required. Press any key to reboot"
 msgstr ""
 
 #: boot.sh:854
@@ -135,22 +131,22 @@ msgid ""
 msgstr ""
 
 #: boot.sh:905
-msgid "Not Supported Loader BUS Type, program Exit!!!"
+msgid "Not Supported Loader BUS Type, program Exit"
 msgstr ""
 
 #: boot.sh:927
-msgid "Failed to find boot Partition on !!!"
+msgid "Failed to find boot Partition on"
 msgstr ""
 
 #: boot.sh:971
 msgid ""
-"model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"model is not resolved. Please check the /mnt/tcrp/user_config.json file"
 "stopping boot process"
 msgstr ""
 
 #: boot.sh:976
 msgid ""
-"Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
+"Build version is not resolved. Please check the /mnt/tcrp/user_config.json"
 "file. stopping boot process"
 msgstr ""
 
@@ -162,13 +158,13 @@ msgstr ""
 
 #: boot.sh:989
 msgid ""
-"serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"serial is not resolved. Please check the /mnt/tcrp/user_config.json file"
 "stopping boot process"
 msgstr ""
 
 #: boot.sh:996
 msgid ""
-"mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file"
 "stopping boot process"
 msgstr ""
 
@@ -181,11 +177,11 @@ msgid "Debug Friend set, stopping boot process"
 msgstr ""
 
 #: boot.sh:1142
-msgid "Static boot set, rebooting to static ..."
+msgid "Static boot set, rebooting to static"
 msgstr ""
 
 #: boot.sh:1156
-msgid "Boot timeout exceeded, booting ... "
+msgid "Boot timeout exceeded, booting"
 msgstr ""
 
 #: boot.sh:1159
@@ -193,7 +189,7 @@ msgid "(Network access is not immediately available)"
 msgstr ""
 
 #: boot.sh:1161
-msgid "Kernel loading has started, nothing will be displayed here anymore ..."
+msgid "Kernel loading has started, nothing will be displayed here anymore"
 msgstr ""
 
 #: boot.sh:1195
@@ -201,5 +197,105 @@ msgid "ERROR running on alien system"
 msgstr ""
 
 #: boot.sh:1205
-msgid "No NIC found! - Loader does not work without Network connection."
+msgid "No NIC found! - Loader does not work without Network connection"
+msgstr ""
+
+#: boot.sh:191
+msgid "No IP yet to check for latest friend"
+msgstr ""
+
+#: boot.sh:199
+msgid "The getredpillko() cannot proceed because there is no IP yet"
+msgstr ""
+
+#: boot.sh:365 boot.sh:807
+msgid "The patch cannot proceed because there is no IP yet"
+msgstr ""
+
+#: boot.sh:1111
+msgid "Press <r> to enter a menu for Reset DSM Password"
+msgstr ""
+
+#: boot.sh:1128
+msgid ""
+"FAILED to match the count of configured netif_num and mac addresses, DSM"
+"will panic, exiting so you can fix this"
+msgstr ""
+
+#: boot.sh:186
+msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
+msgstr ""
+
+#: boot.sh:542
+msgid ""
+"Since the revision update was not detected, proceed to the next step"
+msgstr ""
+
+#: boot.sh:648
+msgid "System is running in UEFI boot mode"
+msgstr ""
+
+#: boot.sh:789
+msgid "Setting default boot entry to JOT SATA"
+msgstr ""
+
+#: boot.sh:792
+msgid "Setting default boot entry to JOT USB"
+msgstr ""
+
+#: boot.sh:1112
+msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
+msgstr ""
+
+#: boot.sh:1158
+msgid "take 20 - 40 seconds"
+msgstr ""
+
+#: boot.sh:141
+msgid ""
+"No internet found, Skip updating friends and installing Python libraries for"
+"QR codes"
+msgstr ""
+
+#: boot.sh:157
+msgid "TCRP Friend auto update disabled"
+msgstr ""
+
+#: boot.sh:175
+msgid ""
+"Remove vga=791 parameter from grub.cfg friend boot entry to prevent console"
+"dead"
+msgstr ""
+
+#: boot.sh:802
+msgid "Ramdisk upgrade has been detected and "
+msgstr ""
+
+#: boot.sh:815
+msgid "zImage upgrade has been detected"
+msgstr ""
+
+#: boot.sh:819
+msgid ""
+"Ramdisk upgrade and zImage upgrade for JOT completed successfully"
+msgstr ""
+
+#: boot.sh:1105
+msgid "blank"
+msgstr ""
+
+#: boot.sh:1113
+msgid "Press <j> to enter a Junior mode (to re-install DSM)"
+msgstr ""
+
+#: boot.sh:1117
+msgid "Entering a Junior mode (to re-install DSM)"
+msgstr ""
+
+#: boot.sh:1132
+msgid "EFI booted system with no EFI option, adding withefi to cmdline"
+msgstr ""
+
+#: boot.sh:1175
+msgid "Booting with noefi, please notice that this might cause issues"
 msgstr ""
