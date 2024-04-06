@@ -1105,7 +1105,8 @@ function boot() {
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo "cmdline : $(msgblue "${CMDLINE_LINE}")"
     echo
-    echo -e "$(msgpurple "$(TEXT "Access http://${IP}:7681 via the TTYD web terminal to check the problem.")")"
+    echo -en "$(msgpurple "$(TEXT "To check the problem, access the following TTYD URL through a web browser. :")")"
+    echo " http://${IP}:7681"
     echo -e "$(msgwarning "$(TEXT "If you have any problems with the DSM installation steps, check the '/var/log/linuxrc.syno.log' file in this access.")")"
     echo -e "$(msgalert "$(TEXT "Default TTYD root password is 'blank' ")")"
     echo -e "$(msgcyan "$(TEXT "User config is on '/mnt/tcrp/user_config.json'")")"
