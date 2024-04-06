@@ -140,7 +140,7 @@ function checkinternet() {
     curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
         INTERNET="ON"
-        msgwarning "OK!\n"
+        msgwarning " OK!\n"
     else
         INTERNET="OFF"
         echo -e "\033[1;33m$(TEXT "No internet found, Skip updating friends and installing Python libraries for QR codes!")\033[0m"
@@ -159,7 +159,7 @@ function upgradefriend() {
     if [ ! -z "$IP" ]; then
 
         if [ "${friendautoupd}" = "false" ]; then
-            echo -e "\033[1;33m$(TEXT "TCRP Friend auto update disabled")\033[0m"
+            echo -en "\r$(msgwarning "$(TEXT "TCRP Friend auto update disabled")")\n"
             return
         else
             friendwillupdate="1"
