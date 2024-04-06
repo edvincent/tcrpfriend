@@ -1103,7 +1103,7 @@ function boot() {
 
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
-    echo "cmdline : \033[1;36m${CMDLINE_LINE}\033[0m"
+    echo "cmdline : $(msgblue "${CMDLINE_LINE}")"
     echo
     echo -e "$(msgpurple "$(TEXT "Access http://${IP}:7681 via the TTYD web terminal to check the problem.")")"
     echo -e "$(msgwarning "$(TEXT "If you have any problems with the DSM installation steps, check the '/var/log/linuxrc.syno.log' file in this access.")")"
