@@ -1158,12 +1158,12 @@ function boot() {
         if [ "$1" != "forcejunior" ]; then
             countdown "booting"
         fi
-        TEXT "Boot timeout exceeded, booting ... "
+        echo -en "\r$(TEXT "Boot timeout exceeded, booting ... ")\n"
         echo
-        TEXT "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 seconds."
-        TEXT "(Network access is not immediately available)"
+        echo -en "\r$(TEXT "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 seconds.")\n"
+        echo -en "\r$(TEXT "(Network access is not immediately available)")\n"
         echo    
-        TEXT "Kernel loading has started, nothing will be displayed here anymore ..."
+        echo -en "\r$(TEXT "Kernel loading has started, nothing will be displayed here anymore ...")\n"
 
         if [ "${INTERNET}" = "ON" ]; then
             [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
