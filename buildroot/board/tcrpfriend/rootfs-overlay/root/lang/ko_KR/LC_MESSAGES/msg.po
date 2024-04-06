@@ -258,7 +258,7 @@ msgstr ""
 
 #: boot.sh:157
 msgid "TCRP Friend auto update disabled"
-msgstr ""
+msgstr "TCRP Friend 자동 업데이트가 비활성화되었습니다"
 
 #: boot.sh:175
 msgid ""
