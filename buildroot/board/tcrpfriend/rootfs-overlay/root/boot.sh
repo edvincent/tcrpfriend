@@ -159,7 +159,7 @@ function upgradefriend() {
     if [ ! -z "$IP" ]; then
 
         if [ "${friendautoupd}" = "false" ]; then
-            TEXT "TCRP Friend auto update disabled."
+            echo -e "\033[1;33m$(TEXT "TCRP Friend auto update disabled")\033[0m"
             return
         else
             friendwillupdate="1"
@@ -1105,11 +1105,11 @@ function boot() {
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo "cmdline : ${CMDLINE_LINE}"
     echo
-    TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem."
-    TEXT "(If you have any problems with the DSM installation steps, check the $(echo -e "\033[1;33m/var/log/linuxrc.syno.log\033[0m" file in this access)"
-    TEXT "Default TTYD root password is \033[1;33mblank\033[0m"
+    TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem.\n"
+    TEXT "(If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access.\n"
+    TEXT "Default TTYD root password is $(msgalert "blank")\n"
     echo        
-    TEXT "User config is on \033[1;33m/mnt/tcrp/user_config.json\033[0m"
+    TEXT "User config is on $(msgwarning "/mnt/tcrp/user_config.json")\n"
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
