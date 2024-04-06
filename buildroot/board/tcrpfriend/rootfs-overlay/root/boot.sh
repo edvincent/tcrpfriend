@@ -116,22 +116,22 @@ function version() {
 }
 
 function msgalert() {
-    TEXT "\033[1;31m$1\033[0m"
+    echo -en "\033[1;31m$1\033[0m"
 }
 function msgnormal() {
-    TEXT "\033[1;32m$1\033[0m"
+    echo -en "\033[1;32m$1\033[0m"
 }
 function msgwarning() {
-    TEXT "\033[1;33m$1\033[0m"
+    echo -en "\033[1;33m$1\033[0m"
 }
 function msgblue() {
-    TEXT "\033[1;34m$1\033[0m"
+    echo -en "\033[1;34m$1\033[0m"
 }
 function msgpurple() {
-    TEXT "\033[1;35m$1\033[0m"
+    echo -en "\033[1;35m$1\033[0m"
 }
 function msgcyan() {
-    TEXT "\033[1;36m$1\033[0m"
+    echo -en "\033[1;36m$1\033[0m"
 }
 
 function checkinternet() {
@@ -159,7 +159,7 @@ function upgradefriend() {
     if [ ! -z "$IP" ]; then
 
         if [ "${friendautoupd}" = "false" ]; then
-            msgwarning "TCRP Friend auto update disabled\n"
+            TEXT "TCRP Friend auto update disabled\n"
             return
         else
             friendwillupdate="1"
