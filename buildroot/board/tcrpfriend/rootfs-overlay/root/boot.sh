@@ -1134,7 +1134,7 @@ function boot() {
 
     #If EFI then add withefi to CMDLINE_LINE
     if [ "$EFIMODE" = "yes" ] && [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -le 0 ]; then
-        CMDLINE_LINE+=" withefi " && echo -e "\033[1;33m$(TEXT "EFI booted system with no EFI option, adding withefi to cmdline\n"
+        CMDLINE_LINE+=" withefi " && echo -e "\033[1;33m$(TEXT "EFI booted system with no EFI option, adding withefi to cmdline\n")\033[0m"
     fi
 
     #if [ "${INTERNET}" = "ON" ]; then
