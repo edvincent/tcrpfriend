@@ -924,7 +924,7 @@ function mountall() {
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
-            TEXT "This is BASIC or RAID Type Disk & Has Syno Boot Partition. $edisk"
+            echo "This is BASIC or RAID Type Disk & Has Syno Boot Partition. $edisk"
             BOOT_DISK=$(echo "$edisk" | cut -c 6-8)
         fi
       done
@@ -950,17 +950,17 @@ function mountall() {
     [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
 
     if [ "$(mount | grep ${BOOT_DISK}${p1} | wc -l)" = "0" ]; then
-        TEXT "Failed mount /dev/${BOOT_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
+        echo "Failed mount /dev/${BOOT_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
         exit 99
     fi
 
     if [ "$(mount | grep ${BOOT_DISK}${p2} | wc -l)" = "0" ]; then
-        TEXT "Failed mount /dev/${BOOT_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
+        echo "Failed mount /dev/${BOOT_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
         exit 99
     fi
 
     if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
-        TEXT "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
+        echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
         exit 99
     fi
 
@@ -1014,7 +1014,7 @@ function readconfig() {
         export LC_ALL=${ucode}.UTF-8
   
     else
-        TEXT "ERROR ! User config file : $userconfigfile not found"
+        echo "ERROR ! User config file : $userconfigfile not found"
     fi
 
     [ -z "$redpillmake" ] || [ "$redpillmake" = "null" ] && echo "redpillmake setting not found while reading $userconfigfile, defaulting to dev" && redpillmake="dev"
