@@ -88,7 +88,7 @@ function history() {
     0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
     0.1.0v Improved functionality to skip non-bootloader devices
     0.1.0w Improved setnetwork function for using static IP
-    0.1.0x Multilingual explanation support
+    0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ function showlastupdate() {
 0.1.0t Supports bootloader injection with SHR disk only
        dom_szmax=32GB (limit size of the injected bootloader)
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
-0.1.0x Multilingual explanation support
+0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
 
 EOF
 }
