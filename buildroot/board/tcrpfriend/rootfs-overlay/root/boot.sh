@@ -136,14 +136,14 @@ function msgcyan() {
 
 function checkinternet() {
 
-    echo -n "Detecting Internet -> "
+    echo -n $(TEXT "Detecting Internet -> ")
     curl --connect-timeout 5 -skLO https://raw.githubusercontent.com/about.html 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
         INTERNET="ON"
         msgwarning "OK!\n"
     else
         INTERNET="OFF"
-        msgwarning "No internet found, Skip updating friends and installing Python libraries for QR codes!\n"
+        echo -e "\033[1;33m$(TEXT "No internet found, Skip updating friends and installing Python libraries for QR codes!")\033[0m"
     fi
 
 }
@@ -159,13 +159,13 @@ function upgradefriend() {
     if [ ! -z "$IP" ]; then
 
         if [ "${friendautoupd}" = "false" ]; then
-            TEXT "TCRP Friend auto update disabled\n"
+            TEXT "TCRP Friend auto update disabled."
             return
         else
             friendwillupdate="1"
         fi
 
-        echo -n "Checking for latest friend -> "
+        echo -n $(TEXT "Checking for latest friend -> ")
         URL=$(curl --connect-timeout 15 -s --insecure -L https://api.github.com/repos/PeterSuh-Q3/tcrpfriend/releases/latest | jq -r -e .assets[].browser_download_url | grep chksum)
         [ -n "$URL" ] && curl -s --insecure -L $URL -O
 
@@ -188,12 +188,12 @@ function upgradefriend() {
                 INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
                 [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f bzImage-friend /mnt/tcrp${chgpart}/ && msgnormal "bzImage OK! \n"
                 [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f initrd-friend /mnt/tcrp${chgpart}/ && msgnormal "initrd-friend OK! \n"
-                msgnormal "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT\n"
+                echo -e "\033[1;32m$(TEXT "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT")\033[0m"
                 countdown "REBOOT"
                 reboot -f
             fi
         else
-            msgalert "No IP yet to check for latest friend \n"
+            echo -e "\033[1;31m$(TEXT "No IP yet to check for latest friend")\033[0m"
         fi
     fi
 }
@@ -611,19 +611,19 @@ function countdown() {
             #    boot gettycon
             #    ;;
             'r') # r key
-                echo "r key pressed! Entering Menu for Reset DSM Password!"
+                TEXT "r key pressed! Entering Menu for Reset DSM Password!"
                 pip install passlib >/dev/null 2>/dev/null
                 sleep 3
                 mainmenu
                 ;;
             'e') # e key
-                echo "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
+                TEXT "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
                 pip install passlib >/dev/null 2>/dev/null                
                 sleep 3
                 mainmenu
                 ;;
             'j') # j key
-                echo "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
+                TEXT "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
                 sleep 3
                 initialize
                 boot forcejunior
@@ -695,7 +695,7 @@ function getusb() {
         sed -i "s/${curpid}/${PID}/" $userconfigfile
         sed -i "s/${curvid}/${VID}/" $userconfigfile
     elif [ "${BUS}" != "sata" ]; then
-        echo "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
+        TEXT "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
     fi
 
 }
@@ -774,11 +774,11 @@ function checkfiles() {
 function checkupgrade() {
 
     if [ ! -f /mnt/tcrp-p2/rd.gz ]; then
-        echo "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
+        TEXT "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
         exit 99
     fi
     if [ ! -f /mnt/tcrp-p2/zImage ]; then
-        echo "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
+        TEXT "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
         exit 99
     fi
 
@@ -799,12 +799,12 @@ function checkupgrade() {
         fi        
     fi
 
-    echo -n "Detecting upgrade : "
+    echo -n $(TEXT "Detecting upgrade : ")
 
     if [ "$rdhash" = "$origrdhash" ]; then
         msgnormal "Ramdisk OK ! "
     else
-        msgwarning "Ramdisk upgrade has been detected and "
+        msgwaring "Ramdisk upgrade has been detected and "
         [ -z "$IP" ] && getip
         if [ -n "$IP" ]; then
             patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
@@ -817,12 +817,12 @@ function checkupgrade() {
     if [ "$zimghash" = "$origzimghash" ]; then
         msgnormal "zImage OK ! \n"
     else
-        msgwarning "zImage upgrade has been detected \n"
+        msgwaring "zImage upgrade has been detected "
         patchkernel 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
    
         if [ "$loadermode" == "JOT" ]; then
-            msgwarning "Ramdisk upgrade and zImage upgrade for JOT completed successfully !!! \n"
-            echo "A reboot is required. Press any key to reboot..."
+            msgwaring "Ramdisk upgrade and zImage upgrade for JOT completed successfully!"
+            TEXT "A reboot is required. Press any key to reboot..."
             read answer
             reboot
         fi
@@ -907,7 +907,7 @@ function mountall() {
     fi    
 
     if [ -z "${LOADER_DISK}" ]; then
-        echo "Not Supported Loader BUS Type, program Exit!!!"
+        TEXT "Not Supported Loader BUS Type, program Exit!!!"
         exit 99
     fi
     
@@ -924,12 +924,12 @@ function mountall() {
     if [ -d /sys/block/${LOADER_DISK}/${LOADER_DISK}4 ]; then
       for edisk in $(fdisk -l | grep "Disk /dev/sd" | awk '{print $2}' | sed 's/://' ); do
         if [ $(fdisk -l | grep "fd Linux raid autodetect" | grep ${edisk} | wc -l ) -eq 3 ] && [ $(fdisk -l | grep "83 Linux" | grep ${edisk} | wc -l ) -eq 2 ]; then
-            echo "This is BASIC or RAID Type Disk & Has Syno Boot Partition. $edisk"
+            TEXT "This is BASIC or RAID Type Disk & Has Syno Boot Partition. $edisk"
             BOOT_DISK=$(echo "$edisk" | cut -c 6-8)
         fi
       done
       if [ "${BOOT_DISK}" = "${LOADER_DISK}" ]; then
-        echo "Failed to find boot Partition on !!!"
+        TEXT "Failed to find boot Partition on !!!"
         exit 99
       fi
       if [ $(fdisk -l | grep "W95 Ext" | grep ${edisk} | wc -l ) -eq 1 ]; then
@@ -950,17 +950,17 @@ function mountall() {
     [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ] && mount /dev/${LOADER_DISK}${p3} /mnt/tcrp
 
     if [ "$(mount | grep ${BOOT_DISK}${p1} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev/${BOOT_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
+        TEXT "Failed mount /dev/${BOOT_DISK}${p1} to /mnt/tcrp-p1, stopping boot process"
         exit 99
     fi
 
     if [ "$(mount | grep ${BOOT_DISK}${p2} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev/${BOOT_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
+        TEXT "Failed mount /dev/${BOOT_DISK}${p2} to /mnt/tcrp-p2, stopping boot process"
         exit 99
     fi
 
     if [ "$(mount | grep ${LOADER_DISK}${p3} | wc -l)" = "0" ]; then
-        echo "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
+        TEXT "Failed mount /dev/${LOADER_DISK}${p3} to /mnt/tcrp, stopping boot process"
         exit 99
     fi
 
@@ -973,17 +973,17 @@ function readconfig() {
     if [ -f $userconfigfile ]; then
         model="$(jq -r -e '.general .model' $userconfigfile)"
         if [ -z "$model" ]; then
-            echo "model is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            TEXT "model is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
             exit 99
         fi        
         version="$(jq -r -e '.general .version' $userconfigfile)"
         if [ -z "$version" ]; then
-            echo "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            TEXT "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
             exit 99
         fi        
         smallfixnumber="$(jq -r -e '.general .smallfixnumber' $userconfigfile)"
         if [ -z "$smallfixnumber" ]; then
-            echo "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file."
+            TEXT "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/user_config.json file."
         #    exit 99
         fi        
         redpillmake="$(jq -r -e '.general .redpillmake' $userconfigfile)"
@@ -991,14 +991,14 @@ function readconfig() {
         hidesensitive="$(jq -r -e '.general .hidesensitive' $userconfigfile)"
         serial="$(jq -r -e '.extra_cmdline .sn' $userconfigfile)"
         if [ -z "$serial" ]; then
-            echo "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            TEXT "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
             exit 99
         fi        
         rdhash="$(jq -r -e '.general .rdhash' $userconfigfile)"
         zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
         mac1="$(jq -r -e '.extra_cmdline .mac1' $userconfigfile)"
         if [ -z "$mac1" ]; then
-            echo "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
+            TEXT "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. stopping boot process"
             exit 99
         fi        
         mac2="$(jq -r -e '.extra_cmdline .mac2' $userconfigfile)"
@@ -1014,7 +1014,7 @@ function readconfig() {
         export LC_ALL=${ucode}.UTF-8
   
     else
-        echo "ERROR ! User config file : $userconfigfile not found"
+        TEXT "ERROR ! User config file : $userconfigfile not found"
     fi
 
     [ -z "$redpillmake" ] || [ "$redpillmake" = "null" ] && echo "redpillmake setting not found while reading $userconfigfile, defaulting to dev" && redpillmake="dev"
@@ -1105,21 +1105,21 @@ function boot() {
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo "cmdline : ${CMDLINE_LINE}"
     echo
-    echo "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem."
-    echo "(If you have any problems with the DSM installation steps, check the $(msgwarning "/var/log/linuxrc.syno.log") file in this access)"
-    echo "Default TTYD root password is $(msgwarning "blank")"
+    TEXT "Access $(msgalert "http://${IP}:7681") via the TTYD web terminal to check the problem."
+    TEXT "(If you have any problems with the DSM installation steps, check the $(echo -e "\033[1;33m/var/log/linuxrc.syno.log\033[0m" file in this access)"
+    TEXT "Default TTYD root password is \033[1;33mblank\033[0m"
     echo        
-    echo "User config is on $(msgwarning "/mnt/tcrp/user_config.json\n")"
+    TEXT "User config is on \033[1;33m/mnt/tcrp/user_config.json\033[0m"
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
-        msgalert   "Press <r> to enter a menu for Reset DSM Password\n"
-        msgnormal  "Press <e> to enter a menu for Edit USB/SATA Command Line\n"
-        msgwarning "Press <j> to enter a Junior mode (to re-install DSM)\n"
+        echo -e "\033[1;31m$(TEXT "Press <r> to enter a menu for Reset DSM Password")\033[0m"
+        echo -e "\033[1;32m$(TEXT "Press <e> to enter a menu for Edit USB/SATA Command Line")\033[0m"
+        echo -e "\033[1;33m$(TEXT "Press <j> to enter a Junior mode (to re-install DSM)")\033[0m"
 #    elif [ "$1" = "gettycon" ]; then
 #        msgalert "Entering a Getty Console to solve trouble...\n"
     elif [ "$1" = "forcejunior" ]; then
-        msgwarning "Entering a Junior mode (to re-install DSM)...\n"
+        echo -e "\033[1;33m$(TEXT "Entering a Junior mode (to re-install DSM)...")\033[0m"
     fi
     
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
@@ -1134,7 +1134,7 @@ function boot() {
 
     #If EFI then add withefi to CMDLINE_LINE
     if [ "$EFIMODE" = "yes" ] && [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -le 0 ]; then
-        CMDLINE_LINE+=" withefi " && msgwarning "EFI booted system with no EFI option, adding withefi to cmdline\n"
+        CMDLINE_LINE+=" withefi " && echo -e "\033[1;33m$(TEXT "EFI booted system with no EFI option, adding withefi to cmdline\n"
     fi
 
     #if [ "${INTERNET}" = "ON" ]; then
@@ -1144,7 +1144,7 @@ function boot() {
     #fi   
 
     if [ "$staticboot" = "true" ]; then
-        echo "Static boot set, rebooting to static ..."
+        TEXT "Static boot set, rebooting to static ..."
         cp tools/libdevmapper.so.1.02 /usr/lib
         cp tools/grub-editenv /usr/bin
         chmod +x /usr/bin/grub-editenv
@@ -1158,12 +1158,12 @@ function boot() {
         if [ "$1" != "forcejunior" ]; then
             countdown "booting"
         fi
-        echo "Boot timeout exceeded, booting ... "
+        TEXT "Boot timeout exceeded, booting ... "
         echo
-        echo "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may $(msgnormal "take 20 - 40 seconds")."
-        echo "(Network access is not immediately available)"
+        TEXT "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 seconds."
+        TEXT "(Network access is not immediately available)"
         echo    
-        echo "Kernel loading has started, nothing will be displayed here anymore ..."
+        TEXT "Kernel loading has started, nothing will be displayed here anymore ..."
 
         if [ "${INTERNET}" = "ON" ]; then
             [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
@@ -1177,7 +1177,7 @@ function boot() {
         if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
             kexec -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         else
-            msgwarning "Booting with noefi, please notice that this might cause issues"
+            echo -e "\033[1;33m$(TEXT "Booting with noefi, please notice that this might cause issues")\033[0m"
             kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         fi
 
@@ -1207,7 +1207,7 @@ function initialize() {
 
     # No network devices
     eths=$(ls /sys/class/net/ | grep -v lo || true)    
-    [ $(echo ${eths} | wc -w) -le 0 ] && echo "No NIC found! - Loader does not work without Network connection." && exit 99
+    [ $(echo ${eths} | wc -w) -le 0 ] && TEXT "No NIC found! - Loader does not work without Network connection." && exit 99
 
     # Update user config file to latest version
     updateuserconfigfile
