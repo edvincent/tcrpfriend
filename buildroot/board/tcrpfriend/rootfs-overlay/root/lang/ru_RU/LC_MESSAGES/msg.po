@@ -165,7 +165,7 @@ msgid "No NIC found! - Loader does not work without Network connection."
 msgstr ""
 
 #: boot.sh:1108
-msgid "Access http://{0}:7681 via the TTYD web terminal to check the problem."
+msgid "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
 
 #: boot.sh:1109
