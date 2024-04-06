@@ -1,0 +1,39 @@
+# This is a basic workflow
+
+name: Make .mo file
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload_and_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Set up Git
+        run: |
+          git config --global user.name "PeterSuh-Q3"
+          git config --global user.email dante9000@gmail.com
+          
+      - name: make local mo file
+        run: |
+          ROOT_PATH=${{ github.workspace }}
+          cd ${ROOT_PATH}/
+          echo "Convert po2mo begin"
+          sudo apt-get update
+          sudo apt-get install gettext
+          DEST_PATH="${ROOT_PATH}/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/lang"
+          for P in $(ls ${DEST_PATH}/*/LC_MESSAGES/msg.po 2>/dev/null); do
+            # Use msgfmt command to compile the .po file into a binary .mo file
+            echo "msgfmt ${P} to ${P/.po/.mo}"
+            msgfmt ${P} -o ${P/.po/.mo}
+          done
+          echo "Convert po2mo end"          
+          ll ${DEST_PATH}/*/LC_MESSAGES/
+      - name: Commit and push changes
+        run: |
+          git add .
+          git commit -a -m "upload lastest"
+          git push            
