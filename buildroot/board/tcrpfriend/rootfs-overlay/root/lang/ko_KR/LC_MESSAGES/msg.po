@@ -183,8 +183,8 @@ msgstr ""
 "NIC를 찾을 수 없습니다! - 네트워크 연결이 없으면 로더가 작동하지 않습니다."
 
 #: boot.sh:1108
-msgid "Access http://${IP}:7681 via the TTYD web terminal to check the problem."
-msgstr "TTYD 웹 브라우저를 통해 http://${IP}:7681에 접속하여 문제를 확인합니다."
+msgid "Access http://%s:7681 via the TTYD web terminal to check the problem."
+msgstr "문제를 확인하기위해 TTYD 웹 브라우저를 통해 http://%s:7681에 접속합니다."
 
 #: boot.sh:1109
 msgid ""
