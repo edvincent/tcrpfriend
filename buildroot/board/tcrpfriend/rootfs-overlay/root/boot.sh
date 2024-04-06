@@ -116,22 +116,22 @@ function version() {
 }
 
 function msgalert() {
-    TEXT -en "\033[1;31m$1\033[0m"
+    TEXT "\033[1;31m$1\033[0m"
 }
 function msgnormal() {
-    TEXT -en "\033[1;32m$1\033[0m"
+    TEXT "\033[1;32m$1\033[0m"
 }
 function msgwarning() {
-    TEXT -en "\033[1;33m$1\033[0m"
+    TEXT "\033[1;33m$1\033[0m"
 }
 function msgblue() {
-    TEXT -en "\033[1;34m$1\033[0m"
+    TEXT "\033[1;34m$1\033[0m"
 }
 function msgpurple() {
-    TEXT -en "\033[1;35m$1\033[0m"
+    TEXT "\033[1;35m$1\033[0m"
 }
 function msgcyan() {
-    TEXT -en "\033[1;36m$1\033[0m"
+    TEXT "\033[1;36m$1\033[0m"
 }
 
 function checkinternet() {
