@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-06 01:11+0000\n"
+"POT-Creation-Date: 2024-04-06 09:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,285 +17,148 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: boot.sh:205 boot.sh:271
-msgid "Removing any old redpill.ko modules"
+#: boot.sh:139
+msgid "Detecting Internet -> "
 msgstr ""
 
-#: boot.sh:256 boot.sh:294
-msgid "Copying redpill.ko module to ramdisk"
+#: boot.sh:146
+msgid ""
+"No internet found, Skip updating friends and installing Python libraries for "
+"QR codes!"
 msgstr ""
 
-#: boot.sh:262 boot.sh:300
-msgid "Redpill module is in place"
+#: boot.sh:162
+msgid "TCRP Friend auto update disabled"
 msgstr ""
 
-#: boot.sh:285
-msgid "Extracting module"
+#: boot.sh:168
+msgid "Checking for latest friend -> "
 msgstr ""
 
-#: boot.sh:323
-msgid "Patching Kernel"
+#: boot.sh:191
+msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
 msgstr ""
 
-#: boot.sh:343
-msgid "Ramdisk is compressed"
+#: boot.sh:196
+msgid "No IP yet to check for latest friend"
 msgstr ""
 
-#: boot.sh:353
-msgid "ERROR, Couldnt read extracted file version"
-msgstr ""
-
-#: boot.sh:377
-msgid "Patching RamDisk"
-msgstr ""
-
-#: boot.sh:397
-msgid "Applying model synoinfo patches"
-msgstr ""
-
-#: boot.sh:409
-msgid "Applying user synoinfo settings"
-msgstr ""
-
-#: boot.sh:424
-msgid "Copying extra ramdisk files"
-msgstr ""
-
-#: boot.sh:431
-msgid "Adding precompiled redpill module"
-msgstr ""
-
-#: boot.sh:435
-msgid "Adding custom.gz or initrd-dsm to image"
-msgstr ""
-
-#: boot.sh:439
-msgid "Found custom.gz, so extract from custom.gz"
-msgstr ""
-
-#: boot.sh:446
-msgid "Not found custom.gz, so extract from initrd-dsm"
-msgstr ""
-
-#: boot.sh:456
-msgid "Reassempling ramdisk"
-msgstr ""
-
-#: boot.sh:511
-msgid "ERROR: Failed to mount correctly all required partitions"
-msgstr ""
-
-#: boot.sh:567
-msgid "Done"
-msgstr ""
-
-#: boot.sh:567
-msgid "Failed"
-msgstr ""
-
-#: boot.sh:591
-msgid "No values to update specified"
-msgstr ""
-
-#: boot.sh:609
+#: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
 msgstr ""
 
-#: boot.sh:615
+#: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
 msgstr ""
 
-#: boot.sh:621
+#: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
 msgstr ""
 
-#: boot.sh:693
+#: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
 msgstr ""
 
-#: boot.sh:772
+#: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
 msgstr ""
 
-#: boot.sh:776
+#: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
 msgstr ""
 
-#: boot.sh:820
-msgid "A reboot is required. Press any key to reboot"
+#: boot.sh:802
+msgid "Detecting upgrade : "
 msgstr ""
 
-#: boot.sh:854
-msgid ""
-"Network settings are set to static proceeding setting static IP settings"
+#: boot.sh:825
+msgid "A reboot is required. Press any key to reboot..."
 msgstr ""
 
-#: boot.sh:905
-msgid "Not Supported Loader BUS Type, program Exit"
+#: boot.sh:910
+msgid "Not Supported Loader BUS Type, program Exit!!!"
 msgstr ""
 
-#: boot.sh:927
-msgid "Failed to find boot Partition on"
-msgstr ""
-
-#: boot.sh:971
-msgid ""
-"model is not resolved. Please check the /mnt/tcrp/user_config.json file"
-"stopping boot process"
+#: boot.sh:932
+msgid "Failed to find boot Partition on !!!"
 msgstr ""
 
 #: boot.sh:976
 msgid ""
-"Build version is not resolved. Please check the /mnt/tcrp/user_config.json"
-"file. stopping boot process"
+"model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"stopping boot process"
 msgstr ""
 
 #: boot.sh:981
+msgid ""
+"Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
+"file. stopping boot process"
+msgstr ""
+
+#: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
 
-#: boot.sh:989
+#: boot.sh:994
 msgid ""
-"serial is not resolved. Please check the /mnt/tcrp/user_config.json file"
+"serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
 
-#: boot.sh:996
+#: boot.sh:1001
 msgid ""
-"mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file"
+"mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
 
-#: boot.sh:1064
-msgid "Stop at friend detected, stopping boot"
-msgstr ""
-
-#: boot.sh:1071
-msgid "Debug Friend set, stopping boot process"
-msgstr ""
-
-#: boot.sh:1142
-msgid "Static boot set, rebooting to static"
-msgstr ""
-
-#: boot.sh:1156
-msgid "Boot timeout exceeded, booting"
-msgstr ""
-
-#: boot.sh:1159
-msgid "(Network access is not immediately available)"
-msgstr ""
-
-#: boot.sh:1161
-msgid "Kernel loading has started, nothing will be displayed here anymore"
-msgstr ""
-
-#: boot.sh:1195
-msgid "ERROR running on alien system"
-msgstr ""
-
-#: boot.sh:1205
-msgid "No NIC found! - Loader does not work without Network connection"
-msgstr ""
-
-#: boot.sh:191
-msgid "No IP yet to check for latest friend"
-msgstr ""
-
-#: boot.sh:199
-msgid "The getredpillko() cannot proceed because there is no IP yet"
-msgstr ""
-
-#: boot.sh:365 boot.sh:807
-msgid "The patch cannot proceed because there is no IP yet"
-msgstr ""
-
-#: boot.sh:1111
+#: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
 msgstr ""
 
-#: boot.sh:1128
-msgid ""
-"FAILED to match the count of configured netif_num and mac addresses, DSM"
-"will panic, exiting so you can fix this"
-msgstr ""
-
-#: boot.sh:186
-msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr ""
-
-#: boot.sh:542
-msgid ""
-"Since the revision update was not detected, proceed to the next step"
-msgstr ""
-
-#: boot.sh:648
-msgid "System is running in UEFI boot mode"
-msgstr ""
-
-#: boot.sh:789
-msgid "Setting default boot entry to JOT SATA"
-msgstr ""
-
-#: boot.sh:792
-msgid "Setting default boot entry to JOT USB"
-msgstr ""
-
-#: boot.sh:1112
+#: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
 msgstr ""
 
-#: boot.sh:1158
-msgid "take 20 - 40 seconds"
-msgstr ""
-
-#: boot.sh:141
-msgid ""
-"No internet found, Skip updating friends and installing Python libraries for"
-"QR codes"
-msgstr ""
-
-#: boot.sh:157
-msgid "TCRP Friend auto update disabled"
-msgstr ""
-
-#: boot.sh:175
-msgid ""
-"Remove vga=791 parameter from grub.cfg friend boot entry to prevent console"
-"dead"
-msgstr ""
-
-#: boot.sh:802
-msgid "Ramdisk upgrade has been detected and "
-msgstr ""
-
-#: boot.sh:815
-msgid "zImage upgrade has been detected"
-msgstr ""
-
-#: boot.sh:819
-msgid ""
-"Ramdisk upgrade and zImage upgrade for JOT completed successfully"
-msgstr ""
-
-#: boot.sh:1105
-msgid "blank"
-msgstr ""
-
-#: boot.sh:1113
+#: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
 msgstr ""
 
-#: boot.sh:1117
-msgid "Entering a Junior mode (to re-install DSM)"
+#: boot.sh:1122
+msgid "Entering a Junior mode (to re-install DSM)..."
 msgstr ""
 
-#: boot.sh:1132
+#: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
 msgstr ""
 
-#: boot.sh:1175
+#: boot.sh:1147
+msgid "Static boot set, rebooting to static ..."
+msgstr ""
+
+#: boot.sh:1161
+msgid "Boot timeout exceeded, booting ... "
+msgstr ""
+
+#: boot.sh:1163
+msgid ""
+"\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
+"seconds."
+msgstr ""
+
+#: boot.sh:1164
+msgid "(Network access is not immediately available)"
+msgstr ""
+
+#: boot.sh:1166
+msgid "Kernel loading has started, nothing will be displayed here anymore ..."
+msgstr ""
+
+#: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
+msgstr ""
+
+#: boot.sh:1210
+msgid "No NIC found! - Loader does not work without Network connection."
 msgstr ""
