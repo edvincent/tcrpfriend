@@ -1200,6 +1200,14 @@ function initialize() {
     # Read Configuration variables
     readconfig
 
+    # Apply i18n
+    export TEXTDOMAINDIR="/root/lang"
+    gettext() {
+        env TEXTDOMAIN=mydomain gettext "$@"
+    }
+    alias TEXT='gettext "msg"'
+    shopt -s expand_aliases
+
     # No network devices
     eths=$(ls /sys/class/net/ | grep -v lo || true)    
     [ $(echo ${eths} | wc -w) -le 0 ] && echo "No NIC found! - Loader does not work without Network connection." && exit 99
