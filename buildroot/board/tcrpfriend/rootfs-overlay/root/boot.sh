@@ -143,7 +143,7 @@ function checkinternet() {
         msgwarning " OK!\n"
     else
         INTERNET="OFF"
-        echo -e "\033[1;33m$(TEXT "No internet found, Skip updating friends and installing Python libraries for QR codes!")\033[0m"
+        echo -e "$(msgwarning "$(TEXT "No internet found, Skip updating friends and installing Python libraries for QR codes!")")"
     fi
 
 }
@@ -188,12 +188,12 @@ function upgradefriend() {
                 INITRDSHA256="$(grep initrd-friend chksum | awk '{print $1}')"
                 [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f bzImage-friend /mnt/tcrp${chgpart}/ && msgnormal "bzImage OK! \n"
                 [ "$(sha256sum bzImage-friend | awk '{print $1}')" = "$BZIMAGESHA256" ] && [ "$(sha256sum initrd-friend | awk '{print $1}')" = "$INITRDSHA256" ] && cp -f initrd-friend /mnt/tcrp${chgpart}/ && msgnormal "initrd-friend OK! \n"
-                echo -e "\033[1;32m$(TEXT "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT")\033[0m"
+                echo -e "$(msgnormal "$(TEXT "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT")")"
                 countdown "REBOOT"
                 reboot -f
             fi
         else
-            echo -e "\033[1;31m$(TEXT "No IP yet to check for latest friend")\033[0m"
+            echo -e "$(msgalert "$(TEXT "No IP yet to check for latest friend")")"
         fi
     fi
 }
@@ -1113,13 +1113,13 @@ function boot() {
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
  #       msgalert "Press <g> to enter a Getty Console to solve trouble\n"
-        echo -e "\033[1;31m$(TEXT "Press <r> to enter a menu for Reset DSM Password")\033[0m"
-        echo -e "\033[1;32m$(TEXT "Press <e> to enter a menu for Edit USB/SATA Command Line")\033[0m"
-        echo -e "\033[1;33m$(TEXT "Press <j> to enter a Junior mode (to re-install DSM)")\033[0m"
+        echo -e "$(msgalert "$(TEXT "Press <r> to enter a menu for Reset DSM Password")")"
+        echo -e "$(msgnormal "$(TEXT "Press <e> to enter a menu for Edit USB/SATA Command Line")")"
+        echo -e "$(msgwarning "$(TEXT "Press <j> to enter a Junior mode (to re-install DSM)")")"
 #    elif [ "$1" = "gettycon" ]; then
 #        msgalert "Entering a Getty Console to solve trouble...\n"
     elif [ "$1" = "forcejunior" ]; then
-        echo -e "\033[1;33m$(TEXT "Entering a Junior mode (to re-install DSM)...")\033[0m"
+        echo -e "$(msgwarning "$(TEXT "Entering a Junior mode (to re-install DSM)...")")"
     fi
     
     # Check netif_num matches the number of configured mac addresses as if these does not match redpill will cause a KP
@@ -1134,7 +1134,7 @@ function boot() {
 
     #If EFI then add withefi to CMDLINE_LINE
     if [ "$EFIMODE" = "yes" ] && [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -le 0 ]; then
-        CMDLINE_LINE+=" withefi " && echo -e "\033[1;33m$(TEXT "EFI booted system with no EFI option, adding withefi to cmdline\n")\033[0m"
+        CMDLINE_LINE+=" withefi " && echo -e "$(msgwarning "$(TEXT "EFI booted system with no EFI option, adding withefi to cmdline\n")")"
     fi
 
     #if [ "${INTERNET}" = "ON" ]; then
@@ -1177,7 +1177,7 @@ function boot() {
         if [ $(echo ${CMDLINE_LINE} | grep withefi | wc -l) -eq 1 ]; then
             kexec -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         else
-            echo -e "\033[1;33m$(TEXT "Booting with noefi, please notice that this might cause issues")\033[0m"
+            echo -e "$(msgwarning "$(TEXT "Booting with noefi, please notice that this might cause issues")")"
             kexec --noefi -l "${MOD_ZIMAGE_FILE}" --initrd "${MOD_RDGZ_FILE}" --command-line="${CMDLINE_LINE}"
         fi
 
