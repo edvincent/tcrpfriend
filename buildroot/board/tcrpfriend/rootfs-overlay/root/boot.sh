@@ -804,7 +804,7 @@ function checkupgrade() {
     if [ "$rdhash" = "$origrdhash" ]; then
         msgnormal "Ramdisk OK ! "
     else
-        msgwaring "Ramdisk upgrade has been detected and "
+        msgwarning "Ramdisk upgrade has been detected and "
         [ -z "$IP" ] && getip
         if [ -n "$IP" ]; then
             patchramdisk 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
@@ -817,11 +817,11 @@ function checkupgrade() {
     if [ "$zimghash" = "$origzimghash" ]; then
         msgnormal "zImage OK ! \n"
     else
-        msgwaring "zImage upgrade has been detected "
+        msgwarning "zImage upgrade has been detected \n"
         patchkernel 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
    
         if [ "$loadermode" == "JOT" ]; then
-            msgwaring "Ramdisk upgrade and zImage upgrade for JOT completed successfully!"
+            msgwarning "Ramdisk upgrade and zImage upgrade for JOT completed successfully!\n"
             TEXT "A reboot is required. Press any key to reboot..."
             read answer
             reboot
