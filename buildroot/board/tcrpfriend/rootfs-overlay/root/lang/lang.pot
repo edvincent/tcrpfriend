@@ -1,1 +1,209 @@
-.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-06 01:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: boot.sh:205 boot.sh:271
+msgid "Removing any old redpill.ko modules"
+msgstr ""
+
+#: boot.sh:256 boot.sh:294
+msgid "Copying redpill.ko module to ramdisk"
+msgstr ""
+
+#: boot.sh:262 boot.sh:300
+msgid "Redpill module is in place"
+msgstr ""
+
+#: boot.sh:285
+msgid "Extracting module"
+msgstr ""
+
+#: boot.sh:323
+msgid "Patching Kernel"
+msgstr ""
+
+#: boot.sh:343
+msgid "Ramdisk is compressed"
+msgstr ""
+
+#: boot.sh:353
+msgid "ERROR, Couldnt read extracted file version"
+msgstr ""
+
+#: boot.sh:377
+msgid "Patching RamDisk"
+msgstr ""
+
+#: boot.sh:397
+msgid "Applying model synoinfo patches"
+msgstr ""
+
+#: boot.sh:409
+msgid "Applying user synoinfo settings"
+msgstr ""
+
+#: boot.sh:424
+msgid "Copying extra ramdisk files "
+msgstr ""
+
+#: boot.sh:431
+msgid "Adding precompiled redpill module"
+msgstr ""
+
+#: boot.sh:435
+msgid "Adding custom.gz or initrd-dsm to image"
+msgstr ""
+
+#: boot.sh:439
+msgid "Found custom.gz, so extract from custom.gz "
+msgstr ""
+
+#: boot.sh:446
+msgid "Not found custom.gz, so extract from initrd-dsm "
+msgstr ""
+
+#: boot.sh:456
+msgid "Reassempling ramdisk"
+msgstr ""
+
+#: boot.sh:511
+msgid "ERROR: Failed to mount correctly all required partitions"
+msgstr ""
+
+#: boot.sh:533
+msgid "copy 7.2 initrd-dsm & grub.cfg"
+msgstr ""
+
+#: boot.sh:567
+msgid "Done"
+msgstr ""
+
+#: boot.sh:567
+msgid "Failed"
+msgstr ""
+
+#: boot.sh:591
+msgid "No values to update specified"
+msgstr ""
+
+#: boot.sh:609
+msgid "r key pressed! Entering Menu for Reset DSM Password!"
+msgstr ""
+
+#: boot.sh:615
+msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
+msgstr ""
+
+#: boot.sh:621
+msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
+msgstr ""
+
+#: boot.sh:637 boot.sh:638 boot.sh:642 boot.sh:644 boot.sh:647
+msgid "-ne"
+msgstr ""
+
+#: boot.sh:693
+msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
+msgstr ""
+
+#: boot.sh:772
+msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
+msgstr ""
+
+#: boot.sh:776
+msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
+msgstr ""
+
+#: boot.sh:820
+msgid "A reboot is required. Press any key to reboot..."
+msgstr ""
+
+#: boot.sh:854
+msgid ""
+"Network settings are set to static proceeding setting static IP settings"
+msgstr ""
+
+#: boot.sh:905
+msgid "Not Supported Loader BUS Type, program Exit!!!"
+msgstr ""
+
+#: boot.sh:927
+msgid "Failed to find boot Partition on !!!"
+msgstr ""
+
+#: boot.sh:971
+msgid ""
+"model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"stopping boot process"
+msgstr ""
+
+#: boot.sh:976
+msgid ""
+"Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
+"file. stopping boot process"
+msgstr ""
+
+#: boot.sh:981
+msgid ""
+"Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
+"user_config.json file."
+msgstr ""
+
+#: boot.sh:989
+msgid ""
+"serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"stopping boot process"
+msgstr ""
+
+#: boot.sh:996
+msgid ""
+"mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
+"stopping boot process"
+msgstr ""
+
+#: boot.sh:1064
+msgid "Stop at friend detected, stopping boot"
+msgstr ""
+
+#: boot.sh:1071
+msgid "Debug Friend set, stopping boot process"
+msgstr ""
+
+#: boot.sh:1142
+msgid "Static boot set, rebooting to static ..."
+msgstr ""
+
+#: boot.sh:1156
+msgid "Boot timeout exceeded, booting ... "
+msgstr ""
+
+#: boot.sh:1159
+msgid "(Network access is not immediately available)"
+msgstr ""
+
+#: boot.sh:1161
+msgid "Kernel loading has started, nothing will be displayed here anymore ..."
+msgstr ""
+
+#: boot.sh:1195
+msgid "ERROR running on alien system"
+msgstr ""
+
+#: boot.sh:1205
+msgid "No NIC found! - Loader does not work without Network connection."
+msgstr ""
