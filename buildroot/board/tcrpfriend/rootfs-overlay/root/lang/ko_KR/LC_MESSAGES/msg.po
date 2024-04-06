@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 18:57+0900\n"
+"PO-Revision-Date: 2024-04-06 20:34+0900\n"
 "Last-Translator: dante9000@gmail.com\n"
 "Language-Team: Korean\n"
 "Language: ko\n"
@@ -27,8 +27,8 @@ msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
 msgstr ""
-"인터넷을 찾을 수 없으니, 친구 업데이트와 QR코드용 Python 라이브러리 설치를 "
-"건너뜁니다!"
+"인터넷을 찾을 수 없으니, 친구 업데이트와 QR코드용 Python 라이브러리 설치를 건"
+"너뜁니다!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
@@ -64,11 +64,13 @@ msgstr "USB, Sata DoM, mmc, NVMe 등 이외의 로더 디스크는 지원되지 
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
-msgstr "오류! /mnt/tcrp-p2/rd.gz 파일을 찾을 수 없어 부팅 프로세스가 중지되었습니다"
+msgstr ""
+"오류! /mnt/tcrp-p2/rd.gz 파일을 찾을 수 없어 부팅 프로세스가 중지되었습니다"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr "오류! /mnt/tcrp-p2/z이미지 파일을 찾을 수 없어 부팅 프로세스가 중지되었습니다"
+msgstr ""
+"오류! /mnt/tcrp-p2/z이미지 파일을 찾을 수 없어 부팅 프로세스가 중지되었습니다"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
@@ -91,40 +93,40 @@ msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"모델이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. "
-"부팅 프로세스 중지 중"
+"모델이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. 부"
+"팅 프로세스 중지 중"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
-"빌드 버전이 해결되지 않았습니다. /mnt/tcrp/user_config.json "
-"파일을 확인하세요. 부팅 프로세스 중지 중"
+"빌드 버전이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세"
+"요. 부팅 프로세스 중지 중"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
-"업데이트(smallfixnumber)가 해결되지 않았습니다. /mnt/tcrp/user_config.json "
-"파일을 확인하세요."
+"업데이트(smallfixnumber)가 해결되지 않았습니다. /mnt/tcrp/user_config.json 파"
+"일을 확인하세요."
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"직렬이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. "
-"부팅 프로세스 중지 중"
+"직렬이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. 부"
+"팅 프로세스 중지 중"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"mac1이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. "
-"부팅 프로세스 중지 중"
+"mac1이 해결되지 않았습니다. /mnt/tcrp/user_config.json 파일을 확인하세요. 부"
+"팅 프로세스 중지 중"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
@@ -168,7 +170,8 @@ msgstr "(네트워크 액세스를 즉시 사용할 수 없음)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr "커널 로딩이 시작되었습니다, 더 이상 여기에 아무것도 표시되지 않습니다 ..."
+msgstr ""
+"커널 로딩이 시작되었습니다, 더 이상 여기에 아무것도 표시되지 않습니다 ..."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
@@ -176,4 +179,25 @@ msgstr "noefi로 부팅할 경우 문제가 발생할 수 있습니다"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr "NIC를 찾을 수 없습니다! - 네트워크 연결이 없으면 로더가 작동하지 않습니다."
+msgstr ""
+"NIC를 찾을 수 없습니다! - 네트워크 연결이 없으면 로더가 작동하지 않습니다."
+
+#: boot.sh:1108
+msgid "Access http://{0}:7681 via the TTYD web terminal to check the problem."
+msgstr "웹 브라우져을 통해 http://{0}:7681에 접속하여 문제를 확인합니다."
+
+#: boot.sh:1109
+msgid ""
+"If you have any problems with the DSM installation steps, check the '/var/"
+"log/linuxrc.syno.log' file in this access."
+msgstr ""
+"DSM 설치 단계에 문제가 있는 경우, 이 액세스 권한에서 '/var/log/linuxrc.syno."
+"log' 파일을 확인하세요."
+
+#: boot.sh:1110
+msgid "Default TTYD root password is 'blank' "
+msgstr "기본 TTYD 루트 비밀번호는 '공백'입니다"
+
+#: boot.sh:1111
+msgid "User config is on '/mnt/tcrp/user_config.json'"
+msgstr "사용자 구성은 '/mnt/tcrp/user_config.json'에 있습니다"
