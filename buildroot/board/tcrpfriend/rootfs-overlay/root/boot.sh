@@ -13,6 +13,11 @@ BOOTVER="0.1.0x"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
+# Apply i18n
+export TEXTDOMAINDIR="/root/lang"
+alias TEXT='gettext "msg"'
+shopt -s expand_aliases
+
 function history() {
     cat <<EOF
     --------------------------------------------------------------------------------------
@@ -1199,14 +1204,6 @@ function initialize() {
 
     # Read Configuration variables
     readconfig
-
-    # Apply i18n
-    export TEXTDOMAINDIR="/root/lang"
-    gettext() {
-        env TEXTDOMAIN=mydomain gettext "$@"
-    }
-    alias TEXT='gettext "msg"'
-    shopt -s expand_aliases
 
     # No network devices
     eths=$(ls /sys/class/net/ | grep -v lo || true)    
