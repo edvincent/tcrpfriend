@@ -1007,6 +1007,7 @@ function readconfig() {
 
         export LANG=${ucode}.UTF-8
         export LC_ALL=${ucode}.UTF-8
+        msgfmt lang/${ucode}/LC_MESSAGES/msg.po -o lang/${ucode}/LC_MESSAGES/msg.mo
   
     else
         echo "ERROR ! User config file : $userconfigfile not found"
