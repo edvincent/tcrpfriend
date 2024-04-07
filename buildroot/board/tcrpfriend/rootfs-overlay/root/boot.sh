@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240407
+# Date : 240408
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0y"
+BOOTVER="0.1.0z"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -90,6 +90,7 @@ function history() {
     0.1.0w Improved setnetwork function for using static IP
     0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
     0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
+    0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -107,6 +108,7 @@ function showlastupdate() {
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
 0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
+0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
 
 EOF
 }
