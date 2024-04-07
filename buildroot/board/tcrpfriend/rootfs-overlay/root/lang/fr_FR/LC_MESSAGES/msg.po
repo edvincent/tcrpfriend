@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 23:29+0900\n"
-"Last-Translator: <dante9000@gmail.com>\n"
-"Language-Team: French\n"
-"Language: fr\n"
+"PO-Revision-Date: 2024-04-07 06:31+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/tcrp-mshell/lang/"
+"fr/>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
@@ -48,16 +49,19 @@ msgstr "Pas encore d'adresse IP pour vérifier le dernier ami"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr "r touche enfoncée ! Accès au menu pour réinitialiser le mot de passe DSM!"
+msgstr ""
+"r touche enfoncée ! Accès au menu pour réinitialiser le mot de passe DSM !"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
 msgstr ""
-"e touche appuyée ! Accès au menu pour modifier la ligne de commande USB/SATA!"
+"e touche appuyée ! Accès au menu pour modifier la ligne de commande USB/SATA "
+"!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
-msgstr "j touche enfoncée ! Préparez Entering Force Junior (pour réinstaller DSM)!"
+msgstr ""
+"j touche enfoncée ! Préparez Entering Force Junior (pour réinstaller DSM) !"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."

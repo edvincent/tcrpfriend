@@ -1,7 +1,7 @@
-# Portuguese translations for PACKAGE package.
-# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <dante9000@gmail.com>, 2024.
+# FIRST AUTHOR <dante9000@gmail.com>, YEAR.
 #
 msgid ""
 msgstr ""
@@ -10,203 +10,193 @@ msgstr ""
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
 "PO-Revision-Date: 2024-04-07 06:31+0000\n"
 "Last-Translator: Peter Suh <dante9000@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"tcrp-mshell/lang/pt_BR/>\n"
-"Language: pt_BR\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/tcrp-mshell/lang/"
+"ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
-msgstr "Detectando Internet -> "
+msgstr "كشف الإنترنت "
 
 #: boot.sh:146
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
 msgstr ""
-"Nenhuma internet encontrada, Pular atualizar amigos e instalar bibliotecas "
-"Python para códigos QR!"
+"لم يعثر على الإنترنت، (سكيب) يستكمل الأصدقاء ويجمع مكتبات (فيثون) لرموز (كيو "
+"ر)!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
-msgstr "TCRP Amigo atualização automática desativado"
+msgstr "TCRP تحديث للصديق الآلي"
 
 #: boot.sh:168
 msgid "Checking for latest friend -> "
-msgstr "Verificando para o mais recente amigo -> "
+msgstr "تحقق من آخر صديق "
 
 #: boot.sh:191
 msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr "TCRP FRIEND FOI CRIADA, INDO PARA O REBOTE"
+msgstr "صديقها قد تم تأطيره"
 
 #: boot.sh:196
 msgid "No IP yet to check for latest friend"
-msgstr "Não há IP ainda para verificar para o amigo mais recente"
+msgstr "لا يوجد أي بي بعد لتفقد آخر صديق"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr "r chave pressionada! Inserindo o menu para redefinir a senha DSM!"
+msgstr "! دخول مينو لإستعادة كلمة سر دي إم سي!"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
-msgstr ""
-"e chave pressionada! Menu de entrada para Editar linha de comando USB/SATA!"
+msgstr "! دخول مينو من أجل إيديت يونا بي/ساتا خط القيادة!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
-msgstr "chave pressionada! Prepare Entering Force Junior (reinstalar DSM)!"
+msgstr "! جهزوا قوة الدخول!"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
-msgstr ""
-"Discos de carregador não suportados que não sejam USB, Sata DoM, mmc, NVMe, "
-"etc."
+msgstr "أقراص تحميل غير مدعمة غير مركب USB، Sata DoM، mmc، NVMe، الخ."
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
-msgstr ""
-"ERROR! /mnt/tcrp-p2/rd.gz ficheiro não encontrado, parando o processo de "
-"arranque"
+msgstr "ERROR /mnt/tcrp-p2/rd.gz file not found, stop boot process"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr ""
-"ERROR! arquivo /mnt/tcrp-p2/zImage não encontrado, parando processo de "
-"inicialização"
+msgstr "! /mnt/tcrp-p2/zImage file not found, stop boot process"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
-msgstr "Detectando atualização : "
+msgstr "الترقية: "
 
 #: boot.sh:825
 msgid "A reboot is required. Press any key to reboot..."
-msgstr ""
-"É necessária uma reinicialização. Pressione qualquer chave para reiniciar..."
+msgstr "يجب إعادة التشغيل اضغط أي مفتاح لإعادة تشغيل..."
 
 #: boot.sh:910
 msgid "Not Supported Loader BUS Type, program Exit!!!"
-msgstr "Não suportado Loader tipo BUS, saída do programa!!!"
+msgstr "ليس مُدعماً من نوع (لودر بوس)، برنامج مخرج!"
 
 #: boot.sh:932
 msgid "Failed to find boot Partition on !!!"
-msgstr "Falhado para encontrar a partição de inicialização em !!!"
+msgstr "فشل في العثور على تجزئة على!"
 
 #: boot.sh:976
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"modelo não é resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"النموذج لم يحل يرجى التحقق من ملف /mnt/tcrp/user_config.json. إيقاف عملية "
+"الأحذية"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
-"A versão de compilação não é resolvida. Verifique o arquivo /mnt/tcrp/"
-"user_config.json. processo de inicialização"
+"لم تُحلّ صيغة البناء. يرجى التحقق من ملف /mnt/tcrp/user_config.json. إيقاف "
+"عملية الأحذية"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
-"Atualização (número de pequenos ajustes) não é resolvida. Verifique o "
-"arquivo /mnt/tcrp/user_config.json."
+"لم يتم حل التحديث (الرقم القياسي). يرجى التحقق من ملف /mnt/tcrp/user_config."
+"json."
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"serial não está resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"التسلسل لم يحل يرجى التحقق من ملف /mnt/tcrp/user_config.json. إيقاف عملية "
+"الأحذية"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"mac1 não está resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"(ماك 1) لم يحل يرجى التحقق من ملف /mnt/tcrp/user_config.json. إيقاف عملية "
+"الأحذية"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
-msgstr "Pressione <r> para inserir um menu para redefinir a senha DSM"
+msgstr ":: إدخال قائمة بأسماء جوازات السفر الخاصة بـ \" ريست دي إم \""
 
 #: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
-msgstr ""
-"Pressione <e> para inserir um menu para Editar linha de comando USB/SATA"
+msgstr "مطبعة للدخول في قائمة لخط قيادة إيديت أوكس بي/ساتا"
 
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
-msgstr "Pressione <j> para entrar em um modo Junior (reinstalar DSM)"
+msgstr "اضغط على <j> للدخول إلى وضع المبتدئين (لإعادة تثبيت DSM)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
-msgstr "Entrando em um modo Junior (para reinstalar DSM)..."
+msgstr "إدخال طريقة مبتدئة (لإعادة تركيب الـ (دي إم."
 
 #: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
 msgstr ""
-"Sistema de inicialização EFI sem opção EFI, adicionando withefi a cmdline"
+"النظام المضغوط للمؤسسة التي لا تملك خياراً للمؤسسة، مضافاً معطفاً إلى التلميذ"
 
 #: boot.sh:1147
 msgid "Static boot set, rebooting to static ..."
-msgstr "Conjunto de inicialização estática, reiniciando a estática ..."
+msgstr "أحذية ثابتة، إعادة تشغيل إلى ثابتة..."
 
 #: boot.sh:1161
 msgid "Boot timeout exceeded, booting ... "
-msgstr "Tempo de inicialização excedido, inicialização ... "
+msgstr "تجاوز وقت الازدحام، الازدحام... "
 
 #: boot.sh:1163
 msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
-"\"HTTP, Synology Web Assistant (BusyBox httpd)\" serviço pode levar 20 - 40 "
-"segundos."
+"\"HTTP, Synology Web Assistant (BusyBox httpd)\" قد يستغرق 20 - 40 ثانية."
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
-msgstr "(O acesso à rede não está imediatamente disponível)"
+msgstr "(النفاذ إلى العمل غير متاح على الفور)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr "O carregamento do kernel começou, nada será exibido aqui mais ..."
+msgstr "بدأ تحميل العجلات لن يظهر شيء هنا بعد الآن."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
-msgstr "Inicializando com noefi, observe que isso pode causar problemas"
+msgstr "الازدهار مع النوف، يرجى ملاحظة أن هذا قد يسبب مشاكل"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr "Não foi encontrado! - Loader não funciona sem conexão de rede."
+msgstr "لم يعثر على أي مركز -اللودار لا يعمل بدون اتصال بالشبكة."
 
 #: boot.sh:1108
 msgid "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
-"Para verificar o problema, acesse o seguinte URL TTYD através de um "
-"navegador web. :"
+"للتحقق من المشكلة، قم بالوصول إلى عنوان URL التالي لـ TTYD من خلال متصفح "
+"الويب. :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the "
 "'/var/log/linuxrc.syno.log' file in this access."
 msgstr ""
-"Se tiver algum problema com as etapas de instalação do DSM, verifique o "
-"arquivo '/var/log/linuxrc.syno.log' neste acesso."
+"إذا كان لديك أي مشاكل مع خطوات تركيب DSM، تحقق من ملف '/var/log/linuxrc.syno."
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
-msgstr "Palavra-passe de raiz padrão TTYD é 'blank ' "
+msgstr "كلمة السر الجذري لـ (تي دي) هي \"بلانك\" ' "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr "A configuração do usuário está em '/mnt/tcrp/user_config.json '"
+msgstr "مركب المستعمل على / / / / خط/ مستعمل config.json '"

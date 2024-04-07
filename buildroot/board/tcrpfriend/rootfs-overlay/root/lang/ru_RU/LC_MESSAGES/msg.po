@@ -8,176 +8,201 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 09:16+0000\n"
-"Last-Translator:  <dante9000@gmail.com>\n"
-"Language-Team: Russian\n"
-"Language: ru\n"
+"PO-Revision-Date: 2024-04-07 06:31+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/tcrp-mshell/lang/"
+"ru/>\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
-msgstr ""
+msgstr "Обнаружение Интернета -> "
 
 #: boot.sh:146
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
 msgstr ""
+"Никакого Интернета не найдено, Skip обновляет друзей и устанавливает "
+"библиотеки Python для QR-кодов!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
-msgstr ""
+msgstr "TCRP Друг авто обновление отключен"
 
 #: boot.sh:168
 msgid "Checking for latest friend -> "
-msgstr ""
+msgstr "Проверка на последнего друга -> "
 
 #: boot.sh:191
 msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr ""
+msgstr "TCRP FRIEND HAS BEEN UPED,GOING FOR REBOOT"
 
 #: boot.sh:196
 msgid "No IP yet to check for latest friend"
-msgstr ""
+msgstr "Нет IP-адреса еще не проверить для последнего друга"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr ""
+msgstr "клавиши нажаты! Введите меню для удаления пароля DSM!"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
 msgstr ""
+"е ключ нажат! Введите меню для редактирования командной строки USB/SATA!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
 msgstr ""
+"джи ключ нажат! Подготовьтесь к вводу силы Junior (для повторной установки "
+"DSM)!"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
 msgstr ""
+"Неподдерживаемые загрузочные диски, кроме USB, Sata DoM, mmc, NVMe и т.д."
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
-msgstr ""
+msgstr "ERROR! /mnt/tcrp-p2/rd.gz файл не найден, процесс остановки загрузки"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr ""
+msgstr "Эйрор! /mnt/tcrp-p2/zImage файл не найден, процесс остановки загрузки"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
-msgstr ""
+msgstr "Обнаружение обновления: "
 
 #: boot.sh:825
 msgid "A reboot is required. Press any key to reboot..."
-msgstr ""
+msgstr "Требуется перезагрузка. Нажмите на любой ключ, чтобы перезагрузить..."
 
 #: boot.sh:910
 msgid "Not Supported Loader BUS Type, program Exit!!!"
-msgstr ""
+msgstr "Неподдерживаемый грузовой тип BUS, программа Выход!!!"
 
 #: boot.sh:932
 msgid "Failed to find boot Partition on !!!"
-msgstr ""
+msgstr "Не удалось найти загрузочную часть на!!!"
 
 #: boot.sh:976
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"модель не решена. Пожалуйста, проверьте файл /mnt/tcrp/user_config.json. "
+"остановка процесса загрузки"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
+"Строительная версия не разрешена. Пожалуйста, проверьте файл /mnt/tcrp/"
+"user_config.json. остановка процесса загрузки"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
+"Обновление (номер с небольшим исправлением) не разрешается. Пожалуйста, "
+"проверьте файл /mnt/tcrp/user_config.json."
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"серийный не разрешен. Пожалуйста, проверьте файл /mnt/tcrp/user_config.json. "
+"остановка процесса загрузки"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"mac1 не разрешен. Пожалуйста, проверьте файл /mnt/tcrp/user_config.json. "
+"остановка процесса загрузки"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
-msgstr ""
+msgstr "Нажмите <r>, чтобы ввести меню для сброса пароля DSM"
 
 #: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
-msgstr ""
+msgstr "Нажмите <e>, чтобы ввести меню для Правки командной строки USB/SATA"
 
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
-msgstr ""
+msgstr "Нажмите <j>, чтобы ввести режим Junior (переустановить DSM)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
-msgstr ""
+msgstr "Вход в младший режим (для повторной установки DSM)..."
 
 #: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
-msgstr ""
+msgstr "EFI загрузила систему без опции EFI, добавив сефи в смдлайн"
 
 #: boot.sh:1147
 msgid "Static boot set, rebooting to static ..."
-msgstr ""
+msgstr "Статический набор ботинок, перезагрузка на статичную..."
 
 #: boot.sh:1161
 msgid "Boot timeout exceeded, booting ... "
-msgstr ""
+msgstr "Время загрузки превысило, загрузка... "
 
 #: boot.sh:1163
 msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
+"Сервис «HTTP, Synology Web Assistant (BusyBox httpd)» может занять 20-40 "
+"секунд."
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
-msgstr ""
+msgstr "(Сетевой доступ не доступен сразу)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr ""
+msgstr "Загрузка ядра началась, здесь больше ничего не будет отображаться..."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
 msgstr ""
+"Загрузка с ноефи, пожалуйста, обратите внимание, что это может вызвать "
+"проблемы"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr ""
+msgstr "НИК не нашел! - Загрузчик не работает без сетевого подключения."
 
 #: boot.sh:1108
 msgid "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
+"Чтобы проверить проблему, доступ к следующему TTYD URL через веб-браузер. :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the "
 "'/var/log/linuxrc.syno.log' file in this access."
 msgstr ""
+"Если у вас есть какие-либо проблемы с этапами установки DSM, проверьте файл "
+"'/var/log/linuxrc.syno.log' в этом доступе."
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
-msgstr ""
+msgstr "Пароль TTYD по умолчанию - 'blank \" "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr ""
+msgstr "Настройка пользователя на '/mnt/tcrp/user_config.json \""

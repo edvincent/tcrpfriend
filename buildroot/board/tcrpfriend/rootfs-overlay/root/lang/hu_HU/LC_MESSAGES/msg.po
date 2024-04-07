@@ -1,7 +1,7 @@
-# Portuguese translations for PACKAGE package.
-# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <dante9000@gmail.com>, 2024.
+# FIRST AUTHOR <dante9000@gmail.com>, YEAR.
 #
 msgid ""
 msgstr ""
@@ -10,203 +10,201 @@ msgstr ""
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
 "PO-Revision-Date: 2024-04-07 06:31+0000\n"
 "Last-Translator: Peter Suh <dante9000@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"tcrp-mshell/lang/pt_BR/>\n"
-"Language: pt_BR\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang/hu_ZZ/>\n"
+"Language: hu_ZZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
-msgstr "Detectando Internet -> "
+msgstr "Internet észlelése -> "
 
 #: boot.sh:146
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
 msgstr ""
-"Nenhuma internet encontrada, Pular atualizar amigos e instalar bibliotecas "
-"Python para códigos QR!"
+"Nincs internet, Skip frissítő barátai és telepítése Python könyvtárak QR "
+"kódok!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
-msgstr "TCRP Amigo atualização automática desativado"
+msgstr "TCRP Barát automatikus frissítés fogyatékkal élő"
 
 #: boot.sh:168
 msgid "Checking for latest friend -> "
-msgstr "Verificando para o mais recente amigo -> "
+msgstr "Ellenőrzés a legújabb barát -> "
 
 #: boot.sh:191
 msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr "TCRP FRIEND FOI CRIADA, INDO PARA O REBOTE"
+msgstr "A TCRP FRIEND FRISSÍTVE, ÚJRAINDÍTÁSRA VONATKOZIK"
 
 #: boot.sh:196
 msgid "No IP yet to check for latest friend"
-msgstr "Não há IP ainda para verificar para o amigo mais recente"
+msgstr "Még nem IP, hogy ellenőrizze a legújabb barátot"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr "r chave pressionada! Inserindo o menu para redefinir a senha DSM!"
+msgstr "r kulcsnyomtatott! Belépő menü a DSM jelszó visszaállításához!"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
 msgstr ""
-"e chave pressionada! Menu de entrada para Editar linha de comando USB/SATA!"
+"e kulcsfontosságú nyomott! Belépés menü Edit USB /SATA Parancsnoki Line!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
-msgstr "chave pressionada! Prepare Entering Force Junior (reinstalar DSM)!"
+msgstr ""
+"j kulcsfontosságú nyomott! Készülj be a Force Junior-ba (a DSM "
+"újratelepítése)!"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
-msgstr ""
-"Discos de carregador não suportados que não sejam USB, Sata DoM, mmc, NVMe, "
-"etc."
+msgstr "Nem támogatott rakomány lemezek más, mint USB, Sata DoM, mmc, NVMe stb."
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
 msgstr ""
-"ERROR! /mnt/tcrp-p2/rd.gz ficheiro não encontrado, parando o processo de "
-"arranque"
+"ERROR ! /mnt/tcrp-p2/rd.gz fájl nem talált, megállítva a boot folyamatot"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr ""
-"ERROR! arquivo /mnt/tcrp-p2/zImage não encontrado, parando processo de "
-"inicialização"
+msgstr "ERROR! /mnt/tcrp-p2/zImage fájl nem talált, boot folyamat megállítása"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
-msgstr "Detectando atualização : "
+msgstr "Fejlesztési frissítés: "
 
 #: boot.sh:825
 msgid "A reboot is required. Press any key to reboot..."
-msgstr ""
-"É necessária uma reinicialização. Pressione qualquer chave para reiniciar..."
+msgstr "Újraindításra van szükség. Nyomja meg az újraindítás kulcsát..."
 
 #: boot.sh:910
 msgid "Not Supported Loader BUS Type, program Exit!!!"
-msgstr "Não suportado Loader tipo BUS, saída do programa!!!"
+msgstr "Nem támogatott Loader BUS típus, program kilépés!!!"
 
 #: boot.sh:932
 msgid "Failed to find boot Partition on !!!"
-msgstr "Falhado para encontrar a partição de inicialização em !!!"
+msgstr "Hiába találni boot Partition on !!!"
 
 #: boot.sh:976
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"modelo não é resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"a modell nem oldódik meg. Kérjük, ellenőrizze a /mnt/tcrp/user_config.json "
+"fájlt. boot folyamat megállítása"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
-"A versão de compilação não é resolvida. Verifique o arquivo /mnt/tcrp/"
-"user_config.json. processo de inicialização"
+"Az építési változat nem oldódik meg. Kérjük, ellenőrizze a /mnt/tcrp/"
+"user_config.json fájlt. boot folyamat megállítása"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
-"Atualização (número de pequenos ajustes) não é resolvida. Verifique o "
-"arquivo /mnt/tcrp/user_config.json."
+"Frissítés (kisfélixnumber) nem oldódik meg. Kérjük, ellenőrizze a /mnt/tcrp/"
+"user_config.json fájlt."
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"serial não está resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"a sorozat nem oldódik meg. Kérjük, ellenőrizze a /mnt/tcrp/user_config.json "
+"fájlt. boot folyamat megállítása"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"mac1 não está resolvido. Verifique o arquivo /mnt/tcrp/user_config.json. "
-"processo de inicialização"
+"a mac1 nem oldódik meg. Kérjük, ellenőrizze a /mnt/tcrp/user_config.json "
+"fájlt. boot folyamat megállítása"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
-msgstr "Pressione <r> para inserir um menu para redefinir a senha DSM"
+msgstr "Nyomja meg a <r> menübe a DSM jelszó visszaállításához"
 
 #: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
-msgstr ""
-"Pressione <e> para inserir um menu para Editar linha de comando USB/SATA"
+msgstr "Nyomja meg a <e>-t, hogy menübe lépjen az USB/SATA Parancsnoki Line-hez"
 
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
-msgstr "Pressione <j> para entrar em um modo Junior (reinstalar DSM)"
+msgstr ""
+"Nyomja meg a <j>-t, hogy belépjen egy Junior módba (a DSM újratelepítése)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
-msgstr "Entrando em um modo Junior (para reinstalar DSM)..."
+msgstr "Junior mód (a DSM újratelepítése)."
 
 #: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
 msgstr ""
-"Sistema de inicialização EFI sem opção EFI, adicionando withefi a cmdline"
+"EFI booted rendszer nincs EFI opcióval, hozzáadva az előrejelzőt a cmdline-"
+"hez"
 
 #: boot.sh:1147
 msgid "Static boot set, rebooting to static ..."
-msgstr "Conjunto de inicialização estática, reiniciando a estática ..."
+msgstr "Static boot set, rebooting to static..."
 
 #: boot.sh:1161
 msgid "Boot timeout exceeded, booting ... "
-msgstr "Tempo de inicialização excedido, inicialização ... "
+msgstr "Boot timeout túllépett, booting... "
 
 #: boot.sh:1163
 msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
-"\"HTTP, Synology Web Assistant (BusyBox httpd)\" serviço pode levar 20 - 40 "
-"segundos."
+"\"HTTP, Synology Web Assistant (BusyBox httpd)\" szolgáltatás 20-40 "
+"másodpercig tarthat."
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
-msgstr "(O acesso à rede não está imediatamente disponível)"
+msgstr "(A hálózati hozzáférés nem azonnal elérhető)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr "O carregamento do kernel começou, nada será exibido aqui mais ..."
+msgstr "Kernel rakás kezdődött, semmi sem jelenik meg többé..."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
-msgstr "Inicializando com noefi, observe que isso pode causar problemas"
+msgstr ""
+"Booting with noefi, kérjük, vegye figyelembe, hogy ez okozhat problémákat"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr "Não foi encontrado! - Loader não funciona sem conexão de rede."
+msgstr "Nem talált NIC! A Loader nem működik hálózati kapcsolat nélkül."
 
 #: boot.sh:1108
 msgid "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
-"Para verificar o problema, acesse o seguinte URL TTYD através de um "
-"navegador web. :"
+"A probléma ellenőrzése, a következő TTYD URL elérése egy webes böngészőn "
+"keresztül. :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the "
 "'/var/log/linuxrc.syno.log' file in this access."
 msgstr ""
-"Se tiver algum problema com as etapas de instalação do DSM, verifique o "
-"arquivo '/var/log/linuxrc.syno.log' neste acesso."
+"Ha bármilyen problémája van a DSM telepítési lépésekkel, ellenőrizze a \" /"
+"var/log/linuxrc.syno.log\" fájlt ebben a hozzáférésben."
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
-msgstr "Palavra-passe de raiz padrão TTYD é 'blank ' "
+msgstr "Az alapértelmezett TTYD gyökérjelszó \" üres \"...\" "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr "A configuração do usuário está em '/mnt/tcrp/user_config.json '"
+msgstr "Felhasználói konfiguráció a \"/mnt/tcrp/user_config.json \"...\""

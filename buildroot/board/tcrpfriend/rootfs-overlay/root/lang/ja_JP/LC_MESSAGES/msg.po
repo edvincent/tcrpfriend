@@ -8,175 +8,187 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 09:16+0000\n"
-"Last-Translator:  <dante9000@gmail.com>\n"
-"Language-Team: Japanese\n"
-"Language: ja\n"
+"PO-Revision-Date: 2024-04-06 16:18+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/tcrp-mshell/"
+"lang/ja/>\n"
+"Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
-msgstr ""
+msgstr "インターネットの検出 → "
 
 #: boot.sh:146
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
-msgstr ""
+msgstr "インターネットが見つからず、友人のアップデートをスキップし、QRコード用のPytho"
+"nライブラリをインストール!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
-msgstr ""
+msgstr "トピックス 友人自動更新 無効"
 
 #: boot.sh:168
 msgid "Checking for latest friend -> "
-msgstr ""
+msgstr "友達のチェック → "
 
 #: boot.sh:191
 msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr ""
+msgstr "TCRPフレンドが更新されました"
 
 #: boot.sh:196
 msgid "No IP yet to check for latest friend"
-msgstr ""
+msgstr "最近の友人のためにまだIPがない"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr ""
+msgstr "rキーを押しました! "
+"DSMパスワードをリセットするためのメニューを入力してください!"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
-msgstr ""
+msgstr "eキーを押しました! USB/"
+"SATAコマンドラインを編集するためのメニューを入力してください!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
-msgstr ""
+msgstr "jキープレス! フォースジュニア(DSMを再インストールする)を入力準備する!"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
-msgstr ""
+msgstr "USB、Sata DoM、mmc、NVMe、等以外のサポートされていない積込み機ディスク."
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
-msgstr ""
+msgstr "ERROR ! /mnt/tcrp-p2/rd.gzファイルが見つからなかった、起動プロセスを停止"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr ""
+msgstr "エロール! /mnt/tcrp-p2/zImage ファイルが発見されていない、起動プロセスを停止"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
-msgstr ""
+msgstr "改善の検出: "
 
 #: boot.sh:825
 msgid "A reboot is required. Press any key to reboot..."
-msgstr ""
+msgstr "再起動が必要です。 任意のキーを押して再起動します..."
 
 #: boot.sh:910
 msgid "Not Supported Loader BUS Type, program Exit!!!"
-msgstr ""
+msgstr "支えられない積込み機バス タイプ、プログラム出口!"
 
 #: boot.sh:932
 msgid "Failed to find boot Partition on !!!"
-msgstr ""
+msgstr "ブーツのパーティションを見つける失敗!"
 
 #: boot.sh:976
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
-msgstr ""
+msgstr "モデルは解決しません。 /mnt/tcrp/user_config.jsonファイルを確認してください。"
+" ブーツプロセスの停止"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
-msgstr ""
+msgstr "ビルドバージョンは解決しません。 /mnt/tcrp/user_config."
+"jsonファイルを確認してください。 ブーツプロセスの停止"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
-msgstr ""
+msgstr "更新(smallfixnumber)は解決しません。 /mnt/tcrp/user_config."
+"jsonファイルを確認してください."
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
-msgstr ""
+msgstr "シリアルは解決しません。 /mnt/tcrp/user_config."
+"jsonファイルを確認してください。 ブーツプロセスの停止"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
-msgstr ""
+msgstr "mac1 は解決しません。 /mnt/tcrp/user_config.jsonファイルを確認してください。 "
+"ブーツプロセスの停止"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
-msgstr ""
+msgstr "リセットDSMパスワードのメニューを入力する <r> を押します"
 
 #: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
-msgstr ""
+msgstr "USB/SATA コマンドラインを編集するためのメニューを入力する <e> を押します"
 
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
-msgstr ""
+msgstr "<j> を押して、ジュニアモードに入る (DSMを再インストールするには)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
-msgstr ""
+msgstr "ジュニアモードに入る(DSMを再インストールする)..."
 
 #: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
-msgstr ""
+msgstr "EFIオプションなしのEFI起動システム、withefiをcmdlineに追加"
 
 #: boot.sh:1147
 msgid "Static boot set, rebooting to static ..."
-msgstr ""
+msgstr "静的なブーツ セット、静的なブーツへの再起動..."
 
 #: boot.sh:1161
 msgid "Boot timeout exceeded, booting ... "
-msgstr ""
+msgstr "ブーツタイムアウトが超え, ブート... "
 
 #: boot.sh:1163
 msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
-msgstr ""
+msgstr "「HTTP、Synology Web Assistant(BusyBox "
+"httpd)」サービスは20～40秒かかる場合があります."
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
-msgstr ""
+msgstr "(ネットワークアクセスは利用できません)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr ""
+msgstr "カーネルの読み込みが開始されました。ここで何も表示されません..."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
-msgstr ""
+msgstr "Noefiで起動する、問題を引き起こす可能性があることに気づく"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr ""
+msgstr "NICが見つかりません! - ローダーはネットワーク接続なしで動作しません."
 
 #: boot.sh:1108
 msgid "To check the problem, access the following TTYD URL through a web browser. :"
-msgstr ""
+msgstr "問題を確認するには、次の TTYD URL を Web ブラウザーからアクセスします。 :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the "
 "'/var/log/linuxrc.syno.log' file in this access."
-msgstr ""
+msgstr "DSMのインストール手順に問題がある場合は、このアクセスで '/var/log/"
+"linuxrc.syno.log' ファイルを確認できます."
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
-msgstr ""
+msgstr "デフォルト TTYD の root パスワードは 'blank お問い合わせ "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr ""
+msgstr "ユーザー設定は '/mnt/tcrp/user_config.json にあります。 お問い合わせ"

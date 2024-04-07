@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 22:59+0900\n"
-"Last-Translator: <dante9000@gmail.com>\n"
-"Language-Team: German\n"
-"Language: de\n"
+"PO-Revision-Date: 2024-04-07 06:31+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/tcrp-mshell/lang/"
+"de/>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
@@ -27,9 +28,8 @@ msgid ""
 "No internet found, Skip updating friends and installing Python libraries for QR "
 "codes!"
 msgstr ""
-"Kein Internet gefunden. Überspringen Sie die Aktualisierung von Freunden und die "
-"Installation von Python-Bibliotheken für\n"
-"QR-Codes!"
+"Kein Internet gefunden. Überspringen Sie die Aktualisierung von Freunden und "
+"die Installation von Python-Bibliotheken für QR-Codes!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
@@ -109,9 +109,8 @@ msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"Build-Version wurde nicht aufgelöst. Bitte überprüfen Sie die Datei /mnt/tcrp/"
-"user_config.json\n"
-"Datei. Stoppen des Bootvorgangs"
+"Build-Version wurde nicht aufgelöst. Bitte überprüfen Sie die Datei /mnt/"
+"tcrp/user_config.json Datei. Stoppen des Bootvorgangs"
 
 #: boot.sh:986
 msgid ""
@@ -149,7 +148,8 @@ msgstr ""
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
 msgstr ""
-"Drücken Sie <j>, um in den Junior-Modus zu wechseln (um DSM neu zu installieren)."
+"Drücken Sie <j>, um in den Junior-Modus zu wechseln (um DSM neu zu "
+"installieren)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
@@ -195,7 +195,7 @@ msgstr ""
 #: boot.sh:1108
 msgid "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
-"Greifen Sie über das TTYD-Webterminal auf http://{0}:7681 zu, um das Problem zu "
+"Greifen Sie über das TTYD-Webterminal auf, um das Problem zu "
 "überprüfen. :"
 
 #: boot.sh:1109
@@ -212,4 +212,5 @@ msgstr "Das Standard-TTYD-Root-Passwort ist 'leer'. "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr "Die Benutzerkonfiguration befindet sich auf '/mnt/tcrp/user_config.json'."
+msgstr ""
+"Die Benutzerkonfiguration befindet sich auf '/mnt/tcrp/user_config.json'"

@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-04-06 23:01+0900\n"
-"Last-Translator: dante9000@gmail.com\n"
-"Language-Team: Korean\n"
-"Language: ko\n"
+"PO-Revision-Date: 2024-04-07 06:31+0000\n"
+"Last-Translator: Peter Suh <dante9000@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/tcrp-mshell/lang/"
+"ko/>\n"
+"Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
@@ -171,7 +172,7 @@ msgstr "커널 로딩이 시작되었습니다, 더 이상 여기에 아무것�
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
-msgstr "noefi로 부팅하면 문제가 발생할 수 있습니다."
+msgstr "Noefi로 부팅하면, 문제가 발생할 수 있습니다"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
