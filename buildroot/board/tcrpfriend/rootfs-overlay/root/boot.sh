@@ -1103,6 +1103,7 @@ function boot() {
     export MOD_ZIMAGE_FILE="/mnt/tcrp/zImage-dsm"
     export MOD_RDGZ_FILE="/mnt/tcrp/initrd-dsm"
 
+    echo -e "$(msgcyan "$(TEXT "User config is on '/mnt/tcrp/user_config.json'")")"
     echo
     echo "zImage : ${MOD_ZIMAGE_FILE} initrd : ${MOD_RDGZ_FILE}, Module Processing Method : $(msgnormal "${dmpm}")"
     echo "cmdline : $(msgblue "${CMDLINE_LINE}")"
@@ -1111,7 +1112,6 @@ function boot() {
     echo " http://${IP}:7681"
     echo -e "$(msgwarning "$(TEXT "If you have any problems with the DSM installation steps, check the '/var/log/linuxrc.syno.log' file in this access.")")"
     echo -e "$(msgalert "$(TEXT "Default TTYD root password is 'blank' ")")"
-    echo -e "$(msgcyan "$(TEXT "User config is on '/mnt/tcrp/user_config.json'")")"
     echo            
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
@@ -1165,8 +1165,9 @@ function boot() {
         echo
         echo -en "\r$(TEXT "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 seconds.")\n"
         echo -en "\r$(TEXT "(Network access is not immediately available)")\n"
-        echo    
         echo -en "\r$(TEXT "Kernel loading has started, nothing will be displayed here anymore ...")\n"
+        echo -en "$(msgnormal "$(TEXT "Enter the following address in your web browser :")")"
+        echo " http://${IP}:5000"        
 
         if [ "${INTERNET}" = "ON" ]; then
             [ -n "${IP}" ] && URL="http://${IP}:5000" || URL="http://find.synology.com/"
