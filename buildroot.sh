@@ -9,7 +9,9 @@ mkdir /opt/firmware
 cd /opt/buildroot
 git checkout 2023.08.4
 git pull origin 2023.08.4
-cp -rf /home/runner/work/tcrpfriend/tcrpfriend/buildroot/* .
-cp -rf /opt/config-files/redpill-load/config /home/runner/work/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/
+#cp -rf /home/runner/work/tcrpfriend/tcrpfriend/buildroot/* .
+#cp -rf /opt/config-files/redpill-load/config /home/runner/work/tcrpfriend/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/
+cp -rf /workspaces/tcrpfriend/buildroot/* .
+cp -rf /opt/config-files/redpill-load/config /workspaces/tcrpfriend/buildroot/board/tcrpfriend/rootfs-overlay/root/
 chmod 777 board/tcrpfriend/rootfs-overlay/root/*.sh
 chmod 777 board/tcrpfriend/rootfs-overlay/root/tools/*
