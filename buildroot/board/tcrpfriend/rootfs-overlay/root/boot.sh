@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240408
+# Date : 240411
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.0z"
+BOOTVER="0.1.1a"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -91,6 +91,7 @@ function history() {
     0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
     0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
     0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
+    0.1.1a Extra menu bug fixed
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -100,15 +101,12 @@ EOF
 function showlastupdate() {
     cat <<EOF
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
-0.1.0o Added RedPill bootloader hard disk porting function
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
-       synoboot3 unified to use partition number 4 instead of partition number 5 (1 BASIC + 1 SHR required)
-0.1.0t Supports bootloader injection with SHR disk only
-       dom_szmax=32GB (limit size of the injected bootloader)
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
 0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
 0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
+0.1.1a Extra menu bug fixed
 
 EOF
 }
@@ -698,8 +696,6 @@ function getusb() {
         curvid=$(jq -r -e .general.usb_line $userconfigfile | awk -Fvid= '{print $2}' | awk '{print  $1}')
         sed -i "s/${curpid}/${PID}/" $userconfigfile
         sed -i "s/${curvid}/${VID}/" $userconfigfile
-    elif [ "${BUS}" != "sata" ]; then
-        TEXT "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
     fi
 
 }
@@ -1112,8 +1108,8 @@ function boot() {
     echo
     echo -en "$(msgpurple "$(TEXT "To check the problem, access the following TTYD URL through a web browser. :")")"
     echo " http://${IP}:7681"
+    echo -e "$(msgalert "$(TEXT "Default TTYD root password is 'blank' ")")"    
     echo -e "$(msgwarning "$(TEXT "If you have any problems with the DSM installation steps, check the '/var/log/linuxrc.syno.log' file in this access.")")"
-    echo -e "$(msgalert "$(TEXT "Default TTYD root password is 'blank' ")")"
     echo            
     #if [ "$1" != "gettycon" ] && [ "$1" != "forcejunior" ]; then    
     if [ "$1" != "forcejunior" ]; then    
@@ -1206,7 +1202,7 @@ function initialize() {
     [ "$(hostname)" != "tcrpfriend" ] && echo "ERROR running on alien system" && exit 99
 
     # Mount loader disk
-    mountall
+    [ -z "${LOADER_DISK}" ] && mountall
 
     # Read Configuration variables
     readconfig
