@@ -1245,6 +1245,11 @@ update)
     upgradefriend
     ;;
 
+checkupgrade)
+    initialize
+    checkupgrade
+    ;;
+
 patchramdisk)
     initialize
     patchramdisk
