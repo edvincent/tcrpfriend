@@ -93,6 +93,7 @@ function history() {
     0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
     0.1.1a Extra menu bug fixed
     0.1.1b Display smallfixnumber version changed after Ramdisk patch
+    0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -109,6 +110,7 @@ function showlastupdate() {
 0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
 0.1.1a Extra menu bug fixed
 0.1.1b Display smallfixnumber version changed after Ramdisk patch
+0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
 
 EOF
 }
@@ -744,7 +746,7 @@ function getip() {
             fi
             COUNT=$((${COUNT} + 1))
             if [ $(ip route | grep default | grep metric | grep ${eth} | wc -l) -eq 1 ]; then
-                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | awk '{print $7}')"
+                IP="$(ip route show dev ${eth} 2>/dev/null | grep default | grep metric | awk '{print $7}')"
                 #IP="$(ip route get 1.1.1.1 2>/dev/null | grep ${eth} | awk '{print $7}')"
                 IP=$(echo -n "${IP}" | tr '\n' '\b')
                 LASTIP="${IP}"
@@ -1135,8 +1137,10 @@ function boot() {
         printf "%s\n" "${line[@]}"
     done </tmp/cmdline.out | egrep -i "sn|pid|vid|mac|hddhotplug|netif_num" | sort >/tmp/cmdline.check
 
+    [ $(grep sn /tmp/cmdline.check | wc -l) -eq 0 ] && msgalert "FAILED to find sn in CMDLINE, DSM will panic, exiting so you can fix this\n" && exit 99
+    [ $(grep netif_num /tmp/cmdline.check | wc -l) -eq 0 ] && msgalert "FAILED to find netif_num in CMDLINE, DSM will panic, exiting so you can fix this\n" && exit 99
+    [ $(grep mac /tmp/cmdline.check | wc -l) -eq 0 ] && msgalert "FAILED to find mac# in CMDLINE, DSM will panic, exiting so you can fix this\n" && exit 99
     . /tmp/cmdline.check
-
     [ $(grep mac /tmp/cmdline.check | grep -v vender_mac | wc -l) != $netif_num ] && msgalert "FAILED to match the count of configured netif_num and mac addresses, DSM will panic, exiting so you can fix this\n" && exit 99
 
     #If EFI then add withefi to CMDLINE_LINE
