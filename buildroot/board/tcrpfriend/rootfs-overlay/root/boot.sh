@@ -487,8 +487,6 @@ function patchramdisk() {
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
     updategrubconf
 
-    echo -ne "Smallfixnumber version changed after Ramdisk Patch, Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber")\n"
-
 }
 
 function rebuildloader() {
@@ -831,6 +829,8 @@ function checkupgrade() {
             reboot
         fi
     fi
+
+    [ "$rdhash" != "$origrdhash" ] && echo -ne "Smallfixnumber version changed after Ramdisk Patch, Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber")\n"
     
 }
 
