@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240411
+# Date : 240414
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.1a"
+BOOTVER="0.1.1b"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -92,6 +92,7 @@ function history() {
     0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
     0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
     0.1.1a Extra menu bug fixed
+    0.1.1b Display smallfixnumber version changed after Ramdisk patch
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -107,6 +108,7 @@ function showlastupdate() {
 0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
 0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
 0.1.1a Extra menu bug fixed
+0.1.1b Display smallfixnumber version changed after Ramdisk patch
 
 EOF
 }
@@ -484,6 +486,8 @@ function patchramdisk() {
     updateuserconfigfield "general" "version" "${major}.${minor}.${micro}-${buildnumber}"
     updateuserconfigfield "general" "smallfixnumber" "${smallfixnumber}"
     updategrubconf
+
+    echo -ne "Smallfixnumber version changed after Ramdisk Patch, Build : $(msgnormal "$version"), Update : $(msgnormal "$smallfixnumber")\n"
 
 }
 
