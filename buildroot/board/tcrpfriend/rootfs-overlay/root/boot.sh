@@ -581,9 +581,11 @@ function updateuserconfigfile() {
 
 function updategrubconf() {
 
-    curgrubver="$(grep menuentry /mnt/tcrp-p1/boot/grub/grub.cfg | grep RedPill | head -1 | awk '{print $4}')"
-    echo "Updating grub version values from: $curgrubver to $version"
+    curgrubver="$(grep menuentry /mnt/tcrp-p1/boot/grub/grub.cfg | head -1 | awk '{print $6}')"
+    curgrubsmall="$(grep menuentry /mnt/tcrp-p1/boot/grub/grub.cfg | head -1 | awk '{print $8}')"
+    echo "Updating grub version values from: $curgrubver U$curgrubsmall to $version U$smallfixnumber"
     sed -i "s/$curgrubver/$version/g" /mnt/tcrp-p1/boot/grub/grub.cfg
+    sed -i "s/Update $curgrubsmall/Update $smallfixnumber/g" /mnt/tcrp-p1/boot/grub/grub.cfg
 
 }
 
