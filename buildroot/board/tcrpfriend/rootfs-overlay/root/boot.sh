@@ -357,7 +357,7 @@ function extractramdisk() {
 
     if [ -f $temprd/etc/VERSION ]; then
         . $temprd/etc/VERSION
-        echo "Extracted ramdisk VERSION : ${major}.${minor}.${micro}-${buildnumber}"
+        echo "Extracted ramdisk VERSION : ${major}.${minor}.${micro}-${buildnumber} U${smallfixnumber}"
     else
         echo "ERROR, Couldnt read extracted file version"
         exit 99
