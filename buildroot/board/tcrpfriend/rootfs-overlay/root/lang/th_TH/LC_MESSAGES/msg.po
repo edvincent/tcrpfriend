@@ -18,165 +18,182 @@ msgstr ""
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
-msgstr ""
+msgstr "กำลังตรวจจับอินเทอร์เน็ต ->"
 
 #: boot.sh:146
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
 msgstr ""
+"ไม่พบอินเทอร์เน็ต ข้ามการอัปเดตเพื่อนและติดตั้งไลบรารี Python สำหรับ "
+"คิวอาร์โค้ด!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
-msgstr ""
+msgstr "ปิดใช้งานการอัปเดตอัตโนมัติของเพื่อน TCRP"
 
 #: boot.sh:168
 msgid "Checking for latest friend -> "
-msgstr ""
+msgstr "กำลังตรวจสอบเพื่อนล่าสุด ->"
 
 #: boot.sh:191
 msgid "TCRP FRIEND HAS BEEN UPDATED, GOING FOR REBOOT"
-msgstr ""
+msgstr "เพื่อน TCRP ได้รับการอัปเดตแล้ว กำลังรีบูต"
 
 #: boot.sh:196
 msgid "No IP yet to check for latest friend"
-msgstr ""
+msgstr "ยังไม่มี IP เพื่อตรวจสอบเพื่อนล่าสุด"
 
 #: boot.sh:614
 msgid "r key pressed! Entering Menu for Reset DSM Password!"
-msgstr ""
+msgstr "กดปุ่ม r แล้ว! เข้าสู่เมนูเพื่อรีเซ็ตรหัสผ่าน DSM!"
 
 #: boot.sh:620
 msgid "e key pressed! Entering Menu for Edit USB/SATA Command Line!"
-msgstr ""
+msgstr "กดปุ่ม e! เข้าสู่เมนูเพื่อแก้ไขบรรทัดคำสั่ง USB/SATA!"
 
 #: boot.sh:626
 msgid "j key pressed! Prepare Entering Force Junior (to re-install DSM)!"
-msgstr ""
+msgstr "กดปุ่ม j! เตรียม Entering Force Junior (เพื่อติดตั้ง DSM ใหม่)!"
 
 #: boot.sh:698
 msgid "Unsupported loader disks other than USB, Sata DoM, mmc, NVMe, etc."
-msgstr ""
+msgstr "ไม่รองรับดิสก์ตัวโหลดอื่นที่ไม่ใช่ USB, Sata DoM, mmc, NVMe ฯลฯ"
 
 #: boot.sh:777
 msgid "ERROR ! /mnt/tcrp-p2/rd.gz file not found, stopping boot process"
-msgstr ""
+msgstr "ข้อผิดพลาด ! /mnt/tcrp-p2/rd.gz ไม่พบไฟล์ กำลังหยุดกระบวนการบูต"
 
 #: boot.sh:781
 msgid "ERROR ! /mnt/tcrp-p2/zImage file not found, stopping boot process"
-msgstr ""
+msgstr "ข้อผิดพลาด ! /mnt/tcrp-p2/zImage ไม่พบไฟล์ กำลังหยุดกระบวนการบูต"
 
 #: boot.sh:802
 msgid "Detecting upgrade : "
-msgstr ""
+msgstr "กำลังตรวจหาการอัพเกรด :"
 
 #: boot.sh:825
 msgid "A reboot is required. Press any key to reboot..."
-msgstr ""
+msgstr "จำเป็นต้องรีบูต กดปุ่มใดก็ได้เพื่อรีบูต..."
 
 #: boot.sh:910
 msgid "Not Supported Loader BUS Type, program Exit!!!"
-msgstr ""
+msgstr "ไม่รองรับประเภท Loader BUS, โปรแกรมออก!!!"
 
 #: boot.sh:932
 msgid "Failed to find boot Partition on !!!"
-msgstr ""
+msgstr "ไม่พบพาร์ติชันการบูตบน !!!"
 
 #: boot.sh:976
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"โมเดลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
+"หยุดกระบวนการบูต"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
+"รุ่นบิลด์ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/user_config.json "
+"file. หยุดกระบวนการบูต"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
+"อัปเดต (smallfixnumber) ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/"
+"ไฟล์ user_config.json"
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"ซีเรียลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
+"หยุดกระบวนการบูต"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
+"mac1 ไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
+"หยุดกระบวนการบูต"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
-msgstr ""
+msgstr "กด <r> เพื่อเข้าสู่เมนูสำหรับรีเซ็ตรหัสผ่าน DSM"
 
 #: boot.sh:1117
 msgid "Press <e> to enter a menu for Edit USB/SATA Command Line"
-msgstr ""
+msgstr "กด <e> เพื่อเข้าสู่เมนูสำหรับแก้ไขบรรทัดคำสั่ง USB/SATA"
 
 #: boot.sh:1118
 msgid "Press <j> to enter a Junior mode (to re-install DSM)"
-msgstr ""
+msgstr "กด <j> เพื่อเข้าสู่โหมดจูเนียร์ (เพื่อติดตั้ง DSM ใหม่)"
 
 #: boot.sh:1122
 msgid "Entering a Junior mode (to re-install DSM)..."
-msgstr ""
+msgstr "เข้าสู่โหมดจูเนียร์ (เพื่อติดตั้ง DSM ใหม่)..."
 
 #: boot.sh:1137
 msgid "EFI booted system with no EFI option, adding withefi to cmdline"
-msgstr ""
+msgstr "ระบบบูต EFI โดยไม่มีตัวเลือก EFI กำลังเพิ่ม withefi ใน cmdline"
 
 #: boot.sh:1147
 msgid "Static boot set, rebooting to static ..."
-msgstr ""
+msgstr "ตั้งค่าการบูตแบบคงที่ กำลังรีบูตเป็นแบบคงที่ ..."
 
 #: boot.sh:1161
 msgid "Boot timeout exceeded, booting ... "
-msgstr ""
+msgstr "เกินเวลาการบูต กำลังบูต ... "
 
 #: boot.sh:1163
 msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
+บริการ "\"HTTP, Synology Web Assistant (BusyBox httpd)\" อาจใช้เวลา 20 - 40 "
+"วินาที"
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
-msgstr ""
+msgstr "(การเข้าถึงเครือข่ายไม่สามารถใช้งานได้ทันที)"
 
 #: boot.sh:1166
 msgid "Kernel loading has started, nothing will be displayed here anymore ..."
-msgstr ""
+msgstr "การโหลดเคอร์เนลเริ่มต้นแล้ว ไม่มีอะไรจะแสดงที่นี่อีกต่อไป ..."
 
 #: boot.sh:1180
 msgid "Booting with noefi, please notice that this might cause issues"
-msgstr ""
+msgstr "กำลังบูตด้วย noefi โปรดสังเกตว่านี่อาจทำให้เกิดปัญหา"
 
 #: boot.sh:1210
 msgid "No NIC found! - Loader does not work without Network connection."
-msgstr ""
+msgstr "ไม่พบ NIC! - ตัวโหลดไม่ทำงานหากไม่มีการเชื่อมต่อเครือข่าย"
 
 #: boot.sh:1108
 msgid ""
 "To check the problem, access the following TTYD URL through a web browser. :"
 msgstr ""
+"หากต้องการตรวจสอบปัญหา ให้เข้าถึง TTYD URL ต่อไปนี้ผ่านทางเว็บเบราว์เซอร์ :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the '/var/"
 "log/linuxrc.syno.log' file in this access."
 msgstr ""
+"หากคุณมีปัญหาใดๆ กับขั้นตอนการติดตั้ง DSM ให้ตรวจสอบ '/var/"
+"ไฟล์ log/linuxrc.syno.log' ในการเข้าถึงนี้"
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
-msgstr ""
+msgstr "รหัสผ่านรูท TTYD เริ่มต้นคือ 'ว่างเปล่า' "
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr ""
+msgstr "การกำหนดค่าผู้ใช้อยู่ที่ '/mnt/tcrp/user_config.json'"
