@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.1c"
+BOOTVER="0.1.1d"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -94,6 +94,7 @@ function history() {
     0.1.1a Extra menu bug fixed
     0.1.1b Display smallfixnumber version changed after Ramdisk patch
     0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
+    0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -105,12 +106,8 @@ function showlastupdate() {
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
-0.1.0x Multilingual explanation i18n support (Priority given to German, Spanish, French, and Korean)
-0.1.0y Multilingual explanation i18n support (Added Japanese, Chinese, Russian, Brazilian, and Italian)
-0.1.0z Multilingual explanation i18n support (Added Arabic, Hindi, Hungarian, Indonesian, and Turkish)
-0.1.1a Extra menu bug fixed
-0.1.1b Display smallfixnumber version changed after Ramdisk patch
 0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
+0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
 
 EOF
 }
