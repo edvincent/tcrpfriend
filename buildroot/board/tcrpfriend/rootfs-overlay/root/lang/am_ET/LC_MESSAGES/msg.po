@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-05-08 14:48+0000\n"
-"Last-Translator:  <dante9000@gmail.com>\n"
+"PO-Revision-Date: 2024-05-09 00:50+0900\n"
+"Last-Translator: <dante9000@gmail.com>\n"
 "Language-Team: Amharic\n"
 "Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.3\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
@@ -24,9 +25,7 @@ msgstr "በይነመረብን መፈለግ ->"
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
-msgstr ""
-"ምንም በይነመረብ አልተገኘም, ጓደኞችን ማዘመን እና የ Python ቤተ-መጽሐፍት መጫንን ዝለል ለ"
-"QR ኮዶች!"
+msgstr "ምንም በይነመረብ አልተገኘም, ጓደኞችን ማዘመን እና የ Python ቤተ-መጽሐፍት መጫንን ዝለል ለQR ኮዶች!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
@@ -88,41 +87,35 @@ msgstr "በ ላይ የቡት ክፍልፍልን ማግኘት አልተቻለም!
 msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
-msgstr ""
-"ሞዴሉ አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።"
-"የማስነሳት ሂደትን ማቆም"
+msgstr "ሞዴሉ አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።የማስነሳት ሂደትን ማቆም"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
-"የግንባታ ስሪት አልተፈታም። እባክዎ /mnt/tcrp/user_config.json" የሚለውን ያረጋግጡ
-"ፋይል የማስነሻ ሂደቱን ማቆም"
+"የግንባታ ስሪት አልተፈታም። እባክዎ /mnt/tcrp/user_config.json የሚለውን ያረጋግጡ ፋይል የማስነሻ ሂደቱን "
+"ማቆም"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
-msgstr ""
-"ዝማኔ(ትንሽ ቁጥር) አልተፈታም። እባክዎ /mnt/tcrp/ን ያረጋግጡ"
-"user_config.json ፋይል።"
+msgstr "ዝማኔ(ትንሽ ቁጥር) አልተፈታም። እባክዎ /mnt/tcrp/ን ያረጋግጡuser_config.json ፋይል።"
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"ተከታታይ አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።"
-"የማስነሳት ሂደትን ማቆም"
+"ተከታታይ አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።የማስነሳት ሂደትን ማቆም"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"mac1 አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።"
-"የማስነሳት ሂደትን ማቆም"
+"mac1 አልተፈታም። እባክዎ /mnt/tcrp/user_config.json ፋይልን ያረጋግጡ።የማስነሳት ሂደትን ማቆም"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
@@ -157,8 +150,7 @@ msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
-"\" ኤችቲቲፒ፣ ሲኖሎጂ ዌብ ረዳት (BusyBox httpd)\" አገልግሎት 20 - 40 " ሊወስድ ይችላል
-"ሰከንዶች."
+"\" ኤችቲቲፒ፣ ሲኖሎጂ ዌብ ረዳት (BusyBox httpd)\" አገልግሎት 20 - 40 ሊወስድ ይችላል ሰከንዶች."
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
@@ -179,16 +171,15 @@ msgstr "ምንም NIC አልተገኘም! - ጫኚ ያለ አውታረ መረብ
 #: boot.sh:1108
 msgid ""
 "To check the problem, access the following TTYD URL through a web browser. :"
-msgstr ""
-"ችግሩን ለመፈተሽ የሚከተለውን የTTYD URL በድር አሳሽ ይድረሱ። :"
+msgstr "ችግሩን ለመፈተሽ የሚከተለውን የTTYD URL በድር አሳሽ ይድረሱ። :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the '/var/"
 "log/linuxrc.syno.log' file in this access."
 msgstr ""
-"በዲኤስኤም መጫኛ ደረጃዎች ላይ ችግሮች ካጋጠሙዎት '/var/" የሚለውን ያረጋግጡ
-"log/linuxrc.syno.log' ፋይል በዚህ መዳረሻ።"
+"በዲኤስኤም መጫኛ ደረጃዎች ላይ ችግሮች ካጋጠሙዎት '/var/ የሚለውን ያረጋግጡlog/linuxrc.syno.log' ፋይል "
+"በዚህ መዳረሻ።"
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
@@ -196,4 +187,4 @@ msgstr "ነባሪ የ TTYD root ይለፍ ቃል ባዶ ነው"
 
 #: boot.sh:1111
 msgid "User config is on '/mnt/tcrp/user_config.json'"
-msgstr "የተጠቃሚ ማዋቀር በ'/mnt/tcrp/user_config.json" ላይ ነው።
+msgstr "የተጠቃሚ ማዋቀር በ'/mnt/tcrp/user_config.json ላይ ነው።\""

@@ -5,16 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-06 09:00+0000\n"
-"PO-Revision-Date: 2024-05-08 14:48+0000\n"
-"Last-Translator:  <dante9000@gmail.com>\n"
+"PO-Revision-Date: 2024-05-09 00:51+0900\n"
+"Last-Translator: <dante9000@gmail.com>\n"
 "Language-Team: Thai\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.3\n"
 
 #: boot.sh:139
 msgid "Detecting Internet -> "
@@ -24,9 +25,7 @@ msgstr "กำลังตรวจจับอินเทอร์เน็ต
 msgid ""
 "No internet found, Skip updating friends and installing Python libraries for "
 "QR codes!"
-msgstr ""
-"ไม่พบอินเทอร์เน็ต ข้ามการอัปเดตเพื่อนและติดตั้งไลบรารี Python สำหรับ "
-"คิวอาร์โค้ด!"
+msgstr "ไม่พบอินเทอร์เน็ต ข้ามการอัปเดตเพื่อนและติดตั้งไลบรารี Python สำหรับ คิวอาร์โค้ด!"
 
 #: boot.sh:162
 msgid "TCRP Friend auto update disabled"
@@ -89,40 +88,37 @@ msgid ""
 "model is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"โมเดลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
-"หยุดกระบวนการบูต"
+"โมเดลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.jsonหยุดกระบวนการบูต"
 
 #: boot.sh:981
 msgid ""
 "Build version is not resolved. Please check the /mnt/tcrp/user_config.json "
 "file. stopping boot process"
 msgstr ""
-"รุ่นบิลด์ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/user_config.json "
-"file. หยุดกระบวนการบูต"
+"รุ่นบิลด์ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/user_config.json file. "
+"หยุดกระบวนการบูต"
 
 #: boot.sh:986
 msgid ""
 "Update(smallfixnumber) is not resolved. Please check the /mnt/tcrp/"
 "user_config.json file."
 msgstr ""
-"อัปเดต (smallfixnumber) ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/"
-"ไฟล์ user_config.json"
+"อัปเดต (smallfixnumber) ไม่ได้รับการแก้ไข โปรดตรวจสอบ /mnt/tcrp/ไฟล์ user_config."
+"json"
 
 #: boot.sh:994
 msgid ""
 "serial is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"ซีเรียลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
-"หยุดกระบวนการบูต"
+"ซีเรียลไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.jsonหยุดกระบวนการบูต"
 
 #: boot.sh:1001
 msgid ""
 "mac1 is not resolved. Please check the /mnt/tcrp/user_config.json file. "
 "stopping boot process"
 msgstr ""
-"mac1 ไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.json"
-"หยุดกระบวนการบูต"
+"mac1 ไม่ได้รับการแก้ไข โปรดตรวจสอบไฟล์ /mnt/tcrp/user_config.jsonหยุดกระบวนการบูต"
 
 #: boot.sh:1116
 msgid "Press <r> to enter a menu for Reset DSM Password"
@@ -157,8 +153,8 @@ msgid ""
 "\"HTTP, Synology Web Assistant (BusyBox httpd)\" service may take 20 - 40 "
 "seconds."
 msgstr ""
-บริการ "\"HTTP, Synology Web Assistant (BusyBox httpd)\" อาจใช้เวลา 20 - 40 "
-"วินาที"
+"บริการ \"\"HTTP, Synology Web Assistant (BusyBox httpd) อาจใช้เวลา 20 - 40 "
+"วินาที\""
 
 #: boot.sh:1164
 msgid "(Network access is not immediately available)"
@@ -179,16 +175,15 @@ msgstr "ไม่พบ NIC! - ตัวโหลดไม่ทำงานห�
 #: boot.sh:1108
 msgid ""
 "To check the problem, access the following TTYD URL through a web browser. :"
-msgstr ""
-"หากต้องการตรวจสอบปัญหา ให้เข้าถึง TTYD URL ต่อไปนี้ผ่านทางเว็บเบราว์เซอร์ :"
+msgstr "หากต้องการตรวจสอบปัญหา ให้เข้าถึง TTYD URL ต่อไปนี้ผ่านทางเว็บเบราว์เซอร์ :"
 
 #: boot.sh:1109
 msgid ""
 "If you have any problems with the DSM installation steps, check the '/var/"
 "log/linuxrc.syno.log' file in this access."
 msgstr ""
-"หากคุณมีปัญหาใดๆ กับขั้นตอนการติดตั้ง DSM ให้ตรวจสอบ '/var/"
-"ไฟล์ log/linuxrc.syno.log' ในการเข้าถึงนี้"
+"หากคุณมีปัญหาใดๆ กับขั้นตอนการติดตั้ง DSM ให้ตรวจสอบ '/var/ไฟล์ log/linuxrc.syno.log' "
+"ในการเข้าถึงนี้"
 
 #: boot.sh:1110
 msgid "Default TTYD root password is 'blank' "
