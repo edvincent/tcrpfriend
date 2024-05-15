@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240414
+# Date : 240515
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.1d"
+BOOTVER="0.1.1e"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -95,6 +95,7 @@ function history() {
     0.1.1b Display smallfixnumber version changed after Ramdisk patch
     0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
     0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
+    0.1.1e After applying the nvmesystem addon, add pci=nommconf option to cmdline to disable MMCONFIG use in PCI configuration.
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -108,6 +109,7 @@ function showlastupdate() {
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
 0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
+0.1.1e After applying the nvmesystem addon, add pci=nommconf option to cmdline to disable MMCONFIG use in PCI configuration.
 
 EOF
 }
@@ -1096,6 +1098,8 @@ function boot() {
     else
         CMDLINE_LINE=$(jq -r -e '.general .usb_line' /mnt/tcrp/user_config.json)
     fi
+
+    CMDLINE_LINE+="pci=nommconf "    
 
     #[ "$1" = "gettycon" ] && CMDLINE_LINE+=" gettycon "
 
