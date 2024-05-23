@@ -1,9 +1,0 @@
---- a/etc/rc
-+++ b/etc/rc
-@@ -469,5 +469,5 @@
- echo "============ Date ============"
- date
- echo "=============================="
--
-+(/bin/sh /exts/exec.sh on_rcExit_scripts && echo "rcExit processed") || Exit 99 "early init exec failure"
- exit 0
