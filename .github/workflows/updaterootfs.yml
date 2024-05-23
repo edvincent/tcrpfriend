@@ -15,7 +15,7 @@ jobs:
         run: |
           mkdir /opt/config-files
           cd /opt/config-files
-          git clone -b master https://github.com/PeterSuh-Q3/redpill-load.git
+          git clone -b master --single-branch --depth=1 https://github.com/PeterSuh-Q3/redpill-load.git
           ls -ltr /opt/config-files/redpill-load/config 
       - name: Clone source code
         id: updaterootfs
