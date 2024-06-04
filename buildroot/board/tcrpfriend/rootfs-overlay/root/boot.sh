@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author : PeterSuh-Q3
-# Date : 240522
+# Date : 240604
 # User Variables :
 ###############################################################################
 
@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.1e"
+BOOTVER="0.1.1f"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -96,6 +96,7 @@ function history() {
     0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
     0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
     0.1.1e Update config for DS218+ and SA6400-7.1.1
+    0.1.1f Adjust Grub bootentry default after PostUpdate for jot mode
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -110,6 +111,7 @@ function showlastupdate() {
 0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
 0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
 0.1.1e 0.1.1e Update config for DS218+ and SA6400-7.1.1
+0.1.1f Adjust Grub bootentry default after PostUpdate for jot mode
 
 EOF
 }
@@ -793,14 +795,12 @@ function checkupgrade() {
     zimghash="$(jq -r -e '.general .zimghash' $userconfigfile)"
 
     if [ "$loadermode" == "JOT" ]; then    
-        checkmachine
-
-        if [ "$MACHINE" = "VIRTUAL" ]; then
-            msgnormal "Setting default boot entry to JOT SATA\n"
-            sed -i "/set default=\"*\"/cset default=\"1\"" /mnt/tcrp-p1/boot/grub/grub.cfg
-        else
+        if [ "${BUS}" = "usb" ]; then
             msgnormal "Setting default boot entry to JOT USB\n"
-            sed -i "/set default=\"*\"/cset default=\"0\"" /mnt/tcrp-p1/boot/grub/grub.cfg
+            setgrubdefault 2
+        else
+            msgnormal "Setting default boot entry to JOT SATA\n"
+            setgrubdefault 3
         fi        
     fi
 
