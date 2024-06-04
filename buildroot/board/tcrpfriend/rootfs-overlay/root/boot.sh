@@ -110,7 +110,7 @@ function showlastupdate() {
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
 0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
 0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
-0.1.1e 0.1.1e Update config for DS218+ and SA6400-7.1.1
+0.1.1e Update config for DS218+ and SA6400-7.1.1
 0.1.1f Adjust Grub bootentry default after PostUpdate for jot mode
 
 EOF
