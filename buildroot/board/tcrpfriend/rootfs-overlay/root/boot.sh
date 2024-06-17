@@ -729,8 +729,8 @@ function sortnetif() {
   ETHX=$(ls /sys/class/net/ 2>/dev/null | grep eth) # real network cards list
   for ETH in ${ETHX}; do
     MAC="$(cat /sys/class/net/${ETH}/address 2>/dev/null | sed 's/://g' | tr '[:upper:]' '[:lower:]')"
-    BUS=$(ethtool -i ${ETH} 2>/dev/null | grep bus-info | awk '{print $2}')
-    ETHLIST="${ETHLIST}${BUS} ${MAC} ${ETH}\n"
+    BUSINFO=$(ethtool -i ${ETH} 2>/dev/null | grep bus-info | awk '{print $2}')
+    ETHLIST="${ETHLIST}${BUSINFO} ${MAC} ${ETH}\n"
   done
   
   ETHLIST="$(echo -e "${ETHLIST}" | sort)"
@@ -1097,7 +1097,7 @@ function boot() {
     if [ "$(jq -r -e .ipsettings.ipset /mnt/tcrp/user_config.json)" = "static" ]; then
         setnetwork
     else
-        sortnetif
+        sortnetif 2>&1 | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; }' >>$FRIENDLOG
         # Set Mac Address according to user_config
         setmac
 
