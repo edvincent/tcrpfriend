@@ -762,12 +762,12 @@ function sortnetif() {
         sed -i "s/${ETH}/eth${IDX}/" /tmp/ethlist
         sed -i "s/tmp/${ETH}/" /tmp/ethlist
         sleep 1
-        udhcpc -i ${ETH}
     fi
     IDX=$((${IDX} + 1))
   done
   
   rm -f /tmp/ethlist
+  sleep 2
 }
 
 function getip() {
