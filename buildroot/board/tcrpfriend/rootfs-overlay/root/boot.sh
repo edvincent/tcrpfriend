@@ -9,7 +9,7 @@
 source menufunc.h
 #####################################################################################################
 
-BOOTVER="0.1.1g"
+BOOTVER="0.1.1h"
 FRIENDLOG="/mnt/tcrp/friendlog.log"
 AUTOUPDATES="1"
 
@@ -98,6 +98,7 @@ function history() {
     0.1.1e Update config for DS218+ and SA6400-7.1.1
     0.1.1f Adjust Grub bootentry default after PostUpdate for jot mode
     0.1.1g Sort netif order by bus-id order (Synology netif sorting method)
+    0.1.1h Fixed error displaying information for USB type NICs
     
     Current Version : ${BOOTVER}
     --------------------------------------------------------------------------------------
@@ -109,11 +110,9 @@ function showlastupdate() {
 0.1.0  friend kernel version up from 5.15.26 to 6.4.16
 0.1.0q Added support for SHR type to HDD for bootloader injection. 
 0.1.0u Loader support bus type expansion (mmc, NVMe, etc.)
-0.1.1c Fix Added cmdline netif_num missing check function and corrected URL error (thanks EM10)
-0.1.1d Multilingual explanation i18n support (Added Amharic-Ethiopian and Thai)
-0.1.1e Update config for DS218+ and SA6400-7.1.1
 0.1.1f Adjust Grub bootentry default after PostUpdate for jot mode
 0.1.1g Sort netif order by bus-id order (Synology netif sorting method)
+0.1.1h Fixed error displaying information for USB type NICs
 
 EOF
 }
@@ -779,14 +778,20 @@ function getip() {
     for eth in $ethdevs; do 
         COUNT=0
         DRIVER=$(ls -ld /sys/class/net/${eth}/device/driver 2>/dev/null | awk -F '/' '{print $NF}')
-        BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
-        VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
-        DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
-        if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
-            MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
-            if [ ! -z "${MATCHDRIVER}" ]; then
-                if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
-                    DRIVER=${MATCHDRIVER}
+        if [ $(ls -l /sys/class/net/${eth}/device | grep "0000:" | wc -l) -gt 0 ]; then
+            BUSID=$(ls -ld /sys/class/net/${eth}/device 2>/dev/null | awk -F '0000:' '{print $NF}')
+        else
+            BUSID=""
+        fi
+        if [ -f /sys/class/net/${eth}/device/vendor ] && [ -f /sys/class/net/${eth}/device/device ]; then        
+            VENDOR=$(cat /sys/class/net/${eth}/device/vendor | sed 's/0x//')
+            DEVICE=$(cat /sys/class/net/${eth}/device/device | sed 's/0x//')
+            if [ ! -z "${VENDOR}" ] && [ ! -z "${DEVICE}" ]; then
+                MATCHDRIVER=$(echo "$(matchpciidmodule ${VENDOR} ${DEVICE})")
+                if [ ! -z "${MATCHDRIVER}" ]; then
+                    if [ "${MATCHDRIVER}" != "${DRIVER}" ]; then
+                        DRIVER=${MATCHDRIVER}
+                    fi
                 fi
             fi
         fi    
